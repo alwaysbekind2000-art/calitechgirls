@@ -956,7 +956,6 @@
     align-items: center;
     gap: 4px;
     flex-wrap: nowrap;
-    overflow-x: auto;
   }
   .nav-links a {
     color: rgba(255,248,231,0.65);
@@ -972,6 +971,27 @@
   }
   .nav-links a:hover { color: var(--gold); background: rgba(212,175,55,0.08); }
   .nav-links a.active { color: var(--gold); }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; z-index: 1001; }
+  .hamburger span { display: block; width: 25px; height: 2px; background: var(--gold); margin: 5px 0; transition: all 0.3s; }
+  .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+  @media (max-width: 1200px) {
+    .hamburger { display: block; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 65px; left: 0; right: 0;
+      background: rgba(10,5,0,0.97);
+      backdrop-filter: blur(20px);
+      flex-direction: column;
+      padding: 20px;
+      gap: 8px;
+      border-bottom: 1px solid rgba(212,175,55,0.2);
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { font-size: 0.85rem; padding: 12px 20px; width: 100%; }
+  }
   .nav-order-btn {
     padding: 10px 20px;
     background: linear-gradient(135deg, #8B1A1A, #c0392b);
@@ -1005,6 +1025,9 @@
 <!-- MAIN NAVIGATION -->
 <nav class="main-nav">
   <a href="kekesinternational-14.html" class="nav-logo">Keke's International</a>
+  <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open');this.classList.toggle('active');" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
   <div class="nav-links">
     <a href="kekesinternational-menu.html">Menu</a>
     <a href="kekesinternational-catering.html">Catering</a>
