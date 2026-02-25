@@ -4,602 +4,255 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Checkout — Keke's International Food Spot</title>
-
-<!-- PWA Meta Tags -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#D4A017">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Keke's International">
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
-<!-- Square Web Payments SDK (Sandbox) -->
-<script src="https://web.squarecdn.com/v1/square.js"></script>
-
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
 <style>
-:root {
-  --gold: #D4A017;
-  --gold-light: #F5D76E;
-  --gold-dim: rgba(212,160,23,0.15);
-  --red: #8B1A1A;
-  --red-fire: #FF4500;
-  --cream: #FFF8E7;
-  --dark: #0a0005;
-  --brown: #150008;
-  --green: #2ecc71;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--dark); color:var(--cream); font-family:'Montserrat',sans-serif; min-height:100vh; overflow-x:hidden; }
+:root{--gold:#D4AF37;--gold-light:#F5D76E;--red:#8B1A1A;--red-bright:#c0392b;--cream:#FFF8E7;--dark:#0a0500;--brown:#1a0800;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--dark);color:var(--cream);font-family:'Montserrat',sans-serif;overflow-x:hidden;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.5rem);color:var(--gold);text-align:center;margin-bottom:15px;}
+.section-label{font-size:.7rem;letter-spacing:8px;color:var(--gold);text-transform:uppercase;text-align:center;margin-bottom:20px;opacity:.7;}
+.section-divider{width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:20px auto 50px;}
+.btn-primary{padding:18px 50px;background:linear-gradient(135deg,#8B1A1A,#c0392b);color:var(--cream);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:4px;text-transform:uppercase;border:none;border-radius:5px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .3s ease;box-shadow:0 10px 40px rgba(139,26,26,.5);}
+.btn-primary:hover{transform:translateY(-3px);}
 
-/* FIRE PARTICLES */
-#particles { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; overflow:hidden; }
-.ember {
-  position:absolute;
-  width:3px; height:3px;
-  border-radius:50%;
-  animation:emberRise linear infinite;
-  opacity:0;
-}
-@keyframes emberRise {
-  0%   { opacity:0; transform:translateY(100vh) translateX(0) scale(0.5); }
-  10%  { opacity:1; }
-  50%  { transform:translateY(40vh) translateX(var(--drift)) scale(1); }
-  90%  { opacity:0.2; }
-  100% { opacity:0; transform:translateY(-50px) translateX(var(--drift)) scale(0.3); }
-}
+.hero{min-height:40vh;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at center top,#3d1500 0%,#1a0800 40%,#0a0500 100%);padding-top:100px;}
+.hero-content{text-align:center;padding:40px 20px;}
+.hero-title{font-family:'Dancing Script',cursive;font-size:clamp(2.5rem,8vw,5rem);color:var(--gold);text-shadow:0 0 40px rgba(212,175,55,.5);animation:fadeUp 1s ease forwards .3s;opacity:0;}
+.hero-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;color:rgba(255,248,231,.7);margin-top:15px;animation:fadeUp 1s ease forwards .5s;opacity:0;}
 
-/* NAV */
-.main-nav {
-  position:fixed; top:0; left:0; right:0; z-index:1000;
-  background:rgba(10,0,5,0.96); backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(212,160,23,0.18);
-  padding:0 30px; display:flex; align-items:center; justify-content:space-between; height:65px;
-}
-.nav-logo { font-family:'Dancing Script',cursive; font-size:1.5rem; color:var(--gold); text-decoration:none; text-shadow:0 0 20px rgba(212,160,23,0.5); }
-.nav-links { display:flex; gap:4px; }
-.nav-links a { color:rgba(255,248,231,0.6); text-decoration:none; font-size:0.6rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:600; padding:6px 10px; border-radius:4px; transition:all 0.2s; white-space:nowrap; }
-.nav-links a:hover, .nav-links a.active { color:var(--gold); background:rgba(212,160,23,0.08); }
-.nav-back-btn { padding:10px 20px; background:linear-gradient(135deg,var(--red),#c0392b); color:var(--cream); font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; border:none; border-radius:30px; cursor:pointer; text-decoration:none; font-family:'Montserrat',sans-serif; font-weight:700; box-shadow:0 5px 20px rgba(139,26,26,0.5); transition:all 0.3s; white-space:nowrap; }
-.nav-back-btn:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(255,69,0,0.5); }
+.checkout-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:1200px;margin:0 auto;padding:60px 40px 100px;}
+@media(max-width:768px){.checkout-layout{grid-template-columns:1fr;}}
 
-/* HERO */
-.checkout-hero { padding:110px 20px 30px; text-align:center; position:relative; z-index:1; }
-.checkout-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3rem); color:var(--gold); margin-bottom:8px; text-shadow:0 0 40px rgba(212,160,23,0.4); }
-.checkout-hero p { color:rgba(255,248,231,0.55); font-size:0.85rem; letter-spacing:2.5px; text-transform:uppercase; }
+.checkout-panel{background:linear-gradient(135deg,rgba(26,8,0,.8),rgba(10,5,0,.9));border:1px solid rgba(212,175,55,.2);border-radius:12px;padding:40px;}
+.panel-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold);margin-bottom:25px;padding-bottom:15px;border-bottom:1px solid rgba(212,175,55,.2);}
 
-/* SQUARE BANNER */
-.square-banner {
-  max-width:900px; margin:0 auto 28px; padding:14px 26px;
-  background:linear-gradient(135deg,rgba(212,160,23,0.1),rgba(255,69,0,0.06));
-  border:1px solid rgba(212,160,23,0.35); border-radius:12px;
-  display:flex; align-items:center; gap:14px; justify-content:center;
-  position:relative; z-index:1;
-  animation:pulseGold 2.5s ease-in-out infinite;
-}
-@keyframes pulseGold { 0%,100%{border-color:rgba(212,160,23,0.35)} 50%{border-color:rgba(212,160,23,0.8);box-shadow:0 0 20px rgba(212,160,23,0.2)} }
-.sq-badge { background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--dark); padding:5px 14px; border-radius:20px; font-size:0.62rem; font-weight:800; letter-spacing:2px; text-transform:uppercase; }
-.sq-text { color:var(--gold); font-size:0.82rem; font-weight:600; }
+.cart-item{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(212,175,55,.1);}
+.cart-item:last-child{border-bottom:none;}
+.item-name{font-size:.9rem;color:var(--cream);}
+.item-price{font-family:'Playfair Display',serif;color:var(--gold);font-size:1rem;}
+.empty-cart{text-align:center;padding:40px;color:rgba(255,248,231,.5);font-style:italic;}
 
-/* GRID LAYOUT */
-.checkout-grid { max-width:1100px; margin:0 auto; padding:0 20px 80px; display:grid; grid-template-columns:1fr 400px; gap:28px; position:relative; z-index:1; }
-@media(max-width:900px){ .checkout-grid{grid-template-columns:1fr} }
+.total-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;}
+.total-row.grand{border-top:1px solid rgba(212,175,55,.3);margin-top:10px;padding-top:20px;}
+.total-label{font-size:.8rem;letter-spacing:2px;color:rgba(255,248,231,.7);}
+.total-amount{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);}
+.total-row.grand .total-amount{font-size:1.5rem;}
 
-/* CARDS */
-.card { background:rgba(21,0,8,0.75); border:1px solid rgba(212,160,23,0.12); border-radius:16px; padding:28px; margin-bottom:20px; backdrop-filter:blur(10px); }
-.card:hover { border-color:rgba(212,160,23,0.22); }
-.card-title { font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--gold); margin-bottom:18px; display:flex; align-items:center; gap:10px; }
-.card-title span { font-size:1.25rem; }
+.form-group{margin-bottom:20px;}
+.form-group label{display:block;font-size:.75rem;letter-spacing:3px;color:var(--gold);margin-bottom:8px;}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(212,175,55,.3);border-radius:6px;padding:14px 18px;color:var(--cream);font-family:'Montserrat',sans-serif;font-size:.9rem;outline:none;transition:border-color .3s;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold);}
+.form-group select option{background:#1a0800;color:var(--cream);}
 
-/* DELIVERY TOGGLE */
-.delivery-toggle { display:flex; background:rgba(255,255,255,0.04); border-radius:50px; padding:5px; margin-bottom:22px; border:1px solid rgba(212,160,23,0.12); }
-.toggle-btn { flex:1; padding:12px; border:none; background:transparent; color:rgba(255,248,231,0.45); font-family:'Montserrat',sans-serif; font-size:0.78rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; cursor:pointer; border-radius:40px; transition:all 0.3s; }
-.toggle-btn.active { background:linear-gradient(135deg,var(--red-fire),#c0392b); color:var(--cream); box-shadow:0 5px 20px rgba(255,69,0,0.35); }
+.delivery-toggle{display:flex;gap:10px;margin-bottom:20px;}
+.toggle-btn{flex:1;padding:14px;background:transparent;border:1px solid rgba(212,175,55,.3);color:rgba(255,248,231,.7);border-radius:6px;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:.8rem;letter-spacing:2px;transition:all .3s;}
+.toggle-btn.active{background:rgba(212,175,55,.15);border-color:var(--gold);color:var(--gold);font-weight:700;}
 
-/* FORM */
-.form-group { margin-bottom:14px; }
-.form-label { display:block; font-size:0.62rem; letter-spacing:2px; text-transform:uppercase; color:rgba(212,160,23,0.7); margin-bottom:7px; }
-.form-input { width:100%; padding:13px 15px; background:rgba(255,255,255,0.04); border:1px solid rgba(212,160,23,0.14); border-radius:10px; color:var(--cream); font-family:'Montserrat',sans-serif; font-size:0.88rem; transition:all 0.3s; }
-.form-input:focus { outline:none; border-color:var(--gold); background:rgba(212,160,23,0.06); box-shadow:0 0 12px rgba(212,160,23,0.1); }
-.form-input::placeholder { color:rgba(255,248,231,0.22); }
-.form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-textarea.form-input { resize:vertical; min-height:80px; }
-#address-section { overflow:hidden; transition:max-height 0.4s ease, opacity 0.3s ease; }
+.payment-methods{display:grid;gap:15px;margin-top:20px;}
+.payment-card{background:rgba(255,255,255,.04);border:1px solid rgba(212,175,55,.2);border-radius:8px;padding:20px;display:flex;align-items:center;gap:15px;}
+.payment-icon{font-size:1.8rem;}
+.payment-info h4{font-size:.9rem;color:var(--cream);margin-bottom:4px;}
+.payment-info p{font-size:.75rem;color:rgba(255,248,231,.5);}
 
-/* ORDER TABLE */
-.order-table { width:100%; border-collapse:collapse; }
-.order-table th { text-align:left; padding:9px 10px; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:rgba(212,160,23,0.55); border-bottom:1px solid rgba(212,160,23,0.08); }
-.order-table td { padding:13px 10px; border-bottom:1px solid rgba(255,255,255,0.03); font-size:0.82rem; vertical-align:middle; }
-.item-name { color:var(--cream); font-weight:600; }
-.item-desc { color:rgba(255,248,231,0.38); font-size:0.68rem; margin-top:3px; }
-.item-price { color:var(--gold); font-weight:700; font-size:0.88rem; }
+.deposit-notice{background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.3);border-radius:8px;padding:20px;margin:20px 0;display:flex;gap:12px;align-items:flex-start;}
+.deposit-notice .icon{font-size:1.3rem;margin-top:2px;}
+.deposit-notice p{font-size:.8rem;color:rgba(255,248,231,.8);line-height:1.6;}
 
-/* TOTALS */
-.totals-section { border-top:1px solid rgba(212,160,23,0.12); padding-top:18px; margin-top:5px; }
-.total-row { display:flex; justify-content:space-between; padding:7px 0; font-size:0.82rem; color:rgba(255,248,231,0.58); }
-.total-row.grand { font-size:1.1rem; font-weight:800; color:var(--gold); border-top:1px solid rgba(212,160,23,0.2); margin-top:8px; padding-top:13px; text-shadow:0 0 15px rgba(212,160,23,0.4); }
-
-/* SQUARE CARD CONTAINER */
-#card-container {
-  min-height:90px;
-  padding:14px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(212,160,23,0.18);
-  border-radius:10px;
-  margin-bottom:6px;
-  transition:border-color 0.3s;
-}
-#card-container:focus-within { border-color:var(--gold); box-shadow:0 0 18px rgba(212,160,23,0.12); }
-.card-info-note { font-size:0.62rem; color:rgba(255,248,231,0.32); letter-spacing:1px; text-align:center; margin-bottom:4px; }
-.sq-loading { text-align:center; color:rgba(212,160,23,0.5); font-size:0.75rem; padding:20px; }
-
-/* PAY BUTTON */
-.pay-btn {
-  width:100%; padding:20px; margin-top:16px;
-  background:linear-gradient(135deg,var(--gold),var(--gold-light),var(--gold));
-  background-size:200% 100%;
-  color:var(--dark); font-family:'Montserrat',sans-serif;
-  font-size:0.95rem; font-weight:800; letter-spacing:3px; text-transform:uppercase;
-  border:none; border-radius:14px; cursor:pointer;
-  box-shadow:0 8px 35px rgba(212,160,23,0.4);
-  transition:all 0.3s; position:relative; overflow:hidden;
-}
-.pay-btn:hover:not(:disabled) { transform:translateY(-3px); box-shadow:0 14px 45px rgba(212,160,23,0.6); }
-.pay-btn:disabled { opacity:0.55; cursor:not-allowed; transform:none; }
-.pay-btn::after { content:''; position:absolute; top:-50%; left:-60%; width:40%; height:200%; background:rgba(255,255,255,0.22); transform:skewX(-25deg); transition:left 0.5s; }
-.pay-btn:hover:not(:disabled)::after { left:130%; }
-.pay-note { text-align:center; margin-top:12px; color:rgba(255,248,231,0.38); font-size:0.68rem; line-height:1.8; }
-
-/* ERROR MSG */
-.pay-error { background:rgba(255,69,0,0.12); border:1px solid rgba(255,69,0,0.3); border-radius:8px; padding:12px 16px; color:#ff7043; font-size:0.78rem; margin-top:10px; display:none; }
-.pay-error.show { display:block; }
-
-/* SUMMARY SIDEBAR */
-.summary-sticky { position:sticky; top:85px; }
-.summary-mini-item { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:0.8rem; }
-.summary-mini-item:last-child { border-bottom:none; }
-.summary-name { color:var(--cream); }
-.summary-price { color:var(--gold); font-weight:700; }
-
-/* SUCCESS STATE */
-#successState { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(10,0,5,0.97); z-index:3000; align-items:center; justify-content:center; padding:20px; }
-#successState.show { display:flex; }
-.success-box { background:var(--brown); border:1px solid var(--gold); border-radius:22px; padding:50px 40px; text-align:center; max-width:480px; width:100%; box-shadow:0 0 60px rgba(212,160,23,0.25); animation:successPop 0.4s ease; }
-@keyframes successPop { 0%{transform:scale(0.85);opacity:0} 100%{transform:scale(1);opacity:1} }
-.success-icon { font-size:4rem; margin-bottom:16px; animation:iconBounce 0.6s ease 0.3s both; }
-@keyframes iconBounce { 0%{transform:scale(0)} 60%{transform:scale(1.2)} 100%{transform:scale(1)} }
-.success-box h2 { font-family:'Playfair Display',serif; color:var(--gold); font-size:2.2rem; margin-bottom:10px; text-shadow:0 0 30px rgba(212,160,23,0.5); }
-.success-box p { color:rgba(255,248,231,0.7); line-height:1.8; margin-bottom:10px; }
-.order-num { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--red-fire); font-weight:700; margin:15px 0; }
-.success-time { display:inline-block; background:rgba(255,69,0,0.12); border:1px solid rgba(255,69,0,0.3); border-radius:8px; padding:10px 20px; color:#ff7043; font-weight:700; font-size:0.88rem; margin:10px 0 22px; }
-.success-btn { padding:14px 34px; background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--dark); font-family:'Montserrat',sans-serif; font-weight:800; font-size:0.78rem; letter-spacing:2px; text-transform:uppercase; border:none; border-radius:30px; cursor:pointer; text-decoration:none; display:inline-block; box-shadow:0 8px 25px rgba(212,160,23,0.35); }
-.success-btn:hover { transform:translateY(-2px); box-shadow:0 12px 35px rgba(212,160,23,0.55); }
-
-/* FOOTER */
-.footer { background:#050005; border-top:1px solid rgba(212,160,23,0.12); padding:55px 20px 40px; text-align:center; position:relative; z-index:1; }
-.footer-inner { max-width:800px; margin:0 auto; }
-.footer-logo { font-family:'Dancing Script',cursive; font-size:2.4rem; color:var(--gold); margin-bottom:6px; text-shadow:0 0 25px rgba(212,160,23,0.35); }
-.footer-tagline { color:rgba(255,248,231,0.38); font-size:0.72rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:22px; }
-.social-links { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:22px; }
-.social-btn { padding:9px 18px; background:rgba(212,160,23,0.07); border:1px solid rgba(212,160,23,0.18); color:rgba(255,248,231,0.65); border-radius:25px; text-decoration:none; font-size:0.68rem; letter-spacing:1px; transition:all 0.3s; }
-.social-btn:hover { background:rgba(212,160,23,0.18); color:var(--gold); }
-.footer-divider { height:1px; background:rgba(212,160,23,0.08); margin:18px 0; }
-.footer-contact { color:rgba(255,248,231,0.42); font-size:0.78rem; line-height:2; }
-.footer-copy { color:rgba(255,248,231,0.22); font-size:0.68rem; letter-spacing:1px; }
-
-/* PWA INSTALL BUTTON */
-#pwaInstallBtn {
-  position:fixed; bottom:28px; right:28px; z-index:9999;
-  padding:13px 22px; border:none; border-radius:50px;
-  background:linear-gradient(135deg,var(--gold),var(--gold-light));
-  color:var(--dark); font-family:'Montserrat',sans-serif;
-  font-weight:800; font-size:0.72rem; letter-spacing:1.5px; text-transform:uppercase;
-  cursor:pointer; display:none;
-  box-shadow:0 0 0 3px rgba(212,160,23,0.25), 0 8px 30px rgba(212,160,23,0.5);
-  animation:pwaGlow 2s ease-in-out infinite;
-  transition:transform 0.2s, box-shadow 0.2s;
-}
-#pwaInstallBtn:hover { transform:translateY(-3px); box-shadow:0 0 0 4px rgba(212,160,23,0.4), 0 12px 40px rgba(212,160,23,0.7); }
-@keyframes pwaGlow {
-  0%,100% { box-shadow:0 0 0 3px rgba(212,160,23,0.25), 0 8px 30px rgba(212,160,23,0.5); }
-  50%      { box-shadow:0 0 0 6px rgba(212,160,23,0.15), 0 8px 40px rgba(212,160,23,0.75); }
-}
+#card-container{background:rgba(255,255,255,.05);border:1px solid rgba(212,175,55,.3);border-radius:6px;padding:16px;min-height:60px;margin-top:8px;}
+#payment-status{margin-top:12px;font-size:.8rem;color:var(--gold);text-align:center;}
 </style>
 </head>
 <body>
 
-<!-- Fire/Ember Particles -->
-<div id="particles"></div>
-
-<!-- Nav -->
-<nav class="main-nav">
-  <a href="kekesinternational.html" class="nav-logo">Keke's International</a>
-  <div class="nav-links">
-    <a href="kekesinternational.html">Home</a>
-    <a href="kekesinternational-menu.html">Menu</a>
-    <a href="kekesinternational-catering.html">Catering</a>
-    <a href="kekesinternational-events.html">Events</a>
-    <a href="kekesinternational-grand-opening.html">🎉 Reopening</a>
-    <a href="kekesinternational-gallery.html">Gallery</a>
-    <a href="kekesinternational-vip.html">VIP</a>
-    <a href="kekesinternational-about.html">About</a>
-    <a href="kekesinternational-contact.html">Contact</a>
-    <a href="kekesinternational-tracker.html">Track Order</a>
-    <a href="mississippi-soul-food.html" style="color:#D4AF37;font-size:0.8rem;font-weight:700;padding:6px 12px;border:1px solid #D4AF37;border-radius:20px;text-decoration:none;white-space:nowrap;">🍖 Mississippi Soul</a>
+<!-- NAV -->
+<nav style="position:fixed;top:0;left:0;right:0;z-index:1000;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(10,5,0,0.95),transparent);">
+  <a href="kekesinternational.html" style="font-family:'Dancing Script',cursive;font-size:1.8rem;color:#D4AF37;text-decoration:none;text-shadow:0 0 20px rgba(212,175,55,0.5);">Keke's International</a>
+  <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;">
+    <a href="kekesinternational.html" style="color:#FFF8E7;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">HOME</a>
+    <a href="kekesinternational-menu.html" style="color:#FFF8E7;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">MENU</a>
+    <a href="kekesinternational-catering.html" style="color:#FFF8E7;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">CATERING</a>
+    <a href="kekesinternational-events.html" style="color:#FFF8E7;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">EVENTS</a>
+    <a href="kekesinternational-about.html" style="color:#FFF8E7;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">ABOUT</a>
+    <a href="mississippi-soul-food.html" style="color:#D4AF37;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">🍖 MISSISSIPPI</a>
+    <a href="kekesinternational-menu.html" style="padding:10px 25px;background:linear-gradient(135deg,#8B1A1A,#c0392b);color:#FFF8E7;text-decoration:none;font-size:0.7rem;letter-spacing:3px;font-family:'Montserrat',sans-serif;font-weight:700;border-radius:4px;">ORDER NOW</a>
   </div>
-  <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
 </nav>
 
-<!-- Hero -->
-<div class="checkout-hero">
-  <h1>🛒 Checkout</h1>
-  <p>Secure Payment · Your Order in 35–45 Min</p>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">Order Summary</h1>
+    <p class="hero-subtitle">Review your selections &amp; complete your order</p>
+  </div>
 </div>
 
-<!-- Square Banner -->
-<div class="square-banner" style="max-width:900px;margin:0 auto 28px;position:relative;z-index:1;">
-  <span class="sq-badge">💳 Square Secure</span>
-  <span class="sq-text">Payments processed securely via Square — your card data never touches our servers</span>
-</div>
+<!-- CHECKOUT LAYOUT -->
+<div class="checkout-layout">
 
-<!-- Main Grid -->
-<div class="checkout-grid">
+  <!-- LEFT: Cart + Customer Info -->
+  <div>
+    <div class="checkout-panel" style="margin-bottom:30px;">
+      <div class="panel-title">🛒 Your Order</div>
+      <div id="cartItems">
+        <div class="empty-cart">Your cart is empty. <a href="kekesinternational-menu.html" style="color:var(--gold);">Browse the menu</a></div>
+      </div>
+      <div id="cartTotals" style="display:none;margin-top:20px;">
+        <div class="total-row"><span class="total-label">SUBTOTAL</span><span class="total-amount" id="subtotalDisplay">$0.00</span></div>
+        <div class="total-row"><span class="total-label">DELIVERY FEE</span><span class="total-amount">$3.99</span></div>
+        <div class="total-row grand"><span class="total-label">TOTAL</span><span class="total-amount" id="grandTotalDisplay">$3.99</span></div>
+      </div>
+    </div>
 
-  <!-- LEFT COLUMN -->
-  <div class="left-col">
-
-    <!-- Delivery / Pickup Toggle -->
-    <div class="card">
-      <div class="card-title"><span>🚚</span> Delivery or Pickup?</div>
+    <div class="checkout-panel">
+      <div class="panel-title">📋 Customer Information</div>
       <div class="delivery-toggle">
-        <button class="toggle-btn active" id="deliveryBtn" onclick="setMode('delivery')">🚚 Delivery</button>
-        <button class="toggle-btn" id="pickupBtn" onclick="setMode('pickup')">🏃 Pickup</button>
-      </div>
-
-      <!-- Address (delivery only) -->
-      <div id="address-section" style="max-height:600px;opacity:1;">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Street Address</label>
-            <input type="text" class="form-input" id="address" placeholder="123 Main St">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Apt / Suite</label>
-            <input type="text" class="form-input" placeholder="Apt 2B">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">City</label>
-            <input type="text" class="form-input" placeholder="Moreno Valley">
-          </div>
-          <div class="form-group">
-            <label class="form-label">ZIP Code</label>
-            <input type="text" class="form-input" placeholder="92551">
-          </div>
-        </div>
-      </div>
-
-      <!-- Contact Info (always visible) -->
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Your Name</label>
-          <input type="text" class="form-input" id="custName" placeholder="Full Name">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Phone Number</label>
-          <input type="tel" class="form-input" id="custPhone" placeholder="(555) 000-0000">
-        </div>
+        <button class="toggle-btn active" id="deliveryBtn" onclick="setOrderType('delivery')">🚗 DELIVERY</button>
+        <button class="toggle-btn" id="pickupBtn" onclick="setOrderType('pickup')">🏃 PICKUP</button>
       </div>
       <div class="form-group">
-        <label class="form-label">Email Address</label>
-        <input type="email" class="form-input" id="custEmail" placeholder="you@example.com">
+        <label>FULL NAME</label>
+        <input type="text" id="custName" placeholder="Your name">
       </div>
       <div class="form-group">
-        <label class="form-label">Special Instructions</label>
-        <textarea class="form-input" id="instructions" placeholder="Extra sauce, no onions, ring doorbell..."></textarea>
+        <label>PHONE NUMBER</label>
+        <input type="tel" id="custPhone" placeholder="(555) 000-0000">
       </div>
-    </div>
-
-    <!-- Order Summary (demo items) -->
-    <div class="card">
-      <div class="card-title"><span>🍽️</span> Your Order</div>
-      <table class="order-table">
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Qty</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody id="cart-items">
-          <tr id="empty-cart-row">
-            <td colspan="3" style="text-align:center;color:rgba(255,248,231,0.45);padding:20px;font-style:italic;">Your cart is empty — add items from the menu</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="totals-section">
-        <div class="total-row"><span>Subtotal</span><span id="checkout-subtotal">$0.00</span></div>
-        <div class="total-row" id="deliveryFeeRow"><span>🚚 Delivery Fee</span><span>$3.99</span></div>
-        <div class="total-row grand"><span>TOTAL</span><span id="grandTotal">$0.00</span></div>
+      <div class="form-group">
+        <label>EMAIL</label>
+        <input type="email" id="custEmail" placeholder="your@email.com">
       </div>
-    </div>
-
-    <!-- Square Payment Card -->
-    <div class="card">
-      <div class="card-title"><span>💳</span> Payment</div>
-      <p class="card-info-note">🔒 Secured by Square · SSL Encrypted · Sandbox Mode</p>
-      <div id="card-container"><div class="sq-loading">⏳ Loading secure payment form…</div></div>
-      <div class="pay-error" id="payError"></div>
-      <button class="pay-btn" id="payBtn" onclick="handlePayment()" disabled>🔥 PAY NOW</button>
-      <p class="pay-note">Your card is charged securely via Square.<br>Receipt sent to your email · Estimated 35–45 min</p>
-    </div>
-
-  </div><!-- /left-col -->
-
-  <!-- RIGHT COLUMN — Sticky Summary -->
-  <div class="right-col">
-    <div class="summary-sticky">
-      <div class="card">
-        <div class="card-title"><span>📋</span> Order Summary</div>
-        <div id="summary-items">
-          <div class="summary-mini-item" style="color:rgba(255,248,231,0.45);font-style:italic;">
-            <span>Cart is empty</span>
-          </div>
-        </div>
-        <div style="border-top:1px solid rgba(212,160,23,0.12);margin-top:14px;padding-top:14px;">
-          <div class="total-row" style="font-size:0.78rem;"><span>Subtotal</span><span id="summary-subtotal">$0.00</span></div>
-          <div class="total-row" id="summaryDelivery" style="font-size:0.78rem;"><span>Delivery</span><span>$3.99</span></div>
-          <div class="total-row grand"><span>Total</span><span id="summary-total">$0.00</span></div>
-        </div>
-        <div style="margin-top:18px;padding:14px;background:rgba(212,160,23,0.05);border-radius:10px;text-align:center;">
-          <div style="font-size:0.68rem;color:rgba(255,248,231,0.45);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;">Questions? Call or Text</div>
-          <a href="tel:9516305410" style="color:var(--gold);font-size:1.15rem;font-weight:800;text-decoration:none;">📞 (951) 630-5410</a>
-        </div>
-        <div style="margin-top:12px;padding:11px;background:rgba(46,204,113,0.07);border:1px solid rgba(46,204,113,0.18);border-radius:8px;text-align:center;">
-          <div style="font-size:0.72rem;color:#2ecc71;">🌙 Open Till 4AM · Order Any Time</div>
-        </div>
+      <div class="form-group" id="addressGroup">
+        <label>DELIVERY ADDRESS</label>
+        <input type="text" id="custAddress" placeholder="Street address, City, CA ZIP">
+      </div>
+      <div class="form-group">
+        <label>ORDER NOTES (optional)</label>
+        <textarea id="custNotes" rows="3" placeholder="Special instructions, allergies, substitutions..."></textarea>
       </div>
     </div>
   </div>
 
-</div><!-- /checkout-grid -->
+  <!-- RIGHT: Payment -->
+  <div>
+    <div class="checkout-panel">
+      <div class="panel-title">💳 Payment</div>
+      <div class="deposit-notice">
+        <span class="icon">⚠️</span>
+        <p>A <strong style="color:var(--gold);">deposit is required</strong> before your meal preparation begins. Full payment due at pickup/delivery.</p>
+      </div>
 
-<!-- SUCCESS STATE OVERLAY -->
-<div id="successState">
-  <div class="success-box">
-    <div class="success-icon">🎉</div>
-    <h2>Order Confirmed!</h2>
-    <p>Your payment was accepted. Chef Keke is firing up the grill!</p>
-    <div class="order-num" id="successOrderNum">#KK-00000</div>
-    <div class="success-time">⏱️ Estimated Time: 35–45 Minutes</div>
-    <p style="font-size:0.78rem;color:rgba(255,248,231,0.45);margin-bottom:20px;">A confirmation will be sent to your email &amp; phone.</p>
-    <a href="kekesinternational-tracker.html" class="success-btn">Track My Order 🔥</a>
+      <p style="font-size:.75rem;letter-spacing:3px;color:var(--gold);margin-bottom:15px;">CREDIT / DEBIT CARD</p>
+      <div id="card-container"></div>
+      <div id="payment-status"></div>
+
+      <div style="text-align:center;padding:20px 0;color:rgba(255,248,231,.4);font-size:.7rem;letter-spacing:3px;">— OR PAY WITH —</div>
+
+      <div class="payment-methods">
+        <div class="payment-card">
+          <span class="payment-icon">💚</span>
+          <div class="payment-info">
+            <h4>Cash App</h4>
+            <p>Send payment to <strong style="color:var(--gold);">$CaliChefKeke</strong></p>
+          </div>
+        </div>
+        <div class="payment-card">
+          <span class="payment-icon">💜</span>
+          <div class="payment-info">
+            <h4>Zelle</h4>
+            <p>Send to <strong style="color:var(--gold);">(951) 630-5410</strong></p>
+          </div>
+        </div>
+        <div class="payment-card">
+          <span class="payment-icon">💵</span>
+          <div class="payment-info">
+            <h4>Cash on Delivery</h4>
+            <p>Exact change appreciated · Deposit may be required</p>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="placeOrder()" style="width:100%;margin-top:30px;text-align:center;">PLACE ORDER</button>
+      <p style="text-align:center;font-size:.7rem;color:rgba(255,248,231,.4);margin-top:15px;letter-spacing:1px;">Questions? Call (951) 630-5410</p>
+    </div>
   </div>
+
 </div>
 
-<!-- Footer -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-logo">Keke's</div>
-    <p class="footer-tagline">International Food Spot · Every Meal Cooked with Love</p>
-    <div class="social-links">
-      <a href="https://www.instagram.com/kekesinternationalfoodspot" target="_blank" class="social-btn">📸 @KekesInternational</a>
-      <a href="https://www.instagram.com/longbeach_kekes/" target="_blank" class="social-btn">📸 @LongBeach_Kekes</a>
-      <a href="kekesinternational-catering.html" class="social-btn">🍽️ Book Catering</a>
-      <a href="kekesinternational-events.html" class="social-btn">🎉 Events</a>
-    </div>
-    <div class="footer-divider"></div>
-    <p class="footer-contact">📞 (951) 630-5410 · Call or Text Chef Keke Chanel<br>🚚 Online Orders Only · No Walk-Up · No Dine-In<br>📍 Moreno Valley · Long Beach · Orange County (Coming Soon)<br>🌙 Open Till 4AM</p>
-    <div class="footer-divider"></div>
-    <p class="footer-copy">© 2026 Keke's International Food Spot · Grand Reopening March 2026 🎉</p>
+<!-- FOOTER -->
+<footer style="background:#0a0500;border-top:1px solid rgba(212,175,55,0.2);padding:60px 40px 30px;text-align:center;">
+  <a href="kekesinternational.html" style="font-family:'Dancing Script',cursive;font-size:2.5rem;color:#D4AF37;text-decoration:none;display:block;margin-bottom:10px;">Keke's International</a>
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,248,231,0.6);margin-bottom:30px;">Food Spot · Est. 2020</p>
+  <div style="display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;">
+    <a href="kekesinternational.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">HOME</a>
+    <a href="kekesinternational-menu.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">MENU</a>
+    <a href="kekesinternational-catering.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">CATERING</a>
+    <a href="kekesinternational-events.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">EVENTS</a>
+    <a href="kekesinternational-about.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">ABOUT</a>
+    <a href="kekesinternational-contact.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">CONTACT</a>
+    <a href="mississippi-soul-food.html" style="color:#D4AF37;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">🍖 MISSISSIPPI SOUL FOOD</a>
   </div>
+  <p style="color:rgba(255,248,231,0.4);font-size:0.7rem;font-family:'Montserrat',sans-serif;letter-spacing:2px;">© 2026 KEKE'S INTERNATIONAL FOOD SPOT · ALL RIGHTS RESERVED · (951) 630-5410</p>
 </footer>
 
-<!-- PWA Install Button -->
-<button id="pwaInstallBtn">📲 Install App</button>
-
 <script>
-// ============================================================
-// SQUARE PAYMENT INTEGRATION
-// App ID: sq0idp-huwaT_W5n-rd6iH9yo5dEw (SANDBOX - swap for production key when going live)
-// Location ID: Replace YOUR_LOCATION_ID with actual Square Location ID
-// To find Location ID: Go to squareup.com/dashboard/locations > click your location > copy ID from URL
-// Production App ID will start with sq0idp- instead of sandbox-sq0idb-
-// ============================================================
+let orderType = 'delivery';
 
-const SQUARE_APP_ID  = 'sq0idp-huwaT_W5n-rd6iH9yo5dEw';
-const SQUARE_LOC_ID  = 'YOUR_LOCATION_ID'; // ⚠️ REPLACE with real Location ID from Square Dashboard
+function setOrderType(type) {
+  orderType = type;
+  document.getElementById('deliveryBtn').classList.toggle('active', type === 'delivery');
+  document.getElementById('pickupBtn').classList.toggle('active', type === 'pickup');
+  document.getElementById('addressGroup').style.display = type === 'delivery' ? 'block' : 'none';
+}
 
-let squareCard = null;
-
-// ── Init Square SDK ──────────────────────────────────────────
-async function initSquare() {
-  if (!window.Square) {
-    document.getElementById('card-container').innerHTML =
-      '<div class="sq-loading" style="color:#ff7043;">⚠️ Square SDK failed to load. Check your connection.</div>';
-    return;
-  }
-
-  try {
-    const payments = Square.payments(SQUARE_APP_ID, SQUARE_LOC_ID);
-
-    squareCard = await payments.card({
-      style: {
-        '.input-container': { borderColor: 'rgba(212,160,23,0.25)', borderRadius: '8px' },
-        '.input-container.is-focus': { borderColor: '#D4A017' },
-        '.message-text': { color: '#ff7043' },
-        input: { color: '#FFF8E7', fontFamily: "'Montserrat', sans-serif" },
-        'input::placeholder': { color: 'rgba(255,248,231,0.25)' },
-        '.input-container.is-error': { borderColor: '#FF4500' }
+// Load cart from localStorage
+window.addEventListener('DOMContentLoaded', function() {
+  const stored = localStorage.getItem('kekesCart');
+  if (stored) {
+    try {
+      const cart = JSON.parse(stored);
+      if (cart.length > 0) {
+        const container = document.getElementById('cartItems');
+        container.innerHTML = '';
+        cart.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'cart-item';
+          div.innerHTML = '<span class="item-name">' + item.name + '</span><span class="item-price">$' + parseFloat(item.price).toFixed(2) + '</span>';
+          container.appendChild(div);
+        });
+        const subtotal = cart.reduce((s, i) => s + parseFloat(i.price), 0);
+        const grand = subtotal + 3.99;
+        document.getElementById('subtotalDisplay').textContent = '$' + subtotal.toFixed(2);
+        document.getElementById('grandTotalDisplay').textContent = '$' + grand.toFixed(2);
+        document.getElementById('cartTotals').style.display = 'block';
       }
-    });
-
-    await squareCard.attach('#card-container');
-
-    // Enable the pay button once card form is ready
-    document.getElementById('payBtn').disabled = false;
-    console.log('✅ Square card form initialised');
-  } catch (err) {
-    console.error('Square init error:', err);
-    document.getElementById('card-container').innerHTML =
-      `<div class="sq-loading" style="color:#ff7043;">⚠️ Payment form error: ${err.message}</div>`;
+    } catch(e) {}
   }
-}
 
-// ── Handle Payment ───────────────────────────────────────────
-async function handlePayment() {
-  if (!squareCard) return;
+  // Init Square
+  try {
+    const payments = Square.payments('sq0idp-huwaT_W5n-rd6iH9yo5dEw', 'sandbox');
+    payments.card().then(card => {
+      card.attach('#card-container');
+    }).catch(() => {
+      document.getElementById('card-container').innerHTML = '<p style="color:rgba(255,248,231,.4);font-size:.8rem;text-align:center;padding:10px;">Card payments via Square · Use Cash App or Zelle for instant processing</p>';
+    });
+  } catch(e) {
+    document.getElementById('card-container').innerHTML = '<p style="color:rgba(255,248,231,.4);font-size:.8rem;text-align:center;padding:10px;">Card payments via Square · Use Cash App or Zelle for instant processing</p>';
+  }
+});
 
-  const name  = document.getElementById('custName').value.trim();
-  const phone = document.getElementById('custPhone').value.trim();
+function placeOrder() {
+  const name = document.getElementById('custName').value;
+  const phone = document.getElementById('custPhone').value;
   if (!name || !phone) {
-    showError('Please enter your name and phone number before paying.');
+    alert('Please enter your name and phone number.');
     return;
   }
-
-  const btn = document.getElementById('payBtn');
-  btn.disabled = true;
-  btn.textContent = '⏳ Processing…';
-  hideError();
-
-  try {
-    const result = await squareCard.tokenize();
-
-    if (result.status === 'OK') {
-      // ── SUCCESS ──
-      // In production: send result.token to your backend to charge the card via Square Payments API
-      console.log('✅ Payment token received:', result.token);
-      showOrderConfirmation(result.token);
-    } else {
-      // ── TOKENISATION ERROR ──
-      const msgs = (result.errors || []).map(e => e.message).join(' · ') || 'Card tokenisation failed.';
-      showError(msgs);
-      btn.disabled = false;
-      btn.textContent = '🔥 PAY NOW';
-    }
-  } catch (err) {
-    console.error('Payment error:', err);
-    showError('An unexpected error occurred. Please try again.');
-    btn.disabled = false;
-    btn.textContent = '🔥 PAY NOW';
-  }
+  document.getElementById('payment-status').innerHTML = '✅ Order submitted! Chef Keke will contact you at ' + phone + ' to confirm and collect deposit.';
+  document.getElementById('payment-status').style.color = '#D4AF37';
 }
-
-// ── Show Order Confirmation ──────────────────────────────────
-function showOrderConfirmation(token) {
-  // Generate a random order number
-  const orderNum = 'KK-' + Math.floor(10000 + Math.random() * 90000);
-  document.getElementById('successOrderNum').textContent = '#' + orderNum;
-
-  const success = document.getElementById('successState');
-  success.classList.add('show');
-
-  // Trigger extra particles for the celebration
-  burstEmbers();
-}
-
-// ── Error helpers ────────────────────────────────────────────
-function showError(msg) {
-  const el = document.getElementById('payError');
-  el.textContent = '⚠️ ' + msg;
-  el.classList.add('show');
-}
-function hideError() {
-  document.getElementById('payError').classList.remove('show');
-}
-
-// ── Delivery / Pickup Toggle ─────────────────────────────────
-let isDelivery = true;
-function setMode(mode) {
-  isDelivery = mode === 'delivery';
-  document.getElementById('deliveryBtn').classList.toggle('active', isDelivery);
-  document.getElementById('pickupBtn').classList.toggle('active', !isDelivery);
-  const addrSection    = document.getElementById('address-section');
-  const feeRow         = document.getElementById('deliveryFeeRow');
-  const summaryDelivery = document.getElementById('summaryDelivery');
-
-  if (isDelivery) {
-    addrSection.style.maxHeight = '600px';
-    addrSection.style.opacity   = '1';
-    feeRow.style.display = 'flex';
-    summaryDelivery.style.display = 'flex';
-    document.getElementById('grandTotal').textContent = '$0.00';
-    document.getElementById('payBtn').textContent     = '🔥 PAY NOW';
-  } else {
-    addrSection.style.maxHeight = '0';
-    addrSection.style.opacity   = '0';
-    feeRow.style.display = 'none';
-    summaryDelivery.style.display = 'none';
-    document.getElementById('grandTotal').textContent = '$0.00';
-    document.getElementById('payBtn').textContent     = '🔥 PAY NOW';
-  }
-}
-
-// ── Fire / Ember Particles ───────────────────────────────────
-const pContainer = document.getElementById('particles');
-const FIRE_COLORS = ['#D4A017','#FF4500','#ff7c00','#F5D76E','#ff2200'];
-
-function createEmber() {
-  const s = document.createElement('div');
-  s.className = 'ember';
-  const drift = (Math.random() * 80 - 40) + 'px';
-  s.style.cssText = `
-    left:${Math.random() * 100}%;
-    --drift:${drift};
-    animation-duration:${10 + Math.random() * 14}s;
-    animation-delay:${Math.random() * 8}s;
-    width:${1 + Math.random() * 3}px;
-    height:${1 + Math.random() * 3}px;
-    background:${FIRE_COLORS[Math.floor(Math.random()*FIRE_COLORS.length)]};
-    box-shadow:0 0 ${2+Math.random()*4}px currentColor;
-  `;
-  pContainer.appendChild(s);
-}
-
-function burstEmbers() {
-  for (let i = 0; i < 25; i++) {
-    const s = document.createElement('div');
-    s.className = 'ember';
-    const drift = (Math.random() * 200 - 100) + 'px';
-    s.style.cssText = `
-      left:${30 + Math.random() * 40}%;
-      --drift:${drift};
-      animation-duration:${3 + Math.random() * 4}s;
-      animation-delay:${Math.random() * 0.5}s;
-      width:${2 + Math.random() * 4}px;
-      height:${2 + Math.random() * 4}px;
-      background:${FIRE_COLORS[Math.floor(Math.random()*FIRE_COLORS.length)]};
-      box-shadow:0 0 6px currentColor;
-    `;
-    pContainer.appendChild(s);
-    setTimeout(() => s.remove(), 8000);
-  }
-}
-
-for (let i = 0; i < 40; i++) createEmber();
-
-// ── PWA Install ──────────────────────────────────────────────
-let installPrompt = null;
-const pwaBtn = document.getElementById('pwaInstallBtn');
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  installPrompt = e;
-  pwaBtn.style.display = 'block';
-});
-
-pwaBtn.addEventListener('click', async () => {
-  if (!installPrompt) return;
-  installPrompt.prompt();
-  const { outcome } = await installPrompt.userChoice;
-  if (outcome === 'accepted') pwaBtn.style.display = 'none';
-  installPrompt = null;
-});
-
-// ── Boot ─────────────────────────────────────────────────────
-initSquare();
 </script>
 </body>
 </html>

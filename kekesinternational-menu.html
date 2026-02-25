@@ -3,813 +3,328 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Menu & Order — Keke's International Food Spot</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<title>The Menu — Keke's International Food Spot</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
 <style>
-:root {
-  --gold: #D4AF37;
-  --gold-light: #F5D76E;
-  --red: #8B1A1A;
-  --red-bright: #c0392b;
-  --cream: #FFF8E7;
-  --dark: #0a0500;
-  --brown: #1a0800;
-  --green: #2ecc71;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background: var(--dark); color: var(--cream); font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+:root{--gold:#D4AF37;--gold-light:#F5D76E;--red:#8B1A1A;--red-bright:#c0392b;--cream:#FFF8E7;--dark:#0a0500;--brown:#1a0800;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--dark);color:var(--cream);font-family:'Montserrat',sans-serif;overflow-x:hidden;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sparkle{0%,100%{opacity:0;transform:translateY(0) scale(0)}50%{opacity:.8;transform:translateY(-30px) scale(1.5)}}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.5rem);color:var(--gold);text-align:center;margin-bottom:15px;}
+.section-label{font-size:.7rem;letter-spacing:8px;color:var(--gold);text-transform:uppercase;text-align:center;margin-bottom:20px;opacity:.7;}
+.section-divider{width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:20px auto 50px;}
+.btn-primary{padding:18px 50px;background:linear-gradient(135deg,#8B1A1A,#c0392b);color:var(--cream);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:4px;text-transform:uppercase;border:none;border-radius:5px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .3s ease;box-shadow:0 10px 40px rgba(139,26,26,.5);}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 15px 60px rgba(139,26,26,.7);}
+.btn-secondary{padding:16px 45px;background:transparent;color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:600;font-size:.85rem;letter-spacing:4px;text-transform:uppercase;border:1px solid rgba(212,175,55,.5);border-radius:5px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .3s ease;}
+.btn-secondary:hover{background:rgba(212,175,55,.1);border-color:var(--gold);}
+.card{background:linear-gradient(135deg,rgba(26,8,0,.8),rgba(10,5,0,.9));border:1px solid rgba(212,175,55,.2);border-radius:12px;padding:40px;transition:all .3s ease;}
+.card:hover{border-color:rgba(212,175,55,.5);transform:translateY(-5px);box-shadow:0 20px 60px rgba(212,175,55,.1);}
 
-/* NAV */
-.main-nav {
-  position: fixed; top:0; left:0; right:0; z-index:1000;
-  background: rgba(10,5,0,0.95); backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(212,175,55,0.15);
-  padding: 0 30px; display:flex; align-items:center; justify-content:space-between; height:65px;
-}
-.nav-logo { font-family:'Dancing Script',cursive; font-size:1.4rem; color:var(--gold); text-decoration:none; }
-.nav-links { display:flex; gap:4px; }
-.nav-links a { color:rgba(255,248,231,0.65); text-decoration:none; font-size:0.6rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:600; padding:6px 10px; border-radius:4px; transition:all 0.2s; white-space:nowrap; }
-.nav-links a:hover, .nav-links a.active { color:var(--gold); background:rgba(212,175,55,0.08); }
-.nav-order-btn { padding:10px 20px; background:linear-gradient(135deg,#8B1A1A,#c0392b); color:var(--cream); font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; border:none; border-radius:30px; cursor:pointer; text-decoration:none; font-family:'Montserrat',sans-serif; font-weight:700; box-shadow:0 5px 20px rgba(139,26,26,0.5); transition:all 0.3s; white-space:nowrap; }
+/* HERO */
+.hero{min-height:60vh;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(ellipse at center top,#3d1500 0%,#1a0800 40%,#0a0500 100%);}
+.hero-content{position:relative;z-index:2;text-align:center;padding:120px 20px 60px;}
+.hero-tagline{font-size:.7rem;letter-spacing:8px;color:var(--gold);text-transform:uppercase;margin-bottom:20px;animation:fadeUp 1s ease forwards .3s;opacity:0;}
+.hero-title{font-family:'Dancing Script',cursive;font-size:clamp(3rem,10vw,7rem);color:var(--gold);text-shadow:0 0 60px rgba(212,175,55,.5);line-height:1;animation:fadeUp 1s ease forwards .5s;opacity:0;}
+.hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.5vw,1.6rem);color:rgba(255,248,231,.8);font-style:italic;margin-top:20px;animation:fadeUp 1s ease forwards .7s;opacity:0;}
+.steam-lines{position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,rgba(212,175,55,.05),transparent);pointer-events:none;}
+.particle{position:absolute;width:2px;height:2px;background:var(--gold);border-radius:50%;animation:sparkle var(--d,4s) ease-in-out infinite var(--delay,0s);opacity:0;}
 
+/* FILTER TABS */
+.filter-bar{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:40px 20px 20px;max-width:1200px;margin:0 auto;}
+.filter-btn{padding:10px 24px;background:transparent;border:1px solid rgba(212,175,55,.3);color:rgba(255,248,231,.7);font-family:'Montserrat',sans-serif;font-size:.75rem;letter-spacing:3px;text-transform:uppercase;border-radius:30px;cursor:pointer;transition:all .3s;}
+.filter-btn:hover,.filter-btn.active{background:var(--gold);color:var(--dark);border-color:var(--gold);font-weight:700;}
 
-/* LAYOUT */
-.page-wrap { display:flex; padding-top:65px; min-height:100vh; }
+/* MENU GRID */
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:30px;padding:20px 40px 120px;max-width:1300px;margin:0 auto;}
+.menu-card{background:linear-gradient(135deg,rgba(26,8,0,.9),rgba(10,5,0,.95));border:1px solid rgba(212,175,55,.2);border-radius:12px;padding:30px;transition:all .3s ease;display:flex;flex-direction:column;}
+.menu-card:hover{border-color:rgba(212,175,55,.5);transform:translateY(-5px);box-shadow:0 20px 60px rgba(212,175,55,.1);}
+.menu-card-emoji{font-size:2.5rem;margin-bottom:15px;}
+.menu-card-name{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--cream);margin-bottom:8px;}
+.menu-card-desc{font-size:.8rem;color:rgba(255,248,231,.6);line-height:1.6;flex-grow:1;margin-bottom:20px;}
+.menu-card-footer{display:flex;justify-content:space-between;align-items:center;}
+.menu-card-price{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold);}
+.add-btn{padding:10px 20px;background:linear-gradient(135deg,#8B1A1A,#c0392b);color:var(--cream);border:none;border-radius:5px;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all .3s;}
+.add-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(139,26,26,.6);}
 
-/* MENU SIDE */
-.menu-side { flex:1; padding:40px 30px 120px; overflow-y:auto; }
-.page-title { font-family:'Playfair Display',serif; font-size:2.5rem; color:var(--gold); margin-bottom:8px; }
-.page-sub { font-size:0.7rem; letter-spacing:3px; text-transform:uppercase; color:rgba(255,248,231,0.4); margin-bottom:40px; }
-
-/* CATEGORY TABS */
-.cat-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:40px; }
-.cat-tab { padding:10px 20px; background:rgba(212,175,55,0.05); border:1px solid rgba(212,175,55,0.2); color:rgba(255,248,231,0.6); font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; border-radius:25px; cursor:pointer; transition:all 0.3s; font-weight:600; }
-.cat-tab:hover, .cat-tab.active { background:var(--gold); color:var(--dark); border-color:var(--gold); }
-
-/* CATEGORY SECTION */
-.cat-section { margin-bottom:60px; }
-.cat-title {
-  font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--gold);
-  border-bottom:1px solid rgba(212,175,55,0.2); padding-bottom:15px; margin-bottom:25px;
-  display:flex; align-items:center; gap:12px;
-}
-.cat-icon { font-size:1.6rem; }
-
-/* MENU ITEMS GRID */
-.menu-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:20px; }
-.menu-item {
-  background:linear-gradient(135deg,#1a0800,#0f0500);
-  border:1px solid rgba(212,175,55,0.12);
-  border-radius:16px; padding:20px;
-  cursor:pointer; transition:all 0.3s ease;
-  position:relative; overflow:hidden;
-}
-.menu-item:hover {
-  border-color:rgba(212,175,55,0.5);
-  transform:translateY(-4px);
-  box-shadow:0 15px 40px rgba(212,175,55,0.15);
-}
-.menu-item-emoji { font-size:2.8rem; margin-bottom:12px; display:block; }
-.menu-item-name { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--cream); margin-bottom:6px; }
-.menu-item-desc { font-size:0.7rem; color:rgba(255,248,231,0.5); line-height:1.6; margin-bottom:14px; }
-.menu-item-footer { display:flex; justify-content:space-between; align-items:center; }
-.menu-item-price { font-size:1.1rem; font-weight:800; color:var(--gold); }
-.add-btn {
-  padding:8px 18px; background:linear-gradient(135deg,#8B1A1A,#c0392b);
-  color:#fff; border:none; border-radius:20px; font-size:0.65rem;
-  font-weight:700; letter-spacing:1px; cursor:pointer; transition:all 0.3s;
-  font-family:'Montserrat',sans-serif;
-}
-.add-btn:hover { background:linear-gradient(135deg,#c0392b,#e74c3c); transform:scale(1.05); }
-.add-btn.added { background:linear-gradient(135deg,#1a6b2a,#27ae60); }
-.menu-item-tag { position:absolute; top:12px; right:12px; padding:4px 10px; border-radius:10px; font-size:0.55rem; letter-spacing:1px; font-weight:700; text-transform:uppercase; }
-.tag-popular { background:rgba(212,175,55,0.2); color:var(--gold); border:1px solid rgba(212,175,55,0.3); }
-.tag-new { background:rgba(46,204,113,0.2); color:#7dffb3; border:1px solid rgba(46,204,113,0.3); }
-.tag-hot { background:rgba(192,57,43,0.25); color:#ff8a80; border:1px solid rgba(192,57,43,0.4); }
-
-/* QUANTITY CONTROLS */
-.qty-ctrl { display:none; align-items:center; gap:8px; }
-.qty-ctrl.show { display:flex; }
-.qty-btn { width:28px; height:28px; border-radius:50%; border:1px solid var(--gold); background:transparent; color:var(--gold); font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
-.qty-btn:hover { background:var(--gold); color:var(--dark); }
-.qty-num { font-weight:700; color:var(--cream); min-width:20px; text-align:center; }
-
-/* ORDER TRAY SIDEBAR */
-.order-tray {
-  width: 380px; min-width:380px;
-  background: linear-gradient(180deg, #0f0800 0%, #0a0500 100%);
-  border-left: 1px solid rgba(212,175,55,0.15);
-  position:sticky; top:65px; height:calc(100vh - 65px);
-  display:flex; flex-direction:column; overflow:hidden;
-}
-.tray-header {
-  padding:25px; border-bottom:1px solid rgba(212,175,55,0.1);
-  background:linear-gradient(135deg,rgba(139,26,26,0.2),transparent);
-}
-.tray-title { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--gold); }
-.tray-sub { font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:rgba(255,248,231,0.35); margin-top:4px; }
-.tray-items { flex:1; overflow-y:auto; padding:20px; }
-.tray-empty {
-  text-align:center; padding:60px 20px;
-  color:rgba(255,248,231,0.25);
-}
-.tray-empty-icon { font-size:3rem; margin-bottom:15px; display:block; }
-.tray-empty p { font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; }
-.tray-item {
-  background:rgba(212,175,55,0.05);
-  border:1px solid rgba(212,175,55,0.1);
-  border-radius:12px; padding:15px; margin-bottom:12px;
-  display:flex; gap:12px; align-items:flex-start;
-  animation: slideInRight 0.3s ease;
-}
-@keyframes slideInRight { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
-.tray-item-emoji { font-size:1.8rem; flex-shrink:0; }
-.tray-item-info { flex:1; }
-.tray-item-name { font-size:0.8rem; font-weight:700; color:var(--cream); margin-bottom:4px; }
-.tray-item-price { font-size:0.75rem; color:var(--gold); font-weight:600; }
-.tray-item-controls { display:flex; align-items:center; gap:8px; margin-top:8px; }
-.tray-qty-btn { width:24px; height:24px; border-radius:50%; border:1px solid rgba(212,175,55,0.4); background:transparent; color:var(--gold); font-size:0.9rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
-.tray-qty-btn:hover { background:var(--gold); color:var(--dark); }
-.tray-qty-num { font-size:0.8rem; font-weight:700; min-width:18px; text-align:center; }
-.tray-remove { margin-left:auto; background:rgba(192,57,43,0.15); border:1px solid rgba(192,57,43,0.3); color:#ff8a80; width:24px; height:24px; border-radius:50%; cursor:pointer; font-size:0.7rem; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
-.tray-remove:hover { background:rgba(192,57,43,0.4); }
-
-/* TRAY NOTES */
-.tray-notes { padding:15px 20px; border-top:1px solid rgba(212,175,55,0.08); }
-.notes-label { font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:rgba(255,248,231,0.4); margin-bottom:8px; }
-.notes-input {
-  width:100%; background:rgba(212,175,55,0.05); border:1px solid rgba(212,175,55,0.15);
-  border-radius:8px; padding:10px 14px; color:var(--cream); font-family:'Montserrat',sans-serif;
-  font-size:0.75rem; resize:none; height:60px;
-}
-.notes-input::placeholder { color:rgba(255,248,231,0.2); }
-.notes-input:focus { outline:none; border-color:rgba(212,175,55,0.4); }
-
-/* TRAY SUMMARY */
-.tray-summary { padding:20px; border-top:1px solid rgba(212,175,55,0.1); }
-.tray-line { display:flex; justify-content:space-between; font-size:0.75rem; color:rgba(255,248,231,0.55); margin-bottom:8px; }
-.tray-total { display:flex; justify-content:space-between; font-size:1.1rem; font-weight:800; color:var(--gold); margin:15px 0; padding-top:12px; border-top:1px solid rgba(212,175,55,0.2); }
-.checkout-btn {
-  width:100%; padding:18px; background:linear-gradient(135deg,#8B1A1A,#c0392b);
-  color:#fff; border:none; border-radius:12px; font-size:0.8rem; letter-spacing:3px;
-  text-transform:uppercase; font-weight:700; cursor:pointer; font-family:'Montserrat',sans-serif;
-  transition:all 0.3s; box-shadow:0 8px 25px rgba(139,26,26,0.4);
-}
-.checkout-btn:hover { transform:translateY(-2px); box-shadow:0 12px 35px rgba(139,26,26,0.6); }
-.checkout-btn:disabled { opacity:0.35; cursor:not-allowed; transform:none; }
-.tray-badge {
-  position:absolute; top:-6px; right:-6px;
-  background:var(--red-bright); color:#fff; font-size:0.6rem; font-weight:800;
-  width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-}
-.tray-icon-wrap { position:relative; display:inline-block; }
-
-/* ORDER TYPE SELECTOR */
-.order-type { display:flex; gap:10px; margin-bottom:30px; }
-.otype-btn {
-  flex:1; padding:14px; background:rgba(212,175,55,0.05); border:1px solid rgba(212,175,55,0.2);
-  color:rgba(255,248,231,0.6); font-size:0.65rem; letter-spacing:2px; text-transform:uppercase;
-  border-radius:10px; cursor:pointer; transition:all 0.3s; font-weight:700; text-align:center;
-}
-.otype-btn:hover, .otype-btn.active { background:rgba(212,175,55,0.12); border-color:var(--gold); color:var(--gold); }
-.otype-btn span { display:block; font-size:1.3rem; margin-bottom:6px; }
-
-/* SEARCH */
-.menu-search-wrap { position:relative; margin-bottom:30px; }
-.menu-search { width:100%; padding:14px 20px 14px 48px; background:rgba(212,175,55,0.05); border:1px solid rgba(212,175,55,0.15); border-radius:30px; color:var(--cream); font-family:'Montserrat',sans-serif; font-size:0.8rem; }
-.menu-search::placeholder { color:rgba(255,248,231,0.25); }
-.menu-search:focus { outline:none; border-color:rgba(212,175,55,0.4); background:rgba(212,175,55,0.08); }
-.search-icon { position:absolute; left:18px; top:50%; transform:translateY(-50%); font-size:1rem; pointer-events:none; }
-
-/* MOBILE TRAY TOGGLE */
-.tray-mobile-btn {
-  display:none; position:fixed; bottom:20px; right:20px; z-index:999;
-  background:linear-gradient(135deg,#8B1A1A,#c0392b); color:#fff;
-  width:60px; height:60px; border-radius:50%; border:none; font-size:1.4rem;
-  cursor:pointer; box-shadow:0 8px 25px rgba(139,26,26,0.5);
-  align-items:center; justify-content:center;
-}
-.tray-count-bubble { position:absolute; top:-4px; right:-4px; background:var(--gold); color:var(--dark); width:22px; height:22px; border-radius:50%; font-size:0.65rem; font-weight:800; display:flex; align-items:center; justify-content:center; }
-
-@media(max-width:900px) {
-  .order-tray { display:none; position:fixed; bottom:0; left:0; right:0; width:100%; min-width:unset; height:70vh; top:unset; border-left:none; border-top:1px solid rgba(212,175,55,0.15); z-index:998; border-radius:20px 20px 0 0; }
-  .order-tray.mobile-open { display:flex; }
-  .tray-mobile-btn { display:flex; }
-  .menu-grid { grid-template-columns:1fr 1fr; }
-}
-@media(max-width:600px) {
-  .menu-grid { grid-template-columns:1fr; }
-  .nav-links { display:none; }
-}
-#particles { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; overflow:hidden; }
-.ember { position:absolute; width:3px; height:3px; border-radius:50%; animation:emberRise linear infinite; opacity:0; }
-@keyframes emberRise {
-  0%   { opacity:0; transform:translateY(100vh) translateX(0) scale(0.5); }
-  10%  { opacity:1; }
-  50%  { transform:translateY(40vh) translateX(var(--drift)) scale(1); }
-  90%  { opacity:0.2; }
-  100% { opacity:0; transform:translateY(-50px) translateX(var(--drift)) scale(0.3); }
-}
+/* ORDER TRAY */
+.order-tray{position:fixed;bottom:0;left:0;right:0;z-index:999;background:linear-gradient(135deg,rgba(26,8,0,.98),rgba(10,5,0,.99));border-top:1px solid rgba(212,175,55,.4);padding:16px 40px;display:flex;justify-content:space-between;align-items:center;transform:translateY(100%);transition:transform .4s ease;}
+.order-tray.visible{transform:translateY(0);}
+.tray-info{display:flex;align-items:center;gap:20px;}
+.tray-count{background:var(--gold);color:var(--dark);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;}
+.tray-label{font-size:.8rem;letter-spacing:2px;color:rgba(255,248,231,.7);}
+.tray-total{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold);}
+.checkout-btn{padding:14px 40px;background:linear-gradient(135deg,#8B1A1A,#c0392b);color:var(--cream);border:none;border-radius:5px;font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:3px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .3s;}
+.checkout-btn:hover{box-shadow:0 10px 40px rgba(139,26,26,.7);}
 </style>
 </head>
 <body>
-<div id="particles"></div>
 
 <!-- NAV -->
-<nav class="main-nav">
-  <a href="kekesinternational.html" class="nav-logo">Keke's International</a>
-  <div class="nav-links">
-    <a href="kekesinternational.html">Home</a>
-    <a href="kekesinternational-menu.html" class="active">Menu</a>
-    <a href="kekesinternational-catering.html">Catering</a>
-    <a href="kekesinternational-events.html">Events</a>
-    <a href="kekesinternational-grand-opening.html">🎉 Reopening</a>
-    <a href="kekesinternational-gallery.html">Gallery</a>
-    <a href="kekesinternational-vip.html">VIP</a>
-    <a href="kekesinternational-about.html">About</a>
-    <a href="kekesinternational-contact.html">Contact</a>
-    <a href="kekesinternational-tracker.html">Track Order</a>
-    <a href="mississippi-soul-food.html" style="color:#D4AF37;font-size:0.8rem;font-weight:700;padding:6px 12px;border:1px solid #D4AF37;border-radius:20px;text-decoration:none;white-space:nowrap;">🍖 Mississippi Soul</a>
+<nav style="position:fixed;top:0;left:0;right:0;z-index:1000;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(10,5,0,0.95),transparent);">
+  <a href="kekesinternational.html" style="font-family:'Dancing Script',cursive;font-size:1.8rem;color:#D4AF37;text-decoration:none;text-shadow:0 0 20px rgba(212,175,55,0.5);">Keke's International</a>
+  <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;">
+    <a href="kekesinternational.html" style="color:#FFF8E7;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">HOME</a>
+    <a href="kekesinternational-menu.html" style="color:#D4AF37;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">MENU</a>
+    <a href="kekesinternational-catering.html" style="color:#FFF8E7;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">CATERING</a>
+    <a href="kekesinternational-events.html" style="color:#FFF8E7;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">EVENTS</a>
+    <a href="kekesinternational-about.html" style="color:#FFF8E7;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">ABOUT</a>
+    <a href="mississippi-soul-food.html" style="color:#D4AF37;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">🍖 MISSISSIPPI</a>
+    <a href="kekesinternational-menu.html" style="padding:10px 25px;background:linear-gradient(135deg,#8B1A1A,#c0392b);color:#FFF8E7;text-decoration:none;font-size:0.7rem;letter-spacing:3px;font-family:'Montserrat',sans-serif;font-weight:700;border-radius:4px;">ORDER NOW</a>
   </div>
-  <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
 </nav>
 
-<div class="page-wrap">
-<!-- ===== MENU SIDE ===== -->
-<main class="menu-side">
-  <h1 class="page-title">Our Menu</h1>
-  <p class="page-sub">Fresh · Flavorful · International · Online Orders Only</p>
-
-  <!-- ORDER TYPE -->
-  <div class="order-type">
-    <div class="otype-btn active" onclick="setOrderType('pickup',this)"><span>🥡</span>Pickup</div>
-    <div class="otype-btn" onclick="setOrderType('delivery',this)"><span>🛵</span>Delivery</div>
-    <div class="otype-btn" onclick="setOrderType('catering',this)"><span>🍽️</span>Catering</div>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-particles" id="particles"></div>
+  <div class="steam-lines"></div>
+  <div class="hero-content">
+    <p class="hero-tagline">Keke's International Food Spot</p>
+    <h1 class="hero-title">The Menu</h1>
+    <p class="hero-subtitle">Every dish made with love · Chef Keke's signature flavors</p>
   </div>
-
-  <!-- SEARCH -->
-  <div class="menu-search-wrap">
-    <span class="search-icon">🔍</span>
-    <input class="menu-search" type="text" placeholder="Search the menu..." oninput="searchMenu(this.value)">
-  </div>
-
-  <!-- CATEGORY TABS -->
-  <div class="cat-tabs">
-    <div class="cat-tab active" onclick="filterCat('all',this)">All Items</div>
-    <div class="cat-tab" onclick="filterCat('signatures',this)">🏆 Signatures</div>
-    <div class="cat-tab" onclick="filterCat('soul',this)">❤️ Soul Food</div>
-    <div class="cat-tab" onclick="filterCat('caribbean',this)">🌴 Caribbean</div>
-    <div class="cat-tab" onclick="filterCat('tacos',this)">🌮 Tacos</div>
-    <div class="cat-tab" onclick="filterCat('vegan',this)">🌿 Vegan</div>
-    <div class="cat-tab" onclick="filterCat('drinks',this)">🍹 Drinks</div>
-    <div class="cat-tab" onclick="filterCat('sauces',this)">🫙 Sauces</div>
-    <div class="cat-tab" onclick="filterCat('catering',this)">🎉 Catering</div>
-  </div>
-
-  <!-- PAYMENT & DEPOSIT NOTICE -->
-  <div style="background:linear-gradient(135deg,rgba(212,175,55,0.08),rgba(139,26,26,0.08));border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:20px 24px;margin-bottom:32px;">
-    <div style="font-family:'Playfair Display',serif;font-size:1.05rem;color:#D4AF37;margin-bottom:12px;">💳 We Accept All Payment Methods</div>
-    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
-      <span style="background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);color:#FFF8E7;padding:6px 14px;border-radius:20px;font-size:0.7rem;font-weight:600;">💵 Cash</span>
-      <span style="background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);color:#FFF8E7;padding:6px 14px;border-radius:20px;font-size:0.7rem;font-weight:600;">💳 Credit/Debit Cards</span>
-      <span style="background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);color:#FFF8E7;padding:6px 14px;border-radius:20px;font-size:0.7rem;font-weight:600;">📱 Cash App</span>
-      <span style="background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);color:#FFF8E7;padding:6px 14px;border-radius:20px;font-size:0.7rem;font-weight:600;">💸 Zelle</span>
-      <span style="background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);color:#FFF8E7;padding:6px 14px;border-radius:20px;font-size:0.7rem;font-weight:600;">🍎 Apple Pay</span>
-      <span style="background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);color:#FFF8E7;padding:6px 14px;border-radius:20px;font-size:0.7rem;font-weight:600;">🤖 Google Pay</span>
-      <span style="background:rgba(46,204,113,0.12);border:1px solid rgba(46,204,113,0.3);color:#7dffb3;padding:6px 14px;border-radius:20px;font-size:0.7rem;font-weight:600;">🏛️ CalFresh EBT (RMP)</span>
-      <span style="background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);color:#FFF8E7;padding:6px 14px;border-radius:20px;font-size:0.7rem;font-weight:600;">⬛ Square</span>
-      <span style="background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);color:#FFF8E7;padding:6px 14px;border-radius:20px;font-size:0.7rem;font-weight:600;">🔵 PayPal</span>
-      <span style="background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);color:#FFF8E7;padding:6px 14px;border-radius:20px;font-size:0.7rem;font-weight:600;">🟠 Venmo</span>
-    </div>
-    <div style="background:rgba(255,69,0,0.1);border:1px solid rgba(255,69,0,0.25);border-radius:10px;padding:12px 16px;display:flex;align-items:flex-start;gap:10px;">
-      <span style="font-size:1.2rem;">🔐</span>
-      <div>
-        <div style="color:#ff9a7d;font-size:0.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Deposit Required Before Cooking Begins</div>
-        <div style="color:rgba(255,248,231,0.6);font-size:0.72rem;line-height:1.7;">All orders require a deposit before your meal is started. Your food is made fresh to order — this ensures quality and commitment on both sides. Balance due at delivery or pickup.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SIGNATURES -->
-  <div class="cat-section" data-cat="signatures">
-    <h2 class="cat-title"><span class="cat-icon">🏆</span> Signature Dishes</h2>
-    <div class="menu-grid" id="grid-signatures">
-      <div class="menu-item" data-cat="signatures soul" data-id="jerk-chicken" data-price="18" data-name="Jerk Chicken" data-emoji="🍗">
-        <span class="menu-item-tag tag-popular">⭐ Popular</span>
-        <span class="menu-item-emoji">🍗</span>
-        <div class="menu-item-name">Jerk Chicken</div>
-        <div class="menu-item-desc">House-marinated jerk chicken, slow-cooked with island spices. Served with rice & peas and festival bread.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$27.99</span>
-          <div class="qty-ctrl" id="qty-jerk-chicken">
-            <button class="qty-btn" onclick="updateQty('jerk-chicken',-1)">−</button>
-            <span class="qty-num" id="num-jerk-chicken">1</span>
-            <button class="qty-btn" onclick="updateQty('jerk-chicken',1)">+</button>
-          </div>
-          <button class="add-btn" id="addbtn-jerk-chicken" onclick="addToTray('jerk-chicken','Jerk Chicken','🍗',27.99)">Add to Tray</button>
-        </div>
-      </div>
-      <div class="menu-item" data-cat="signatures soul" data-id="oxtail" data-price="26" data-name="Slow Braised Oxtail" data-emoji="🥩">
-        <span class="menu-item-tag tag-popular">⭐ Popular</span>
-        <span class="menu-item-emoji">🥩</span>
-        <div class="menu-item-name">Slow Braised Oxtail</div>
-        <div class="menu-item-desc">Fall-off-the-bone oxtail braised for hours in our secret gravy. A Keke's staple that sells out fast.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$35.99</span>
-          <div class="qty-ctrl" id="qty-oxtail">
-            <button class="qty-btn" onclick="updateQty('oxtail',-1)">−</button>
-            <span class="qty-num" id="num-oxtail">1</span>
-            <button class="qty-btn" onclick="updateQty('oxtail',1)">+</button>
-          </div>
-          <button class="add-btn" id="addbtn-oxtail" onclick="addToTray('oxtail','Slow Braised Oxtail','🥩',35.99)">Add to Tray</button>
-        </div>
-      </div>
-      <div class="menu-item" data-cat="signatures caribbean" data-id="curry-goat" data-price="24" data-name="Curry Goat" data-emoji="🍲">
-        <span class="menu-item-tag tag-hot">🌶️ Spicy</span>
-        <span class="menu-item-emoji">🍲</span>
-        <div class="menu-item-name">Curry Goat</div>
-        <div class="menu-item-desc">Tender goat slow-simmered in fragrant Caribbean curry. Served with white rice and roti.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$33.99</span>
-          <div class="qty-ctrl" id="qty-curry-goat">
-            <button class="qty-btn" onclick="updateQty('curry-goat',-1)">−</button>
-            <span class="qty-num" id="num-curry-goat">1</span>
-            <button class="qty-btn" onclick="updateQty('curry-goat',1)">+</button>
-          </div>
-          <button class="add-btn" id="addbtn-curry-goat" onclick="addToTray('curry-goat','Curry Goat','🍲',33.99)">Add to Tray</button>
-        </div>
-      </div>
-      <div class="menu-item" data-cat="signatures soul" data-id="fried-catfish" data-price="20" data-name="Crispy Catfish Platter" data-emoji="🐟">
-        <span class="menu-item-tag tag-popular">⭐ Popular</span>
-        <span class="menu-item-emoji">🐟</span>
-        <div class="menu-item-name">Crispy Catfish Platter</div>
-        <div class="menu-item-desc">Seasoned cornmeal-crusted catfish, golden fried. Served with mac & cheese and collard greens.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$29.99</span>
-          <div class="qty-ctrl" id="qty-fried-catfish">
-            <button class="qty-btn" onclick="updateQty('fried-catfish',-1)">−</button>
-            <span class="qty-num" id="num-fried-catfish">1</span>
-            <button class="qty-btn" onclick="updateQty('fried-catfish',1)">+</button>
-          </div>
-          <button class="add-btn" id="addbtn-fried-catfish" onclick="addToTray('fried-catfish','Crispy Catfish Platter','🐟',29.99)">Add to Tray</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SOUL FOOD -->
-  <div class="cat-section" data-cat="soul">
-    <h2 class="cat-title"><span class="cat-icon">❤️</span> Soul Food</h2>
-    <div class="menu-grid">
-      <div class="menu-item" data-cat="soul" data-id="mac-cheese" data-price="12" data-name="Baked Mac & Cheese" data-emoji="🧀">
-        <span class="menu-item-emoji">🧀</span>
-        <div class="menu-item-name">Baked Mac & Cheese</div>
-        <div class="menu-item-desc">Creamy four-cheese blend baked to a golden crust. Made from scratch every morning.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$21.99</span>
-          <div class="qty-ctrl" id="qty-mac-cheese"><button class="qty-btn" onclick="updateQty('mac-cheese',-1)">−</button><span class="qty-num" id="num-mac-cheese">1</span><button class="qty-btn" onclick="updateQty('mac-cheese',1)">+</button></div>
-          <button class="add-btn" id="addbtn-mac-cheese" onclick="addToTray('mac-cheese','Baked Mac & Cheese','🧀',21.99)">Add to Tray</button>
-        </div>
-      </div>
-      <div class="menu-item" data-cat="soul" data-id="collard-greens" data-price="10" data-name="Collard Greens" data-emoji="🥬">
-        <span class="menu-item-emoji">🥬</span>
-        <div class="menu-item-name">Collard Greens</div>
-        <div class="menu-item-desc">Southern slow-cooked collard greens seasoned with smoked turkey. A comfort classic.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$19.99</span>
-          <div class="qty-ctrl" id="qty-collard-greens"><button class="qty-btn" onclick="updateQty('collard-greens',-1)">−</button><span class="qty-num" id="num-collard-greens">1</span><button class="qty-btn" onclick="updateQty('collard-greens',1)">+</button></div>
-          <button class="add-btn" id="addbtn-collard-greens" onclick="addToTray('collard-greens','Collard Greens','🥬',19.99)">Add to Tray</button>
-        </div>
-      </div>
-      <div class="menu-item" data-cat="soul" data-id="candied-yams" data-price="10" data-name="Candied Yams" data-emoji="🍠">
-        <span class="menu-item-emoji">🍠</span>
-        <div class="menu-item-name">Candied Yams</div>
-        <div class="menu-item-desc">Sweet and buttery yams slow-baked with brown sugar, cinnamon, and nutmeg. Pure soul.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$19.99</span>
-          <div class="qty-ctrl" id="qty-candied-yams"><button class="qty-btn" onclick="updateQty('candied-yams',-1)">−</button><span class="qty-num" id="num-candied-yams">1</span><button class="qty-btn" onclick="updateQty('candied-yams',1)">+</button></div>
-          <button class="add-btn" id="addbtn-candied-yams" onclick="addToTray('candied-yams','Candied Yams','🍠',19.99)">Add to Tray</button>
-        </div>
-      </div>
-      <div class="menu-item" data-cat="soul" data-id="cornbread" data-price="6" data-name="Jalapeño Cornbread" data-emoji="🌽">
-        <span class="menu-item-tag tag-new">New</span>
-        <span class="menu-item-emoji">🌽</span>
-        <div class="menu-item-name">Jalapeño Cornbread</div>
-        <div class="menu-item-desc">Fluffy golden cornbread with a jalapeño kick. Baked fresh and served warm with honey butter.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$15.99</span>
-          <div class="qty-ctrl" id="qty-cornbread"><button class="qty-btn" onclick="updateQty('cornbread',-1)">−</button><span class="qty-num" id="num-cornbread">1</span><button class="qty-btn" onclick="updateQty('cornbread',1)">+</button></div>
-          <button class="add-btn" id="addbtn-cornbread" onclick="addToTray('cornbread','Jalapeño Cornbread','🌽',15.99)">Add to Tray</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CARIBBEAN -->
-  <div class="cat-section" data-cat="caribbean">
-    <h2 class="cat-title"><span class="cat-icon">🌴</span> Caribbean Flavors</h2>
-    <div class="menu-grid">
-      <div class="menu-item" data-cat="caribbean" data-id="rice-peas" data-price="11" data-name="Rice & Peas" data-emoji="🍚">
-        <span class="menu-item-emoji">🍚</span>
-        <div class="menu-item-name">Rice & Peas</div>
-        <div class="menu-item-desc">Classic Caribbean rice & peas cooked in coconut milk with thyme and scotch bonnet. Fragrant perfection.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$20.99</span>
-          <div class="qty-ctrl" id="qty-rice-peas"><button class="qty-btn" onclick="updateQty('rice-peas',-1)">−</button><span class="qty-num" id="num-rice-peas">1</span><button class="qty-btn" onclick="updateQty('rice-peas',1)">+</button></div>
-          <button class="add-btn" id="addbtn-rice-peas" onclick="addToTray('rice-peas','Rice & Peas','🍚',20.99)">Add to Tray</button>
-        </div>
-      </div>
-      <div class="menu-item" data-cat="caribbean" data-id="plantains" data-price="9" data-name="Fried Sweet Plantains" data-emoji="🍌">
-        <span class="menu-item-tag tag-popular">⭐ Popular</span>
-        <span class="menu-item-emoji">🍌</span>
-        <div class="menu-item-name">Fried Sweet Plantains</div>
-        <div class="menu-item-desc">Caramelized ripe plantains fried golden. Sweet, soft, irresistible — the perfect Caribbean side.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$18.99</span>
-          <div class="qty-ctrl" id="qty-plantains"><button class="qty-btn" onclick="updateQty('plantains',-1)">−</button><span class="qty-num" id="num-plantains">1</span><button class="qty-btn" onclick="updateQty('plantains',1)">+</button></div>
-          <button class="add-btn" id="addbtn-plantains" onclick="addToTray('plantains','Fried Sweet Plantains','🍌',18.99)">Add to Tray</button>
-        </div>
-      </div>
-      <div class="menu-item" data-cat="caribbean" data-id="curry-bowl" data-price="16" data-name="Caribbean Curry Bowl" data-emoji="🍛">
-        <span class="menu-item-emoji">🍛</span>
-        <div class="menu-item-name">Caribbean Curry Bowl</div>
-        <div class="menu-item-desc">Velvety coconut curry over jasmine rice with seasonal vegetables, topped with crispy chickpeas.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$25.99</span>
-          <div class="qty-ctrl" id="qty-curry-bowl"><button class="qty-btn" onclick="updateQty('curry-bowl',-1)">−</button><span class="qty-num" id="num-curry-bowl">1</span><button class="qty-btn" onclick="updateQty('curry-bowl',1)">+</button></div>
-          <button class="add-btn" id="addbtn-curry-bowl" onclick="addToTray('curry-bowl','Caribbean Curry Bowl','🍛',25.99)">Add to Tray</button>
-        </div>
-      </div>
-      <div class="menu-item" data-cat="caribbean" data-id="festival" data-price="7" data-name="Festival Bread" data-emoji="🍞">
-        <span class="menu-item-emoji">🍞</span>
-        <div class="menu-item-name">Festival Bread</div>
-        <div class="menu-item-desc">Lightly sweet fried dough — a Jamaican classic. The perfect companion to any dish on this menu.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$16.99</span>
-          <div class="qty-ctrl" id="qty-festival"><button class="qty-btn" onclick="updateQty('festival',-1)">−</button><span class="qty-num" id="num-festival">1</span><button class="qty-btn" onclick="updateQty('festival',1)">+</button></div>
-          <button class="add-btn" id="addbtn-festival" onclick="addToTray('festival','Festival Bread','🍞',16.99)">Add to Tray</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TACOS -->
-  <div class="cat-section" data-cat="tacos">
-    <h2 class="cat-title"><span class="cat-icon">🌮</span> International Tacos</h2>
-    <div class="menu-grid">
-      <div class="menu-item" data-cat="tacos" data-id="jerk-tacos" data-price="14" data-name="Jerk Chicken Tacos" data-emoji="🌮">
-        <span class="menu-item-tag tag-popular">⭐ Popular</span>
-        <span class="menu-item-emoji">🌮</span>
-        <div class="menu-item-name">Jerk Chicken Tacos (3)</div>
-        <div class="menu-item-desc">Crispy corn tortillas loaded with jerk chicken, mango slaw, pickled onions, and cilantro crema.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$23.99</span>
-          <div class="qty-ctrl" id="qty-jerk-tacos"><button class="qty-btn" onclick="updateQty('jerk-tacos',-1)">−</button><span class="qty-num" id="num-jerk-tacos">1</span><button class="qty-btn" onclick="updateQty('jerk-tacos',1)">+</button></div>
-          <button class="add-btn" id="addbtn-jerk-tacos" onclick="addToTray('jerk-tacos','Jerk Chicken Tacos','🌮',23.99)">Add to Tray</button>
-        </div>
-      </div>
-      <div class="menu-item" data-cat="tacos" data-id="oxtail-tacos" data-price="17" data-name="Oxtail Tacos" data-emoji="🌯">
-        <span class="menu-item-tag tag-new">New</span>
-        <span class="menu-item-emoji">🌯</span>
-        <div class="menu-item-name">Oxtail Tacos (3)</div>
-        <div class="menu-item-desc">Braised oxtail in flour tortillas with pepper jack cheese, pickled cabbage, and house sauce. Mind-blowing.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$26.99</span>
-          <div class="qty-ctrl" id="qty-oxtail-tacos"><button class="qty-btn" onclick="updateQty('oxtail-tacos',-1)">−</button><span class="qty-num" id="num-oxtail-tacos">1</span><button class="qty-btn" onclick="updateQty('oxtail-tacos',1)">+</button></div>
-          <button class="add-btn" id="addbtn-oxtail-tacos" onclick="addToTray('oxtail-tacos','Oxtail Tacos','🌯',26.99)">Add to Tray</button>
-        </div>
-      </div>
-      <div class="menu-item" data-cat="tacos vegan" data-id="vegan-tacos" data-price="13" data-name="Vegan Black Bean Tacos" data-emoji="🫘">
-        <span class="menu-item-tag tag-new">New</span>
-        <span class="menu-item-emoji">🫘</span>
-        <div class="menu-item-name">Vegan Black Bean Tacos (3)</div>
-        <div class="menu-item-desc">Spiced black beans, roasted corn, avocado, pico de gallo, in warm corn tortillas. Plant-powered paradise.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$22.99</span>
-          <div class="qty-ctrl" id="qty-vegan-tacos"><button class="qty-btn" onclick="updateQty('vegan-tacos',-1)">−</button><span class="qty-num" id="num-vegan-tacos">1</span><button class="qty-btn" onclick="updateQty('vegan-tacos',1)">+</button></div>
-          <button class="add-btn" id="addbtn-vegan-tacos" onclick="addToTray('vegan-tacos','Vegan Black Bean Tacos','🫘',22.99)">Add to Tray</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- VEGAN -->
-  <div class="cat-section" data-cat="vegan">
-    <h2 class="cat-title"><span class="cat-icon">🌿</span> Vegan & Plant-Based</h2>
-    <div class="menu-grid">
-      <div class="menu-item" data-cat="vegan" data-id="vegan-bowl" data-price="15" data-name="Fresh Vegan Bowls" data-emoji="🥗">
-        <span class="menu-item-emoji">🥗</span>
-        <div class="menu-item-name">Fresh Vegan Bowls</div>
-        <div class="menu-item-desc">Colorful seasonal vegetables over grains, topped with tahini drizzle and roasted seeds. Made to order.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$24.99</span>
-          <div class="qty-ctrl" id="qty-vegan-bowl"><button class="qty-btn" onclick="updateQty('vegan-bowl',-1)">−</button><span class="qty-num" id="num-vegan-bowl">1</span><button class="qty-btn" onclick="updateQty('vegan-bowl',1)">+</button></div>
-          <button class="add-btn" id="addbtn-vegan-bowl" onclick="addToTray('vegan-bowl','Fresh Vegan Bowl','🥗',24.99)">Add to Tray</button>
-        </div>
-      </div>
-      <div class="menu-item" data-cat="vegan" data-id="lentil-stew" data-price="14" data-name="Spiced Lentil Stew" data-emoji="🍵">
-        <span class="menu-item-emoji">🍵</span>
-        <div class="menu-item-name">Spiced Lentil Stew</div>
-        <div class="menu-item-desc">Red lentils slow-cooked with turmeric, cumin, tomatoes, and spinach. Served with pita or rice.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$23.99</span>
-          <div class="qty-ctrl" id="qty-lentil-stew"><button class="qty-btn" onclick="updateQty('lentil-stew',-1)">−</button><span class="qty-num" id="num-lentil-stew">1</span><button class="qty-btn" onclick="updateQty('lentil-stew',1)">+</button></div>
-          <button class="add-btn" id="addbtn-lentil-stew" onclick="addToTray('lentil-stew','Spiced Lentil Stew','🍵',23.99)">Add to Tray</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- DRINKS -->
-  <div class="cat-section" data-cat="drinks">
-    <h2 class="cat-title"><span class="cat-icon">🍹</span> House Drinks</h2>
-    <div class="menu-grid">
-      <div class="menu-item" data-cat="drinks" data-id="sorrel" data-price="6" data-name="Sorrel Punch" data-emoji="🌺">
-        <span class="menu-item-tag tag-popular">⭐ Popular</span>
-        <span class="menu-item-emoji">🌺</span>
-        <div class="menu-item-name">Sorrel Punch</div>
-        <div class="menu-item-desc">Refreshing hibiscus sorrel infused with ginger and cloves. A Jamaican classic — sweet and tart.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$15.99</span>
-          <div class="qty-ctrl" id="qty-sorrel"><button class="qty-btn" onclick="updateQty('sorrel',-1)">−</button><span class="qty-num" id="num-sorrel">1</span><button class="qty-btn" onclick="updateQty('sorrel',1)">+</button></div>
-          <button class="add-btn" id="addbtn-sorrel" onclick="addToTray('sorrel','Sorrel Punch','🌺',15.99)">Add to Tray</button>
-        </div>
-      </div>
-      <div class="menu-item" data-cat="drinks" data-id="lemonade" data-price="5" data-name="House Lemonade" data-emoji="🍋">
-        <span class="menu-item-emoji">🍋</span>
-        <div class="menu-item-name">House Lemonade</div>
-        <div class="menu-item-desc">Fresh-squeezed lemonade with a secret twist. Available still or sparkling. Ask about seasonal flavors.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$14.99</span>
-          <div class="qty-ctrl" id="qty-lemonade"><button class="qty-btn" onclick="updateQty('lemonade',-1)">−</button><span class="qty-num" id="num-lemonade">1</span><button class="qty-btn" onclick="updateQty('lemonade',1)">+</button></div>
-          <button class="add-btn" id="addbtn-lemonade" onclick="addToTray('lemonade','House Lemonade','🍋',14.99)">Add to Tray</button>
-        </div>
-      </div>
-      <div class="menu-item" data-cat="drinks" data-id="coconut-water" data-price="5" data-name="Coconut Water" data-emoji="🥥">
-        <span class="menu-item-emoji">🥥</span>
-        <div class="menu-item-name">Fresh Coconut Water</div>
-        <div class="menu-item-desc">Pure natural coconut water, chilled and refreshing. Nature's best hydration, straight from the source.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$14.99</span>
-          <div class="qty-ctrl" id="qty-coconut-water"><button class="qty-btn" onclick="updateQty('coconut-water',-1)">−</button><span class="qty-num" id="num-coconut-water">1</span><button class="qty-btn" onclick="updateQty('coconut-water',1)">+</button></div>
-          <button class="add-btn" id="addbtn-coconut-water" onclick="addToTray('coconut-water','Fresh Coconut Water','🥥',14.99)">Add to Tray</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SAUCES -->
-  <div class="cat-section" data-cat="sauces">
-    <h2 class="cat-title"><span class="cat-icon">🫙</span> International Sauces & Gravies</h2>
-    <div class="menu-grid">
-      <div class="menu-item" data-cat="sauces" data-id="house-sauce" data-price="8" data-name="Keke's House Sauce (8oz)" data-emoji="🫙">
-        <span class="menu-item-tag tag-popular">⭐ Popular</span>
-        <span class="menu-item-emoji">🫙</span>
-        <div class="menu-item-name">Keke's House Sauce (8oz)</div>
-        <div class="menu-item-desc">The secret weapon. House-made international sauce — recipe classified. Elevates every single dish.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$17.99</span>
-          <div class="qty-ctrl" id="qty-house-sauce"><button class="qty-btn" onclick="updateQty('house-sauce',-1)">−</button><span class="qty-num" id="num-house-sauce">1</span><button class="qty-btn" onclick="updateQty('house-sauce',1)">+</button></div>
-          <button class="add-btn" id="addbtn-house-sauce" onclick="addToTray('house-sauce','Keke\'s House Sauce','🫙',17.99)">Add to Tray</button>
-        </div>
-      </div>
-      <div class="menu-item" data-cat="sauces" data-id="jerk-gravy" data-price="8" data-name="Jerk Gravy (8oz)" data-emoji="🍯">
-        <span class="menu-item-emoji">🍯</span>
-        <div class="menu-item-name">Jerk Gravy (8oz)</div>
-        <div class="menu-item-desc">Rich, smoky jerk gravy — poured over everything. Take a jar home and transform your own cooking.</div>
-        <div class="menu-item-footer">
-          <span class="menu-item-price">$17.99</span>
-          <div class="qty-ctrl" id="qty-jerk-gravy"><button class="qty-btn" onclick="updateQty('jerk-gravy',-1)">−</button><span class="qty-num" id="num-jerk-gravy">1</span><button class="qty-btn" onclick="updateQty('jerk-gravy',1)">+</button></div>
-          <button class="add-btn" id="addbtn-jerk-gravy" onclick="addToTray('jerk-gravy','Jerk Gravy','🍯',17.99)">Add to Tray</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>
-
-<!-- ===== ORDER TRAY SIDEBAR ===== -->
-<aside class="order-tray" id="order-tray">
-  <div class="tray-header">
-    <div class="tray-title">🛒 Your Tray</div>
-    <div class="tray-sub" id="tray-order-type">Pickup Order</div>
-  </div>
-  <div class="tray-items" id="tray-items">
-    <div class="tray-empty" id="tray-empty">
-      <span class="tray-empty-icon">🍽️</span>
-      <p>Your tray is empty</p>
-      <p style="margin-top:8px;font-size:0.6rem;opacity:0.6;">Add items from the menu</p>
-    </div>
-  </div>
-  <div class="tray-notes">
-    <div class="notes-label">Special Instructions</div>
-    <textarea class="notes-input" id="order-notes" placeholder="Allergies, extra sauce, no onions..."></textarea>
-  </div>
-  <div class="tray-summary" id="tray-summary" style="display:none;">
-    <div class="tray-line"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
-    <div class="tray-line"><span>Service Fee</span><span>$1.50</span></div>
-    <div class="tray-line"><span>Tax (9%)</span><span id="tax-amt">$0.00</span></div>
-    <div class="tray-total"><span>Total</span><span id="total-amt">$0.00</span></div>
-    <button class="checkout-btn" id="checkout-btn" onclick="goCheckout()">
-      Proceed to Checkout →
-    </button>
-  </div>
-  <div style="padding:12px 20px;display:none;" id="tray-empty-checkout">
-    <button class="checkout-btn" disabled>Proceed to Checkout →</button>
-  </div>
-</aside>
 </div>
 
-<!-- MOBILE TRAY BUTTON -->
-<button class="tray-mobile-btn" id="mobile-tray-btn" onclick="toggleMobileTray()">
-  🛒
-  <span class="tray-count-bubble" id="mobile-count" style="display:none;">0</span>
-</button>
+<!-- FILTER TABS -->
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterMenu('all',this)">All</button>
+  <button class="filter-btn" onclick="filterMenu('soul',this)">Soul Food</button>
+  <button class="filter-btn" onclick="filterMenu('bbq',this)">BBQ &amp; Smoked</button>
+  <button class="filter-btn" onclick="filterMenu('intl',this)">International</button>
+  <button class="filter-btn" onclick="filterMenu('burger',this)">Gourmet Burgers</button>
+  <button class="filter-btn" onclick="filterMenu('vegan',this)">Vegan</button>
+  <button class="filter-btn" onclick="filterMenu('drinks',this)">Drinks &amp; Extras</button>
+</div>
 
-<script>
-// ===== STATE =====
-let cart = {};
-let orderType = 'pickup';
+<!-- MENU GRID -->
+<div class="menu-grid" id="menuGrid">
 
-function setOrderType(type, btn) {
-  orderType = type;
-  document.querySelectorAll('.otype-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  const labels = { pickup: 'Pickup Order', delivery: 'Delivery Order', catering: 'Catering Order' };
-  document.getElementById('tray-order-type').textContent = labels[type];
-  if (type === 'catering') window.location.href = 'kekesinternational-catering.html';
-}
+  <div class="menu-card" data-cat="soul">
+    <div class="menu-card-emoji">🍗</div>
+    <div class="menu-card-name">Smothered Chicken &amp; Gravy</div>
+    <div class="menu-card-desc">Tender chicken smothered in rich homestyle gravy. A true Southern classic made with Chef Keke's signature spice blend. Served with choice of two sides.</div>
+    <div class="menu-card-footer">
+      <div class="menu-card-price">$28.99</div>
+      <button class="add-btn" onclick="addToTray('Smothered Chicken & Gravy',28.99)">ADD TO TRAY</button>
+    </div>
+  </div>
 
-// ===== ADD TO TRAY =====
-function addToTray(id, name, emoji, price) {
-  const qty = parseInt(document.getElementById('num-' + id)?.textContent || '1');
-  if (cart[id]) {
-    cart[id].qty += qty;
-  } else {
-    cart[id] = { name, emoji, price, qty };
-  }
-  // Show qty ctrl, change button
-  const qtyCtrl = document.getElementById('qty-' + id);
-  const addBtn = document.getElementById('addbtn-' + id);
-  if (qtyCtrl) qtyCtrl.classList.add('show');
-  if (addBtn) { addBtn.textContent = '✓ Added'; addBtn.classList.add('added'); setTimeout(() => { addBtn.textContent = 'Add to Tray'; addBtn.classList.remove('added'); }, 1500); }
-  renderTray();
-  // Sizzle effect
-  try {
-    const ctx = new (window.AudioContext||window.webkitAudioContext)();
-    const buf = ctx.createBuffer(1, ctx.sampleRate*0.15, ctx.sampleRate);
-    const d = buf.getChannelData(0);
-    for (let i=0;i<d.length;i++) d[i] = (Math.random()*2-1)*(1-i/d.length)*0.5;
-    const src = ctx.createBufferSource(); src.buffer=buf;
-    const g = ctx.createGain(); g.gain.value=0.15;
-    src.connect(g); g.connect(ctx.destination); src.start();
-  } catch(e) {}
-}
+  <div class="menu-card" data-cat="soul">
+    <div class="menu-card-emoji">🥩</div>
+    <div class="menu-card-name">Oxtail &amp; Gravy</div>
+    <div class="menu-card-desc">Slow-braised oxtail falling off the bone in a deeply seasoned gravy. One of Keke's most beloved signature dishes. Limited availability.</div>
+    <div class="menu-card-footer">
+      <div class="menu-card-price">$35.99</div>
+      <button class="add-btn" onclick="addToTray('Oxtail & Gravy',35.99)">ADD TO TRAY</button>
+    </div>
+  </div>
 
-function updateQty(id, delta) {
-  const el = document.getElementById('num-' + id);
-  if (!el) return;
-  let val = parseInt(el.textContent) + delta;
-  if (val < 1) val = 1;
-  el.textContent = val;
-}
+  <div class="menu-card" data-cat="soul">
+    <div class="menu-card-emoji">🧀</div>
+    <div class="menu-card-name">Mac &amp; Cheese</div>
+    <div class="menu-card-desc">Creamy, baked mac &amp; cheese with a golden crust. Chef Keke's secret four-cheese blend makes this the talk of the town. Perfect side or main.</div>
+    <div class="menu-card-footer">
+      <div class="menu-card-price">$15.99</div>
+      <button class="add-btn" onclick="addToTray('Mac & Cheese',15.99)">ADD TO TRAY</button>
+    </div>
+  </div>
 
-function trayUpdateQty(id, delta) {
-  if (!cart[id]) return;
-  cart[id].qty += delta;
-  if (cart[id].qty <= 0) delete cart[id];
-  renderTray();
-}
+  <div class="menu-card" data-cat="bbq">
+    <div class="menu-card-emoji">🍖</div>
+    <div class="menu-card-name">BBQ Ribs — Half Rack</div>
+    <div class="menu-card-desc">Slow-smoked baby back ribs glazed in house BBQ sauce. Fall-off-the-bone tender with a smoky caramelized crust. Served with cornbread &amp; slaw.</div>
+    <div class="menu-card-footer">
+      <div class="menu-card-price">$32.99</div>
+      <button class="add-btn" onclick="addToTray('BBQ Ribs (Half Rack)',32.99)">ADD TO TRAY</button>
+    </div>
+  </div>
 
-function removeFromTray(id) {
-  delete cart[id];
-  renderTray();
-}
+  <div class="menu-card" data-cat="bbq">
+    <div class="menu-card-emoji">🍖</div>
+    <div class="menu-card-name">BBQ Ribs — Full Rack</div>
+    <div class="menu-card-desc">The full experience. A full rack of slow-smoked ribs with house BBQ sauce, two sides, and cornbread. Feed the whole family or treat yourself.</div>
+    <div class="menu-card-footer">
+      <div class="menu-card-price">$54.99</div>
+      <button class="add-btn" onclick="addToTray('BBQ Ribs (Full Rack)',54.99)">ADD TO TRAY</button>
+    </div>
+  </div>
 
-// ===== RENDER TRAY =====
-function renderTray() {
-  const items = Object.entries(cart);
-  const emptyEl = document.getElementById('tray-empty');
-  const summaryEl = document.getElementById('tray-summary');
-  const itemsEl = document.getElementById('tray-items');
+  <div class="menu-card" data-cat="bbq">
+    <div class="menu-card-emoji">🥓</div>
+    <div class="menu-card-name">Pulled Pork</div>
+    <div class="menu-card-desc">Hickory-smoked pulled pork slow-cooked to perfection. Served on brioche with house-made coleslaw or as a platter with two sides.</div>
+    <div class="menu-card-footer">
+      <div class="menu-card-price">$24.99</div>
+      <button class="add-btn" onclick="addToTray('Pulled Pork',24.99)">ADD TO TRAY</button>
+    </div>
+  </div>
 
-  if (items.length === 0) {
-    emptyEl.style.display = 'block';
-    summaryEl.style.display = 'none';
-    itemsEl.innerHTML = '';
-    itemsEl.appendChild(emptyEl);
-    updateBadge(0);
-    return;
-  }
+  <div class="menu-card" data-cat="intl">
+    <div class="menu-card-emoji">🍋</div>
+    <div class="menu-card-name">Jerk Chicken</div>
+    <div class="menu-card-desc">Authentic Caribbean jerk chicken marinated in scotch bonnets, allspice &amp; thyme. Grilled to charred perfection. Served with rice &amp; peas.</div>
+    <div class="menu-card-footer">
+      <div class="menu-card-price">$26.99</div>
+      <button class="add-btn" onclick="addToTray('Jerk Chicken',26.99)">ADD TO TRAY</button>
+    </div>
+  </div>
 
-  emptyEl.style.display = 'none';
-  summaryEl.style.display = 'block';
+  <div class="menu-card" data-cat="intl">
+    <div class="menu-card-emoji">🍛</div>
+    <div class="menu-card-name">Curry Bowl</div>
+    <div class="menu-card-desc">Rich &amp; fragrant curry — chicken or vegetables — slow-simmered in coconut milk and aromatic spices. Served over jasmine rice with naan.</div>
+    <div class="menu-card-footer">
+      <div class="menu-card-price">$22.99</div>
+      <button class="add-btn" onclick="addToTray('Curry Bowl',22.99)">ADD TO TRAY</button>
+    </div>
+  </div>
 
-  // Build items HTML
-  let html = '';
-  let subtotal = 0;
-  let totalQty = 0;
-  items.forEach(([id, item]) => {
-    subtotal += item.price * item.qty;
-    totalQty += item.qty;
-    html += `
-      <div class="tray-item" id="tray-item-${id}">
-        <span class="tray-item-emoji">${item.emoji}</span>
-        <div class="tray-item-info">
-          <div class="tray-item-name">${item.name}</div>
-          <div class="tray-item-price">$${item.price} each</div>
-          <div class="tray-item-controls">
-            <button class="tray-qty-btn" onclick="trayUpdateQty('${id}',-1)">−</button>
-            <span class="tray-qty-num">${item.qty}</span>
-            <button class="tray-qty-btn" onclick="trayUpdateQty('${id}',1)">+</button>
-            <button class="tray-remove" onclick="removeFromTray('${id}')">✕</button>
-          </div>
-        </div>
-        <div style="font-weight:800;color:var(--gold);font-size:0.9rem;">$${(item.price*item.qty).toFixed(2)}</div>
-      </div>`;
-  });
-  itemsEl.innerHTML = html;
+  <div class="menu-card" data-cat="intl">
+    <div class="menu-card-emoji">🌮</div>
+    <div class="menu-card-name">Tacos (3)</div>
+    <div class="menu-card-desc">Three loaded street tacos — your choice of seasoned beef, jerk chicken, or pulled pork. Topped with pico, cotija, cilantro &amp; lime crema.</div>
+    <div class="menu-card-footer">
+      <div class="menu-card-price">$18.99</div>
+      <button class="add-btn" onclick="addToTray('Tacos (3)',18.99)">ADD TO TRAY</button>
+    </div>
+  </div>
 
-  const tax = subtotal * 0.09;
-  const total = subtotal + tax + 1.50;
-  document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
-  document.getElementById('tax-amt').textContent = '$' + tax.toFixed(2);
-  document.getElementById('total-amt').textContent = '$' + total.toFixed(2);
-  updateBadge(totalQty);
-  // Save to localStorage for checkout
-  localStorage.setItem('kekes_cart', JSON.stringify({ cart, orderType, notes: document.getElementById('order-notes')?.value || '' }));
-}
+  <div class="menu-card" data-cat="intl">
+    <div class="menu-card-emoji">🫔</div>
+    <div class="menu-card-name">Enchiladas</div>
+    <div class="menu-card-desc">Rolled corn tortillas stuffed with seasoned protein and smothered in red or green enchilada sauce. Topped with cheese, sour cream &amp; fresh cilantro.</div>
+    <div class="menu-card-footer">
+      <div class="menu-card-price">$21.99</div>
+      <button class="add-btn" onclick="addToTray('Enchiladas',21.99)">ADD TO TRAY</button>
+    </div>
+  </div>
 
-function updateBadge(count) {
-  const mob = document.getElementById('mobile-count');
-  if (mob) { mob.textContent = count; mob.style.display = count > 0 ? 'flex' : 'none'; }
-}
+  <div class="menu-card" data-cat="burger">
+    <div class="menu-card-emoji">🍔</div>
+    <div class="menu-card-name">Gourmet Burger</div>
+    <div class="menu-card-desc">A half-pound smash burger on brioche bun with caramelized onions, smoked gouda, house aioli &amp; candied jalapeños. Served with seasoned fries.</div>
+    <div class="menu-card-footer">
+      <div class="menu-card-price">$22.99</div>
+      <button class="add-btn" onclick="addToTray('Gourmet Burger',22.99)">ADD TO TRAY</button>
+    </div>
+  </div>
 
-function toggleMobileTray() {
-  document.getElementById('order-tray').classList.toggle('mobile-open');
-}
+  <div class="menu-card" data-cat="vegan">
+    <div class="menu-card-emoji">🥗</div>
+    <div class="menu-card-name">Fresh Vegan Bowl</div>
+    <div class="menu-card-desc">A vibrant plant-based bowl: seasoned black beans, roasted sweet potato, avocado, quinoa, pickled onions &amp; mango-lime dressing. 100% vegan.</div>
+    <div class="menu-card-footer">
+      <div class="menu-card-price">$19.99</div>
+      <button class="add-btn" onclick="addToTray('Fresh Vegan Bowl',19.99)">ADD TO TRAY</button>
+    </div>
+  </div>
 
-function goCheckout() {
-  const notes = document.getElementById('order-notes')?.value || '';
-  localStorage.setItem('kekes_cart', JSON.stringify({ cart, orderType, notes }));
-  window.location.href = 'kekesinternational-checkout.html';
-}
+  <div class="menu-card" data-cat="soul">
+    <div class="menu-card-emoji">🍚</div>
+    <div class="menu-card-name">Rice &amp; Peas</div>
+    <div class="menu-card-desc">Caribbean-style coconut rice &amp; kidney peas cooked in coconut milk with thyme and scotch bonnet. The perfect side dish to any plate.</div>
+    <div class="menu-card-footer">
+      <div class="menu-card-price">$12.99</div>
+      <button class="add-btn" onclick="addToTray('Rice & Peas',12.99)">ADD TO TRAY</button>
+    </div>
+  </div>
 
-// ===== FILTER & SEARCH =====
-function filterCat(cat, btn) {
-  document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.cat-section').forEach(sec => {
-    if (cat === 'all') { sec.style.display = ''; return; }
-    const items = sec.querySelectorAll('.menu-item');
-    let hasMatch = false;
-    items.forEach(item => {
-      const cats = item.dataset.cat || '';
-      if (cats.includes(cat)) { item.style.display = ''; hasMatch = true; }
-      else item.style.display = 'none';
-    });
-    sec.style.display = hasMatch ? '' : 'none';
-  });
-}
+  <div class="menu-card" data-cat="drinks">
+    <div class="menu-card-emoji">🥤</div>
+    <div class="menu-card-name">House Drinks</div>
+    <div class="menu-card-desc">Refreshing house-made lemonade, fruit punch, or sweet tea. Ask about our seasonal specials and fresh-squeezed options.</div>
+    <div class="menu-card-footer">
+      <div class="menu-card-price">$7.99</div>
+      <button class="add-btn" onclick="addToTray('House Drinks',7.99)">ADD TO TRAY</button>
+    </div>
+  </div>
 
-function searchMenu(q) {
-  q = q.toLowerCase();
-  document.querySelectorAll('.menu-item').forEach(item => {
-    const name = item.querySelector('.menu-item-name')?.textContent.toLowerCase() || '';
-    const desc = item.querySelector('.menu-item-desc')?.textContent.toLowerCase() || '';
-    item.style.display = (!q || name.includes(q) || desc.includes(q)) ? '' : 'none';
-  });
-}
+  <div class="menu-card" data-cat="drinks">
+    <div class="menu-card-emoji">🫙</div>
+    <div class="menu-card-name">International Sauces</div>
+    <div class="menu-card-desc">Take the flavor home. Choose from jerk sauce, curry sauce, house BBQ, smothered gravy, or mango-habanero hot sauce. 8oz jar.</div>
+    <div class="menu-card-footer">
+      <div class="menu-card-price">$8.99</div>
+      <button class="add-btn" onclick="addToTray('International Sauces',8.99)">ADD TO TRAY</button>
+    </div>
+  </div>
 
-// Fire particles
-const pContainer = document.getElementById('particles');
-const FIRE_COLORS = ['#D4AF37','#FF4500','#ff7c00','#F5D76E','#ff2200'];
-function createEmber() {
-  const s = document.createElement('div');
-  s.className = 'ember';
-  const drift = (Math.random() * 80 - 40) + 'px';
-  s.style.cssText = `left:${Math.random()*100}%;--drift:${drift};animation-duration:${10+Math.random()*14}s;animation-delay:${Math.random()*8}s;width:${1+Math.random()*3}px;height:${1+Math.random()*3}px;background:${FIRE_COLORS[Math.floor(Math.random()*FIRE_COLORS.length)]};box-shadow:0 0 ${2+Math.random()*4}px currentColor;`;
-  pContainer.appendChild(s);
-}
-for(let i=0;i<40;i++) createEmber();
+</div>
 
-// Cursor trail
-document.addEventListener('mousemove', e => {
-  const el = document.createElement('div');
-  el.textContent = ['🔥','🍽️','✨','🌶️'][Math.floor(Math.random()*4)];
-  el.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;font-size:${8+Math.random()*10}px;pointer-events:none;z-index:9999;transition:all 0.7s ease;transform:translate(-50%,-50%);`;
-  document.body.appendChild(el);
-  setTimeout(() => { el.style.opacity='0'; el.style.transform='translate(-50%,-80px) scale(0.2)'; }, 30);
-  setTimeout(() => el.remove(), 750);
-});
-</script>
+<!-- ORDER TRAY -->
+<div class="order-tray" id="orderTray">
+  <div class="tray-info">
+    <div class="tray-count" id="trayCount">0</div>
+    <div class="tray-label">ITEMS IN YOUR TRAY</div>
+  </div>
+  <div class="tray-total" id="trayTotal">$0.00</div>
+  <a href="kekesinternational-checkout.html" class="checkout-btn" onclick="saveCartToStorage()">CHECKOUT →</a>
+</div>
 
 <!-- FOOTER -->
-<footer style="background:rgba(10,5,0,0.95);border-top:1px solid rgba(212,175,55,0.15);padding:30px;text-align:center;">
-  <div style="margin-top:20px;padding:16px;background:rgba(212,175,55,0.05);border:1px solid rgba(212,175,55,0.12);border-radius:12px;text-align:center;max-width:400px;margin:0 auto;">
-    <div style="font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,248,231,0.4);margin-bottom:10px;">Our Other Restaurant</div>
-    <a href="mississippi-soul-food.html" style="color:#D4AF37;font-family:'Playfair Display',serif;font-size:1.1rem;text-decoration:none;font-weight:700;">🍽️ Mississippi Soul Food →</a>
-    <div style="font-size:0.68rem;color:rgba(255,248,231,0.35);margin-top:5px;">Sunday dinner vibes · Southern comfort cooking</div>
+<footer style="background:#0a0500;border-top:1px solid rgba(212,175,55,0.2);padding:60px 40px 30px;text-align:center;">
+  <a href="kekesinternational.html" style="font-family:'Dancing Script',cursive;font-size:2.5rem;color:#D4AF37;text-decoration:none;display:block;margin-bottom:10px;">Keke's International</a>
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,248,231,0.6);margin-bottom:30px;">Food Spot · Est. 2020</p>
+  <div style="display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;">
+    <a href="kekesinternational.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">HOME</a>
+    <a href="kekesinternational-menu.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">MENU</a>
+    <a href="kekesinternational-catering.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">CATERING</a>
+    <a href="kekesinternational-events.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">EVENTS</a>
+    <a href="kekesinternational-about.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">ABOUT</a>
+    <a href="kekesinternational-grand-opening.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">GRAND OPENING</a>
+    <a href="kekesinternational-gallery.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">GALLERY</a>
+    <a href="kekesinternational-vip.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">VIP</a>
+    <a href="kekesinternational-contact.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">CONTACT</a>
+    <a href="mississippi-soul-food.html" style="color:#D4AF37;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">🍖 MISSISSIPPI SOUL FOOD</a>
   </div>
+  <p style="color:rgba(255,248,231,0.4);font-size:0.7rem;font-family:'Montserrat',sans-serif;letter-spacing:2px;">© 2026 KEKE'S INTERNATIONAL FOOD SPOT · ALL RIGHTS RESERVED · (951) 630-5410</p>
 </footer>
+
+<script>
+let cart = [];
+
+function addToTray(name, price) {
+  cart.push({name, price});
+  updateTray();
+  document.getElementById('orderTray').classList.add('visible');
+}
+
+function updateTray() {
+  const count = cart.length;
+  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  document.getElementById('trayCount').textContent = count;
+  document.getElementById('trayTotal').textContent = '$' + total.toFixed(2);
+}
+
+function saveCartToStorage() {
+  localStorage.setItem('kekesCart', JSON.stringify(cart));
+}
+
+function filterMenu(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.menu-card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// Particles
+const container = document.getElementById('particles');
+if (container) {
+  for (let i = 0; i < 40; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = Math.random() * 100 + '%';
+    p.style.setProperty('--d', (3 + Math.random() * 4) + 's');
+    p.style.setProperty('--delay', (Math.random() * 4) + 's');
+    container.appendChild(p);
+  }
+}
+</script>
 </body>
 </html>

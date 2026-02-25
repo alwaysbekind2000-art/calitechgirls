@@ -4,313 +4,207 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FAQ — Keke's International Food Spot</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
 <style>
-:root { --gold:#D4AF37; --gold-light:#F5D76E; --red:#8B1A1A; --red-bright:#c0392b; --cream:#FFF8E7; --dark:#0a0500; --brown:#1a0800; --green:#2ecc71; }
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--dark); color:var(--cream); font-family:'Montserrat',sans-serif; overflow-x:hidden; }
-.main-nav { position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(10,5,0,0.95); backdrop-filter:blur(20px); border-bottom:1px solid rgba(212,175,55,0.15); padding:0 30px; display:flex; align-items:center; justify-content:space-between; height:65px; }
-.nav-logo { font-family:'Dancing Script',cursive; font-size:1.4rem; color:#D4AF37; text-decoration:none; }
-.nav-links { display:flex; gap:4px; }
-.nav-links a { color:rgba(255,248,231,0.65); text-decoration:none; font-size:0.6rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:600; padding:6px 10px; border-radius:4px; transition:all 0.2s; white-space:nowrap; }
-.nav-links a:hover, .nav-links a.active { color:#D4AF37; background:rgba(212,175,55,0.08); }
-.nav-order-btn { padding:10px 20px; background:linear-gradient(135deg,#8B1A1A,#c0392b); color:#FFF8E7; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; border:none; border-radius:30px; cursor:pointer; text-decoration:none; font-family:'Montserrat',sans-serif; font-weight:700; box-shadow:0 5px 20px rgba(139,26,26,0.5); transition:all 0.3s; white-space:nowrap; }
+:root{--gold:#D4AF37;--gold-light:#F5D76E;--red:#8B1A1A;--red-bright:#c0392b;--cream:#FFF8E7;--dark:#0a0500;--brown:#1a0800;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--dark);color:var(--cream);font-family:'Montserrat',sans-serif;overflow-x:hidden;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sparkle{0%,100%{opacity:0;transform:translateY(0) scale(0)}50%{opacity:.8;transform:translateY(-30px) scale(1.5)}}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.5rem);color:var(--gold);text-align:center;margin-bottom:15px;}
+.section-label{font-size:.7rem;letter-spacing:8px;color:var(--gold);text-transform:uppercase;text-align:center;margin-bottom:20px;opacity:.7;}
+.section-divider{width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:20px auto 50px;}
+.btn-primary{padding:18px 50px;background:linear-gradient(135deg,#8B1A1A,#c0392b);color:var(--cream);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:4px;text-transform:uppercase;border:none;border-radius:5px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .3s ease;box-shadow:0 10px 40px rgba(139,26,26,.5);}
+.btn-primary:hover{transform:translateY(-3px);}
 
-#particles { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
-.spark { position:absolute; width:2px; height:2px; background:var(--gold); border-radius:50%; animation:sparkFloat linear infinite; opacity:0; }
-@keyframes sparkFloat { 0%{opacity:0;transform:translateY(100vh)} 10%{opacity:0.6} 90%{opacity:0.1} 100%{opacity:0;transform:translateY(-20px)} }
+.hero{min-height:50vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(ellipse at center top,#3d1500 0%,#1a0800 40%,#0a0500 100%);}
+.hero-content{position:relative;z-index:2;text-align:center;padding:120px 20px 60px;}
+.hero-tagline{font-size:.7rem;letter-spacing:8px;color:var(--gold);text-transform:uppercase;margin-bottom:20px;animation:fadeUp 1s ease forwards .3s;opacity:0;}
+.hero-title{font-family:'Dancing Script',cursive;font-size:clamp(3rem,10vw,7rem);color:var(--gold);text-shadow:0 0 40px rgba(212,175,55,.5);line-height:1;animation:fadeUp 1s ease forwards .5s;opacity:0;}
+.hero-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,2.5vw,1.5rem);color:rgba(255,248,231,.8);margin-top:15px;animation:fadeUp 1s ease forwards .7s;opacity:0;}
+.steam-lines{position:absolute;bottom:0;left:0;right:0;height:150px;background:linear-gradient(to top,rgba(212,175,55,.05),transparent);pointer-events:none;}
+.particle{position:absolute;width:2px;height:2px;background:var(--gold);border-radius:50%;animation:sparkle var(--d,4s) ease-in-out infinite var(--delay,0s);opacity:0;}
 
-.hero { padding:120px 20px 70px; text-align:center; position:relative; z-index:1; background:radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.07) 0%, transparent 60%); }
-.hero-tag { font-size:0.65rem; letter-spacing:4px; text-transform:uppercase; color:rgba(212,175,55,0.6); margin-bottom:15px; }
-.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,6vw,3.8rem); color:var(--gold); margin-bottom:12px; }
-.hero p { color:rgba(255,248,231,0.6); font-size:0.95rem; max-width:550px; margin:0 auto; line-height:1.7; }
-
-/* SEARCH */
-.search-wrap { max-width:600px; margin:40px auto 20px; padding:0 20px; position:relative; z-index:1; }
-.search-input { width:100%; padding:16px 50px 16px 20px; background:rgba(26,8,0,0.8); border:1px solid rgba(212,175,55,0.2); border-radius:50px; color:var(--cream); font-family:'Montserrat',sans-serif; font-size:0.9rem; outline:none; transition:all 0.3s; }
-.search-input:focus { border-color:var(--gold); }
-.search-input::placeholder { color:rgba(255,248,231,0.25); }
-.search-icon { position:absolute; right:38px; top:50%; transform:translateY(-50%); color:rgba(212,175,55,0.4); font-size:1.1rem; }
-
-/* CATEGORY TABS */
-.cat-tabs { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; padding:20px 20px 0; position:relative; z-index:1; }
-.cat-tab { padding:10px 20px; background:rgba(255,255,255,0.04); border:1px solid rgba(212,175,55,0.12); color:rgba(255,248,231,0.55); border-radius:25px; font-size:0.68rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; cursor:pointer; transition:all 0.3s; font-family:'Montserrat',sans-serif; }
-.cat-tab.active, .cat-tab:hover { background:rgba(212,175,55,0.1); border-color:rgba(212,175,55,0.35); color:var(--gold); }
-
-/* FAQ LAYOUT */
-.faq-layout { max-width:850px; margin:0 auto; padding:50px 20px 80px; position:relative; z-index:1; }
-.faq-category { margin-bottom:50px; }
-.cat-header { display:flex; align-items:center; gap:12px; margin-bottom:20px; }
-.cat-icon { font-size:1.8rem; }
-.cat-title { font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--gold); }
-.cat-line { flex:1; height:1px; background:linear-gradient(to right, rgba(212,175,55,0.3), transparent); }
-
-.faq-item { border-bottom:1px solid rgba(212,175,55,0.06); overflow:hidden; }
-.faq-q { padding:20px 0; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:15px; font-size:0.88rem; font-weight:600; color:rgba(255,248,231,0.82); transition:color 0.3s; line-height:1.5; }
-.faq-q:hover { color:var(--gold); }
-.faq-icon { width:28px; height:28px; border-radius:50%; border:1px solid rgba(212,175,55,0.2); display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:0.9rem; transition:all 0.3s; flex-shrink:0; }
-.faq-q.open .faq-icon { background:rgba(212,175,55,0.12); border-color:rgba(212,175,55,0.4); transform:rotate(45deg); }
-.faq-a { max-height:0; overflow:hidden; transition:max-height 0.45s cubic-bezier(0.4,0,0.2,1); }
-.faq-a-inner { padding:0 0 20px; font-size:0.83rem; color:rgba(255,248,231,0.6); line-height:1.85; }
-.faq-a-inner strong { color:rgba(255,248,231,0.9); }
-.faq-a-inner a { color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(212,175,55,0.3); }
+/* FAQ ACCORDION */
+.faq-section{max-width:800px;margin:0 auto;padding:60px 40px 100px;}
+.faq-item{background:linear-gradient(135deg,rgba(26,8,0,.8),rgba(10,5,0,.9));border:1px solid rgba(212,175,55,.2);border-radius:12px;margin-bottom:15px;overflow:hidden;transition:all .3s;}
+.faq-item:hover{border-color:rgba(212,175,55,.4);}
+.faq-question{width:100%;background:none;border:none;color:var(--cream);font-family:'Montserrat',sans-serif;font-size:.95rem;padding:24px 30px;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:15px;transition:all .3s;}
+.faq-question:hover{color:var(--gold);}
+.faq-icon{font-size:1.2rem;color:var(--gold);transition:transform .3s;flex-shrink:0;}
+.faq-item.open .faq-icon{transform:rotate(45deg);}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s;}
+.faq-item.open .faq-answer{max-height:300px;padding:0 30px 25px;}
+.faq-answer p{font-size:.88rem;color:rgba(255,248,231,.7);line-height:1.7;}
+.faq-answer a{color:var(--gold);text-decoration:none;}
 
 /* CONTACT CTA */
-.contact-cta { background:rgba(26,8,0,0.7); border:1px solid rgba(212,175,55,0.12); border-radius:20px; padding:50px; text-align:center; max-width:700px; margin:0 auto 60px; position:relative; z-index:1; }
-.contact-cta h2 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--gold); margin-bottom:10px; }
-.contact-cta p { color:rgba(255,248,231,0.6); margin-bottom:25px; font-size:0.9rem; }
-.cta-btns { display:flex; gap:15px; justify-content:center; flex-wrap:wrap; }
-.cta-btn { padding:14px 32px; border-radius:50px; font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.78rem; letter-spacing:2px; text-transform:uppercase; text-decoration:none; transition:all 0.3s; }
-.cta-btn.gold { background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--dark); box-shadow:0 6px 20px rgba(212,175,55,0.35); }
-.cta-btn.red { background:linear-gradient(135deg,var(--red),var(--red-bright)); color:var(--cream); box-shadow:0 6px 20px rgba(139,26,26,0.35); }
-.cta-btn:hover { transform:translateY(-2px); }
-
-/* FOOTER */
-.footer { background:#050200; border-top:1px solid rgba(212,175,55,0.15); padding:60px 20px 40px; text-align:center; }
-.footer-inner { max-width:800px; margin:0 auto; }
-.footer-logo { font-family:'Dancing Script',cursive; font-size:2.5rem; color:#D4AF37; margin-bottom:8px; }
-.footer-tagline { color:rgba(255,248,231,0.4); font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:24px; }
-.social-links { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:24px; }
-.social-btn { padding:10px 20px; background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.2); color:rgba(255,248,231,0.7); border-radius:25px; text-decoration:none; font-size:0.7rem; letter-spacing:1px; transition:all 0.3s; }
-.social-btn:hover { background:rgba(212,175,55,0.2); color:#D4AF37; }
-.footer-divider { height:1px; background:rgba(212,175,55,0.1); margin:20px 0; }
-.footer-contact { color:rgba(255,248,231,0.45); font-size:0.8rem; line-height:2; }
-.footer-copy { color:rgba(255,248,231,0.25); font-size:0.7rem; letter-spacing:1px; }
+.contact-cta{background:linear-gradient(135deg,rgba(26,8,0,.6),rgba(10,5,0,.8));border:1px solid rgba(212,175,55,.2);border-radius:16px;padding:50px;text-align:center;margin-top:40px;}
 </style>
 </head>
 <body>
-<div id="particles"></div>
-<nav class="main-nav">
-  <a href="kekesinternational.html" class="nav-logo">Keke's International</a>
-  <div class="nav-links">
-    <a href="kekesinternational.html">Home</a>
-    <a href="kekesinternational-menu.html">Menu</a>
-    <a href="kekesinternational-catering.html">Catering</a>
-    <a href="kekesinternational-events.html">Events</a>
-    <a href="kekesinternational-grand-opening.html">🎉 Reopening</a>
-    <a href="kekesinternational-gallery.html">Gallery</a>
-    <a href="kekesinternational-vip.html">VIP</a>
-    <a href="kekesinternational-about.html">About</a>
-    <a href="kekesinternational-contact.html">Contact</a>
-    <a href="kekesinternational-tracker.html">Track Order</a>
-    <a href="mississippi-soul-food.html" style="color:#D4AF37;font-size:0.8rem;font-weight:700;padding:6px 12px;border:1px solid #D4AF37;border-radius:20px;text-decoration:none;white-space:nowrap;">🍖 Mississippi Soul</a>
+
+<!-- NAV -->
+<nav style="position:fixed;top:0;left:0;right:0;z-index:1000;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(10,5,0,0.95),transparent);">
+  <a href="kekesinternational.html" style="font-family:'Dancing Script',cursive;font-size:1.8rem;color:#D4AF37;text-decoration:none;text-shadow:0 0 20px rgba(212,175,55,0.5);">Keke's International</a>
+  <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;">
+    <a href="kekesinternational.html" style="color:#FFF8E7;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">HOME</a>
+    <a href="kekesinternational-menu.html" style="color:#FFF8E7;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">MENU</a>
+    <a href="kekesinternational-catering.html" style="color:#FFF8E7;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">CATERING</a>
+    <a href="kekesinternational-events.html" style="color:#FFF8E7;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">EVENTS</a>
+    <a href="kekesinternational-about.html" style="color:#FFF8E7;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">ABOUT</a>
+    <a href="mississippi-soul-food.html" style="color:#D4AF37;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">🍖 MISSISSIPPI</a>
+    <a href="kekesinternational-menu.html" style="padding:10px 25px;background:linear-gradient(135deg,#8B1A1A,#c0392b);color:#FFF8E7;text-decoration:none;font-size:0.7rem;letter-spacing:3px;font-family:'Montserrat',sans-serif;font-weight:700;border-radius:4px;">ORDER NOW</a>
   </div>
-  <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
-  <div class="hero-tag">❓ Common Questions</div>
-  <h1>FREQUENTLY ASKED<br>QUESTIONS</h1>
-  <p>Everything you need to know about ordering, catering, the menu, and more.</p>
+  <div class="hero-bg-particles" id="particles"></div>
+  <div class="steam-lines"></div>
+  <div class="hero-content">
+    <p class="hero-tagline">Keke's International Food Spot</p>
+    <h1 class="hero-title">Got Questions?</h1>
+    <p class="hero-subtitle">We've got answers — everything you need to know</p>
+  </div>
 </div>
 
-<div class="search-wrap">
-  <input type="text" class="search-input" id="faqSearch" placeholder="Search questions... e.g. delivery, hours, spicy" oninput="searchFAQ()">
-  <div class="search-icon">🔍</div>
-</div>
+<!-- FAQ -->
+<div class="faq-section">
+  <p class="section-label">Frequently Asked</p>
+  <h2 class="section-title">FAQ</h2>
+  <div class="section-divider"></div>
 
-<div class="cat-tabs">
-  <button class="cat-tab active" onclick="scrollToSection('ordering',this)">🚚 Ordering</button>
-  <button class="cat-tab" onclick="scrollToSection('menu',this)">🍽️ Menu</button>
-  <button class="cat-tab" onclick="scrollToSection('catering',this)">🎉 Catering</button>
-  <button class="cat-tab" onclick="scrollToSection('hours',this)">🕐 Hours & Locations</button>
-  <button class="cat-tab" onclick="scrollToSection('payment',this)">💳 Payment</button>
-</div>
-
-<div class="faq-layout" id="faqLayout">
-
-  <!-- ORDERING -->
-  <div class="faq-category" id="ordering">
-    <div class="cat-header">
-      <span class="cat-icon">🚚</span>
-      <div class="cat-title">Ordering</div>
-      <div class="cat-line"></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">Do you deliver? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">Yes! We offer delivery and pickup only. <strong>We do NOT have a dine-in or walk-up service.</strong> All orders must be placed online or by calling/texting <strong>(951) 630-5410</strong>.</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">What areas do you deliver to? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">We currently deliver in <strong>Moreno Valley</strong> and <strong>Long Beach</strong>. Orange County delivery is coming with our Grand Reopening in March 2026. Delivery fees may vary by distance. For areas outside standard delivery zones, call us — we may still be able to help!</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">Is there a minimum order amount? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">There is a <strong>minimum order of $15</strong> for delivery. Pickup orders have no minimum. Delivery fee is $3.99 flat (free for Gold & Chef's Table VIP members!).</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">How long does delivery take? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">Typical delivery time is <strong>25–45 minutes</strong> depending on your location and order size. Because we cook everything fresh to order, we don't rush. Good food takes time. You'll receive a text confirmation with estimated time from Chef Keke.</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">How do I place an order? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">Visit our <a href="kekesinternational-menu.html">online menu</a> and add items to your cart. You can also call or text <strong>(951) 630-5410</strong> to place an order directly with Chef Keke. All orders are confirmed via text message.</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">Can I schedule an order in advance? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">Yes! Text or call <strong>(951) 630-5410</strong> to schedule a future order. We recommend scheduling large orders (party trays, etc.) at least 24–48 hours in advance to ensure availability.</div></div>
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      How do I place an order?
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-answer">
+      <p>You can place an order online at <a href="https://order.online/business/kekes-international-food-spot-11195188" target="_blank">order.online</a>, through our menu page, or by calling us at (951) 630-5410. Online orders are preferred for the fastest service.</p>
     </div>
   </div>
 
-  <!-- MENU -->
-  <div class="faq-category" id="menu">
-    <div class="cat-header">
-      <span class="cat-icon">🍽️</span>
-      <div class="cat-title">Menu</div>
-      <div class="cat-line"></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">Are your menu items halal or kosher? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">We are working toward <strong>halal certification</strong> for our Grand Reopening. Currently our chicken products are sourced from halal suppliers in most locations. Please call <strong>(951) 630-5410</strong> to confirm halal availability for your specific location. We are not kosher certified.</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">How spicy is the food? Can I request less spice? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">Our jerk seasoning has a <strong>medium-high heat level</strong> by default (scotch bonnet peppers). You can request <strong>mild, medium, or extra spicy</strong> in your order notes. Chef Keke accommodates all heat preferences — just ask!</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">What are the allergens in your food? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">Our kitchen handles <strong>gluten, dairy, soy, eggs, and tree nuts</strong>. For detailed allergen information on specific dishes, please call us at <strong>(951) 630-5410</strong>. We take food allergies seriously and will do our best to accommodate safely.</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">Do you have vegetarian options? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">Yes! Several items are vegetarian-friendly including <strong>Rice & Peas, Fried Plantains, Festival, Coleslaw, and Loaded Fries</strong>. We're also adding more vegetarian entrée options with our Grand Reopening menu. Ask about our vegetarian curry bowl!</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">Is everything cooked fresh to order? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner"><strong>Yes, absolutely.</strong> We don't believe in pre-cooked, sitting food. Every plate is made fresh when you order. Our oxtail is braised 8 hours and our jerk chicken marinated 24 hours — but your plate is assembled fresh. This is why delivery takes a bit longer, and why it tastes so good.</div></div>
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      Do you deliver?
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-answer">
+      <p>Yes! We offer delivery through online orders. Place your order online and select delivery at checkout. Delivery fee applies. Pickup is also available at all locations.</p>
     </div>
   </div>
 
-  <!-- CATERING -->
-  <div class="faq-category" id="catering">
-    <div class="cat-header">
-      <span class="cat-icon">🎉</span>
-      <div class="cat-title">Catering</div>
-      <div class="cat-line"></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">How far in advance should I book catering? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">We recommend booking at least <strong>2 weeks in advance</strong> for standard events, and <strong>3–4 weeks</strong> for large events (50+ guests). Weekend dates fill up fast. Contact us as soon as possible to check availability.</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">Is a deposit required? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">Yes, a <strong>50% deposit</strong> is required to confirm your catering booking. The remaining balance is due 48 hours before your event. We accept Zelle, Cash App, and cash. Stripe payments coming soon.</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">Do you travel for catering events? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">Absolutely! We cater throughout <strong>all of Southern California</strong> — Inland Empire, Los Angeles, Orange County, San Diego, and beyond. Travel fees apply for events more than 30 miles from Moreno Valley. Call us for a quote!</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">What is the minimum headcount for catering? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">Our catering minimum is <strong>15 guests</strong> for the standard packages. For smaller gatherings, we offer party trays starting at $150. Contact us and we'll work something out!</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">Can you handle dietary restrictions for catering? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">Yes! When you book, let us know about any dietary needs (vegetarian, gluten-free, nut allergies, etc.) and we'll customize the menu accordingly. Chef Keke personally reviews all special requirements.</div></div>
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      Do you accept EBT?
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-answer">
+      <p>We are currently in the process of applying for CalFresh Restaurant Meals Program (RMP). Once approved, we will accept EBT at all locations. Stay tuned — follow us on Instagram for updates on our acceptance status.</p>
     </div>
   </div>
 
-  <!-- HOURS & LOCATIONS -->
-  <div class="faq-category" id="hours">
-    <div class="cat-header">
-      <span class="cat-icon">🕐</span>
-      <div class="cat-title">Hours & Locations</div>
-      <div class="cat-line"></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">What time do you close? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">We're open until <strong>4AM every night</strong>. Orders must be placed before 4AM to be fulfilled. We believe the best Caribbean food deserves to be available late — whether it's midnight, 2AM, or 3:30AM, we've got you.</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">Where are you located? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">We currently operate in <strong>Moreno Valley</strong> and <strong>Long Beach</strong>, California. <strong>Orange County</strong> is coming with our March 2026 Grand Reopening. We are delivery and pickup ONLY — no walk-up or dine-in. Exact pickup locations are provided upon order confirmation.</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">Are you open every day? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">Yes! We operate <strong>daily until 4AM</strong>. Holiday hours may vary — follow our Instagram <a href="https://www.instagram.com/kekesinternationalfoodspot">@kekesinternational</a> for any closures or special hours announcements.</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">Do I need to come in person to order? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner"><strong>No — we are ONLINE ORDERS ONLY.</strong> You cannot walk up to our kitchen. All orders must be placed online or by calling/texting (951) 630-5410. This ensures every order gets the time and care it deserves.</div></div>
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      What payment methods do you accept?
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-answer">
+      <p>We accept all major credit/debit cards via Square, Cash App ($CaliChefKeke), Zelle (951-630-5410), and cash. All payment methods are accepted at all locations and for delivery orders.</p>
     </div>
   </div>
 
-  <!-- PAYMENT -->
-  <div class="faq-category" id="payment">
-    <div class="cat-header">
-      <span class="cat-icon">💳</span>
-      <div class="cat-title">Payment</div>
-      <div class="cat-line"></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">What payment methods do you accept? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">Currently we accept <strong>Zelle, Cash App, and cash on delivery/pickup</strong>. <strong>Stripe credit/debit card integration is coming soon</strong> — launching with our Grand Reopening in March 2026. When paying, reference your order number.</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">Can I tip online? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">Tips are always appreciated but never required! You can include a tip when paying via Zelle or Cash App, or tip your driver in cash. Once Stripe integration launches, tipping will be built into the checkout flow.</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">When is Stripe / card payment coming? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner"><strong>Stripe integration launches with our Grand Reopening on March 19, 2026!</strong> You'll be able to pay securely with any major credit or debit card, Apple Pay, and Google Pay. Subscribe to our email list on the <a href="kekesinternational-grand-opening.html">Grand Opening page</a> to be notified first.</div></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggle(this)">What is your refund policy? <div class="faq-icon">+</div></div>
-      <div class="faq-a"><div class="faq-a-inner">Your satisfaction is everything to us. If there's an issue with your order, <strong>contact Chef Keke immediately at (951) 630-5410</strong>. We'll make it right — whether that's a remake, a credit on your next order, or a refund. We stand behind every plate we serve.</div></div>
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      What's the catering minimum?
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-answer">
+      <p>Our minimum catering order is for 15 guests. Our Essentials Package starts at $500 for up to 20 guests. For larger events, check out our <a href="kekesinternational-catering.html">catering page</a> or call us for a custom quote.</p>
     </div>
   </div>
 
-</div>
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      What are your hours?
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-answer">
+      <p><strong style="color:var(--gold);">Moreno Valley:</strong> Thursday–Sunday, open till 4AM<br><strong style="color:var(--gold);">Long Beach:</strong> Monday–Wednesday, open till 2AM<br>Hours may vary on holidays and special events. Follow us on Instagram for real-time updates.</p>
+    </div>
+  </div>
 
-<!-- CONTACT CTA -->
-<div style="padding:0 20px;">
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      Is a deposit required?
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-answer">
+      <p>Yes, a deposit is required before meal preparation begins. This ensures we can source the freshest ingredients for your order. The deposit applies to large orders and all catering requests. Standard menu orders can be paid in full at checkout.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      Can I customize my order?
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-answer">
+      <p>Absolutely! You can add notes and special instructions at checkout. We do our best to accommodate dietary restrictions, allergies, and substitutions. For complex requests, call us at (951) 630-5410 and we'll make it work.</p>
+    </div>
+  </div>
+
+  <!-- CONTACT CTA -->
   <div class="contact-cta">
-    <h2>Still Have Questions?</h2>
-    <p>Chef Keke personally responds to every inquiry. Don't hesitate to reach out — we're here till 4AM!</p>
-    <div class="cta-btns">
-      <a href="tel:9516305410" class="cta-btn gold">📞 (951) 630-5410</a>
-      <a href="kekesinternational-contact.html" class="cta-btn red">✉️ Contact Form</a>
+    <p class="section-label">Still Need Help?</p>
+    <h3 class="section-title" style="font-size:2rem;">We're Here for You</h3>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,248,231,.6);margin:15px 0 25px;">Don't see your question? Reach out — we'll get you sorted.</p>
+    <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+      <a href="tel:9516305410" class="btn-primary">📞 CALL (951) 630-5410</a>
+      <a href="kekesinternational-contact.html" style="padding:16px 40px;background:transparent;color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:600;font-size:.85rem;letter-spacing:4px;text-transform:uppercase;border:1px solid rgba(212,175,55,.5);border-radius:5px;text-decoration:none;">CONTACT US</a>
     </div>
   </div>
 </div>
 
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-logo">Keke's</div>
-    <p class="footer-tagline">International Food Spot · Every Meal Cooked with Love</p>
-    <div class="social-links">
-      <a href="https://www.instagram.com/kekesinternationalfoodspot" target="_blank" class="social-btn">📸 @KekesInternational</a>
-      <a href="https://www.instagram.com/longbeach_kekes/" target="_blank" class="social-btn">📸 @LongBeach_Kekes</a>
-      <a href="kekesinternational-catering.html" class="social-btn">🍽️ Book Catering</a>
-      <a href="kekesinternational-events.html" class="social-btn">🎉 Events</a>
-    </div>
-    <div class="footer-divider"></div>
-    <p class="footer-contact">📞 (951) 630-5410 · Call or Text Chef Keke Chanel<br>🚚 Online Orders Only · No Walk-Up · No Dine-In<br>📍 Moreno Valley · Long Beach · Orange County (Coming Soon)<br>🌙 Open Till 4AM</p>
-    <div class="footer-divider"></div>
-    <p class="footer-copy">© 2026 Keke's International Food Spot · Grand Reopening March 2026 🎉</p>
+<!-- FOOTER -->
+<footer style="background:#0a0500;border-top:1px solid rgba(212,175,55,0.2);padding:60px 40px 30px;text-align:center;">
+  <a href="kekesinternational.html" style="font-family:'Dancing Script',cursive;font-size:2.5rem;color:#D4AF37;text-decoration:none;display:block;margin-bottom:10px;">Keke's International</a>
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,248,231,0.6);margin-bottom:30px;">Food Spot · Est. 2020</p>
+  <div style="display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;">
+    <a href="kekesinternational.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">HOME</a>
+    <a href="kekesinternational-menu.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">MENU</a>
+    <a href="kekesinternational-catering.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">CATERING</a>
+    <a href="kekesinternational-events.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">EVENTS</a>
+    <a href="kekesinternational-about.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">ABOUT</a>
+    <a href="kekesinternational-grand-opening.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">GRAND OPENING</a>
+    <a href="kekesinternational-gallery.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">GALLERY</a>
+    <a href="kekesinternational-vip.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">VIP</a>
+    <a href="kekesinternational-contact.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">CONTACT</a>
+    <a href="mississippi-soul-food.html" style="color:#D4AF37;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">🍖 MISSISSIPPI SOUL FOOD</a>
   </div>
+  <p style="color:rgba(255,248,231,0.4);font-size:0.7rem;font-family:'Montserrat',sans-serif;letter-spacing:2px;">© 2026 KEKE'S INTERNATIONAL FOOD SPOT · ALL RIGHTS RESERVED · (951) 630-5410</p>
 </footer>
-<script>
-const pc=document.getElementById('particles');
-for(let i=0;i<25;i++){const s=document.createElement('div');s.className='spark';s.style.left=Math.random()*100+'%';s.style.animationDuration=(10+Math.random()*18)+'s';s.style.animationDelay=(Math.random()*12)+'s';s.style.width=s.style.height=(1+Math.random()*1.5)+'px';pc.appendChild(s);}
 
-function toggle(el){
-  el.classList.toggle('open');
-  const a=el.nextElementSibling;
-  if(el.classList.contains('open')){ a.style.maxHeight=a.scrollHeight+'px'; }
-  else { a.style.maxHeight='0'; }
+<script>
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
 }
-function scrollToSection(id,btn){
-  document.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
-}
-function searchFAQ(){
-  const q=document.getElementById('faqSearch').value.toLowerCase();
-  document.querySelectorAll('.faq-item').forEach(item=>{
-    const text=item.textContent.toLowerCase();
-    item.style.display=q===''||text.includes(q)?'block':'none';
-  });
+
+const container = document.getElementById('particles');
+if (container) {
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = Math.random() * 100 + '%';
+    p.style.setProperty('--d', (3 + Math.random() * 4) + 's');
+    p.style.setProperty('--delay', (Math.random() * 4) + 's');
+    container.appendChild(p);
+  }
 }
 </script>
 </body>
