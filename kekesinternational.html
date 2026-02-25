@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Keke's International Food Spot — Grand Reopening March 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<!-- PWA Meta Tags -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#D4A017">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Keke's International">
 <style>
   :root {
     --gold: #D4AF37;
@@ -983,23 +990,6 @@
     white-space: nowrap;
   }
   .nav-order-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,26,26,0.7); }
-  .nav-hub-btn {
-    padding: 8px 14px;
-    background: rgba(212,175,55,0.1);
-    color: var(--gold);
-    font-size: 0.55rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    border: 1px solid rgba(212,175,55,0.3);
-    border-radius: 20px;
-    cursor: pointer;
-    text-decoration: none;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-  }
-  .nav-hub-btn:hover { background: rgba(212,175,55,0.2); border-color: var(--gold); }
   body { padding-top: 65px; }
 
   /* ====== MOBILE ====== */
@@ -1029,8 +1019,24 @@
   </div>
   <div style="display:flex;gap:8px;align-items:center;">
     <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
+    <button id="pwa-install-btn" onclick="triggerPWAInstall()" style="display:none;background:linear-gradient(135deg,#D4AF37,#8B1A1A);color:#fff;border:none;padding:8px 14px;border-radius:20px;font-weight:700;font-size:0.8rem;cursor:pointer;animation:pulse-gold 2s infinite;">📱 Add App</button>
   </div>
 </nav>
+
+<!-- PWA Install Popup Banner -->
+<div id="pwa-banner" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9999;background:linear-gradient(135deg,#1a0800,#2d0f00);border:2px solid #D4AF37;border-radius:20px;padding:20px 30px;box-shadow:0 10px 50px rgba(212,175,55,0.5);text-align:center;max-width:380px;width:90%;animation:slideUpBanner 0.5s ease;">
+  <div style="font-size:2rem;margin-bottom:8px;">🍛</div>
+  <div style="color:#D4AF37;font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;margin-bottom:6px;">Add Keke's to Your Phone!</div>
+  <div style="color:#FFF8E7;font-size:0.85rem;margin-bottom:16px;opacity:0.9;">Order faster · Track orders · Get VIP deals · Works offline</div>
+  <div style="display:flex;gap:10px;justify-content:center;">
+    <button onclick="installPWA()" style="background:linear-gradient(135deg,#D4AF37,#8B1A1A);color:#fff;border:none;padding:12px 24px;border-radius:25px;font-weight:700;font-size:0.95rem;cursor:pointer;box-shadow:0 4px 20px rgba(212,175,55,0.4);">📱 Install Free App</button>
+    <button onclick="dismissBanner()" style="background:transparent;color:#D4AF37;border:1px solid #D4AF37;padding:12px 18px;border-radius:25px;font-size:0.85rem;cursor:pointer;">Not Now</button>
+  </div>
+</div>
+<style>
+@keyframes slideUpBanner { from { opacity:0; transform:translateX(-50%) translateY(30px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+@keyframes pulse-gold { 0%,100% { box-shadow:0 0 8px rgba(212,175,55,0.4); } 50% { box-shadow:0 0 20px rgba(212,175,55,0.9); } }
+</style>
 
 <!-- ====== HERO ====== -->
 <section class="hero">
@@ -1487,6 +1493,7 @@
     </p>
     <div class="footer-divider"></div>
     <p class="footer-copy">© 2026 Keke's International Food Spot · All Rights Reserved</p>
+    <p class="footer-copy" style="font-size:0.85rem;margin-top:8px;color:#D4AF37;">🍽️ Powered by Chanel 'The Chef' Hardy</p>
   </div>
 </footer>
 
@@ -1710,6 +1717,90 @@
     document.body.style.transition = 'opacity 1.2s ease';
     setTimeout(() => { document.body.style.opacity = '1'; }, 100);
   });
+</script>
+
+<!-- PWA Install Button -->
+<style>
+#pwaInstallBtn {
+  position:fixed; bottom:28px; right:28px; z-index:9999;
+  padding:13px 22px; border:none; border-radius:50px;
+  background:linear-gradient(135deg,#D4A017,#F5D76E);
+  color:#0a0005; font-family:'Montserrat',sans-serif;
+  font-weight:800; font-size:0.72rem; letter-spacing:1.5px; text-transform:uppercase;
+  cursor:pointer; display:none;
+  box-shadow:0 0 0 3px rgba(212,160,23,0.25), 0 8px 30px rgba(212,160,23,0.5);
+  animation:pwaGlowMain 2s ease-in-out infinite;
+  transition:transform 0.2s, box-shadow 0.2s;
+}
+#pwaInstallBtn:hover { transform:translateY(-3px); box-shadow:0 0 0 5px rgba(212,160,23,0.35), 0 12px 40px rgba(212,160,23,0.7); }
+@keyframes pwaGlowMain {
+  0%,100% { box-shadow:0 0 0 3px rgba(212,160,23,0.25), 0 8px 30px rgba(212,160,23,0.5); }
+  50%      { box-shadow:0 0 0 6px rgba(212,160,23,0.15), 0 8px 40px rgba(212,160,23,0.75); }
+}
+</style>
+<script>
+// ===== PWA INSTALL SYSTEM =====
+let deferredPrompt = null;
+
+// Register service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+
+// Catch install prompt
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Show banner after 3 seconds
+  setTimeout(() => {
+    const banner = document.getElementById('pwa-banner');
+    const btn = document.getElementById('pwa-install-btn');
+    if (banner) banner.style.display = 'block';
+    if (btn) btn.style.display = 'block';
+  }, 3000);
+});
+
+function installPWA() {
+  if (!deferredPrompt) {
+    // iOS fallback instructions
+    alert('📱 To install on iPhone:\n1. Tap the Share button (📤)\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add" — done! 🎉');
+    return;
+  }
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then((choice) => {
+    if (choice.outcome === 'accepted') {
+      dismissBanner();
+    }
+    deferredPrompt = null;
+  });
+}
+
+function triggerPWAInstall() {
+  installPWA();
+}
+
+function dismissBanner() {
+  const banner = document.getElementById('pwa-banner');
+  if (banner) banner.style.display = 'none';
+  // Remember for 7 days
+  localStorage.setItem('pwa-dismissed', Date.now());
+}
+
+// Don't show again for 7 days if dismissed
+window.addEventListener('load', () => {
+  const dismissed = localStorage.getItem('pwa-dismissed');
+  if (dismissed && Date.now() - parseInt(dismissed) < 7 * 24 * 60 * 60 * 1000) {
+    // Suppressed — still show nav button when prompt ready
+  }
+});
+
+// App installed
+window.addEventListener('appinstalled', () => {
+  dismissBanner();
+  document.getElementById('pwa-install-btn').style.display = 'none';
+});
 </script>
 </body>
 </html>
