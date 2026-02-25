@@ -79,7 +79,7 @@ body{background:var(--dark);color:var(--cream);font-family:'Montserrat',sans-ser
 
 <!-- NAV -->
 <nav class="main-nav">
-  <a href="kekesinternational.html" class="nav-logo">Keke's International</a>
+  <a href="kekesinternational-14.html" class="nav-logo">Keke's International</a>
   <div class="nav-links">
     <a href="kekesinternational-menu.html">Menu</a>
     <a href="kekesinternational-catering.html">Catering</a>
@@ -214,6 +214,36 @@ body{background:var(--dark);color:var(--cream);font-family:'Montserrat',sans-ser
   </div>
 </div>
 
+<!-- 📱 INSTALL APP SECTION -->
+<div style="padding:60px 40px;text-align:center;background:radial-gradient(ellipse at center,rgba(139,26,26,.15),transparent 70%);">
+  <p class="section-label">Get the App</p>
+  <h2 class="section-title">📱 Keke's on Your Phone</h2>
+  <div class="section-divider"></div>
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,248,231,.7);font-size:1.1rem;margin-bottom:30px;">Install Keke's International right on your home screen. Order faster, get VIP alerts, and never miss a special.</p>
+  <button id="vip-install-btn" onclick="triggerPWAInstall()" style="padding:20px 60px;background:linear-gradient(135deg,#D4AF37,#8B1A1A,#D4AF37);background-size:200% auto;color:#fff;border:none;border-radius:30px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:3px;cursor:pointer;animation:pulse-gold 2s infinite;box-shadow:0 0 30px rgba(212,175,55,.4),0 0 60px rgba(139,26,26,.3);text-transform:uppercase;">📱 ADD APP TO HOME SCREEN</button>
+  <p style="margin-top:15px;font-size:.75rem;color:rgba(255,248,231,.4);">Works on iPhone, Android, and Desktop</p>
+</div>
+
+<!-- 🤖 AI CHEF AVATAR -->
+<div style="padding:80px 40px;text-align:center;background:linear-gradient(to bottom,rgba(26,8,0,.5),rgba(10,5,0,.9));border-top:1px solid rgba(212,175,55,.1);" id="chef-avatar">
+  <p class="section-label">Meet Your Chef</p>
+  <h2 class="section-title">👩🏾‍🍳 Chef Keke — Live</h2>
+  <div class="section-divider"></div>
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,248,231,.7);font-size:1.1rem;margin-bottom:30px;">Ask Chef Keke about today's specials, get recommendations, or just vibe with the queen of flavor.</p>
+  <div id="avatar-container" style="max-width:500px;margin:0 auto;aspect-ratio:9/16;background:linear-gradient(135deg,rgba(26,8,0,.95),rgba(10,5,0,.98));border:2px solid rgba(212,175,55,.3);border-radius:20px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+    <div style="text-align:center;padding:40px;">
+      <div style="font-size:5rem;margin-bottom:20px;">👩🏾‍🍳</div>
+      <p style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--gold);margin-bottom:10px;">Chef Keke AI</p>
+      <p style="font-size:.85rem;color:rgba(255,248,231,.5);margin-bottom:25px;">Interactive avatar coming soon</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button style="padding:12px 25px;background:linear-gradient(135deg,#8B1A1A,#c0392b);color:#fff;border:none;border-radius:25px;font-weight:700;font-size:.8rem;cursor:pointer;">🎤 Talk to Chef</button>
+        <button style="padding:12px 25px;background:linear-gradient(135deg,#D4AF37,#F5D76E);color:#0a0500;border:none;border-radius:25px;font-weight:700;font-size:.8rem;cursor:pointer;">💃 Make Her Dance</button>
+      </div>
+    </div>
+    <!-- HeyGen/Hedra avatar will replace this div -->
+  </div>
+</div>
+
 <!-- SIGNUP -->
 <div class="signup-section" id="signup">
   <p class="section-label">Get Access</p>
@@ -221,10 +251,28 @@ body{background:var(--dark);color:var(--cream);font-family:'Montserrat',sans-ser
   <div class="section-divider"></div>
   <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,248,231,.6);font-size:1.1rem;margin-bottom:30px;">Complete the form below to become a Keke's VIP member.</p>
   <div style="background:linear-gradient(135deg,rgba(26,8,0,.8),rgba(10,5,0,.9));border:1px solid rgba(212,175,55,.2);border-radius:16px;padding:40px;">
-    <!-- REMOVED EXTERNAL FORM -->
-      style="width:100%;min-height:500px;border:none;background:transparent;"
-      title="VIP Signup Form">
-    </iframe>
+    <form id="vip-signup-form" onsubmit="handleVIPSignup(event)" style="display:flex;flex-direction:column;gap:20px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+        <input type="text" id="vip-fname" placeholder="First Name" required style="padding:16px;background:rgba(255,248,231,.05);border:1px solid rgba(212,175,55,.3);border-radius:8px;color:var(--cream);font-family:'Montserrat',sans-serif;font-size:.9rem;">
+        <input type="text" id="vip-lname" placeholder="Last Name" required style="padding:16px;background:rgba(255,248,231,.05);border:1px solid rgba(212,175,55,.3);border-radius:8px;color:var(--cream);font-family:'Montserrat',sans-serif;font-size:.9rem;">
+      </div>
+      <input type="email" id="vip-email" placeholder="Email Address" required style="padding:16px;background:rgba(255,248,231,.05);border:1px solid rgba(212,175,55,.3);border-radius:8px;color:var(--cream);font-family:'Montserrat',sans-serif;font-size:.9rem;">
+      <input type="tel" id="vip-phone" placeholder="Phone Number" required style="padding:16px;background:rgba(255,248,231,.05);border:1px solid rgba(212,175,55,.3);border-radius:8px;color:var(--cream);font-family:'Montserrat',sans-serif;font-size:.9rem;">
+      <input type="date" id="vip-bday" placeholder="Birthday (for your free plate!)" style="padding:16px;background:rgba(255,248,231,.05);border:1px solid rgba(212,175,55,.3);border-radius:8px;color:var(--cream);font-family:'Montserrat',sans-serif;font-size:.9rem;">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+        <label style="display:flex;align-items:center;gap:8px;padding:12px 20px;background:rgba(255,248,231,.05);border:1px solid rgba(212,175,55,.2);border-radius:8px;cursor:pointer;font-size:.85rem;">
+          <input type="radio" name="vip-tier" value="free" checked style="accent-color:#D4AF37;"> 🥉 Free Member
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;padding:12px 20px;background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.4);border-radius:8px;cursor:pointer;font-size:.85rem;color:var(--gold);">
+          <input type="radio" name="vip-tier" value="gold" style="accent-color:#D4AF37;"> 👑 Gold — $19/mo
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;padding:12px 20px;background:rgba(200,200,220,.08);border:1px solid rgba(200,200,220,.3);border-radius:8px;cursor:pointer;font-size:.85rem;color:#E8E8FF;">
+          <input type="radio" name="vip-tier" value="platinum" style="accent-color:#D4AF37;"> 💎 Platinum — $49/mo
+        </label>
+      </div>
+      <button type="submit" class="btn-gold" style="width:100%;padding:18px;font-size:1rem;">👑 BECOME A VIP MEMBER</button>
+      <div id="signup-msg" style="display:none;padding:15px;border-radius:8px;text-align:center;font-weight:600;"></div>
+    </form>
   </div>
 </div>
 
@@ -254,7 +302,7 @@ body{background:var(--dark);color:var(--cream);font-family:'Montserrat',sans-ser
 
 <!-- FOOTER -->
 <footer style="background:#0a0500;border-top:1px solid rgba(212,175,55,0.2);padding:60px 40px 30px;text-align:center;">
-  <a href="kekesinternational.html" style="font-family:'Dancing Script',cursive;font-size:2.5rem;color:#D4AF37;text-decoration:none;display:block;margin-bottom:10px;">Keke's International</a>
+  <a href="#" style="font-family:'Dancing Script',cursive;font-size:2.5rem;color:#D4AF37;text-decoration:none;display:block;margin-bottom:10px;">Keke's International</a>
   <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,248,231,0.6);margin-bottom:30px;">Food Spot · Est. 2020</p>
   <div style="display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;">
 <a href="kekesinternational-menu.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">MENU</a>
