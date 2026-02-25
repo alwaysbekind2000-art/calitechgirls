@@ -313,23 +313,16 @@ textarea.form-input { resize:vertical; min-height:80px; }
             <th>Price</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td><div class="item-name">Jerk Chicken</div><div class="item-desc">Marinated 24hrs · scotch bonnet fire 🔥</div></td>
-            <td style="color:var(--cream);font-weight:700;">×2</td>
-            <td class="item-price">$37.98</td>
-          </tr>
-          <tr>
-            <td><div class="item-name">Rice &amp; Peas</div><div class="item-desc">Coconut milk, kidney beans</div></td>
-            <td style="color:var(--cream);font-weight:700;">×1</td>
-            <td class="item-price">$4.99</td>
+        <tbody id="cart-items">
+          <tr id="empty-cart-row">
+            <td colspan="3" style="text-align:center;color:rgba(255,248,231,0.45);padding:20px;font-style:italic;">Your cart is empty — add items from the menu</td>
           </tr>
         </tbody>
       </table>
       <div class="totals-section">
-        <div class="total-row"><span>Subtotal</span><span>$42.97</span></div>
+        <div class="total-row"><span>Subtotal</span><span id="checkout-subtotal">$0.00</span></div>
         <div class="total-row" id="deliveryFeeRow"><span>🚚 Delivery Fee</span><span>$3.99</span></div>
-        <div class="total-row grand"><span>TOTAL</span><span id="grandTotal">$46.96</span></div>
+        <div class="total-row grand"><span>TOTAL</span><span id="grandTotal">$0.00</span></div>
       </div>
     </div>
 
@@ -339,7 +332,7 @@ textarea.form-input { resize:vertical; min-height:80px; }
       <p class="card-info-note">🔒 Secured by Square · SSL Encrypted · Sandbox Mode</p>
       <div id="card-container"><div class="sq-loading">⏳ Loading secure payment form…</div></div>
       <div class="pay-error" id="payError"></div>
-      <button class="pay-btn" id="payBtn" onclick="handlePayment()" disabled>🔥 PAY NOW — $46.96</button>
+      <button class="pay-btn" id="payBtn" onclick="handlePayment()" disabled>🔥 PAY NOW</button>
       <p class="pay-note">Your card is charged securely via Square.<br>Receipt sent to your email · Estimated 35–45 min</p>
     </div>
 
@@ -350,18 +343,15 @@ textarea.form-input { resize:vertical; min-height:80px; }
     <div class="summary-sticky">
       <div class="card">
         <div class="card-title"><span>📋</span> Order Summary</div>
-        <div class="summary-mini-item">
-          <span class="summary-name">2× Jerk Chicken</span>
-          <span class="summary-price">$37.98</span>
-        </div>
-        <div class="summary-mini-item">
-          <span class="summary-name">1× Rice &amp; Peas</span>
-          <span class="summary-price">$4.99</span>
+        <div id="summary-items">
+          <div class="summary-mini-item" style="color:rgba(255,248,231,0.45);font-style:italic;">
+            <span>Cart is empty</span>
+          </div>
         </div>
         <div style="border-top:1px solid rgba(212,160,23,0.12);margin-top:14px;padding-top:14px;">
-          <div class="total-row" style="font-size:0.78rem;"><span>Subtotal</span><span>$42.97</span></div>
+          <div class="total-row" style="font-size:0.78rem;"><span>Subtotal</span><span id="summary-subtotal">$0.00</span></div>
           <div class="total-row" id="summaryDelivery" style="font-size:0.78rem;"><span>Delivery</span><span>$3.99</span></div>
-          <div class="total-row grand"><span>Total</span><span>$46.96</span></div>
+          <div class="total-row grand"><span>Total</span><span id="summary-total">$0.00</span></div>
         </div>
         <div style="margin-top:18px;padding:14px;background:rgba(212,160,23,0.05);border-radius:10px;text-align:center;">
           <div style="font-size:0.68rem;color:rgba(255,248,231,0.45);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;">Questions? Call or Text</div>
@@ -487,13 +477,13 @@ async function handlePayment() {
       const msgs = (result.errors || []).map(e => e.message).join(' · ') || 'Card tokenisation failed.';
       showError(msgs);
       btn.disabled = false;
-      btn.textContent = '🔥 PAY NOW — $46.96';
+      btn.textContent = '🔥 PAY NOW';
     }
   } catch (err) {
     console.error('Payment error:', err);
     showError('An unexpected error occurred. Please try again.');
     btn.disabled = false;
-    btn.textContent = '🔥 PAY NOW — $46.96';
+    btn.textContent = '🔥 PAY NOW';
   }
 }
 
@@ -535,15 +525,15 @@ function setMode(mode) {
     addrSection.style.opacity   = '1';
     feeRow.style.display = 'flex';
     summaryDelivery.style.display = 'flex';
-    document.getElementById('grandTotal').textContent = '$46.96';
-    document.getElementById('payBtn').textContent     = '🔥 PAY NOW — $46.96';
+    document.getElementById('grandTotal').textContent = '$0.00';
+    document.getElementById('payBtn').textContent     = '🔥 PAY NOW';
   } else {
     addrSection.style.maxHeight = '0';
     addrSection.style.opacity   = '0';
     feeRow.style.display = 'none';
     summaryDelivery.style.display = 'none';
-    document.getElementById('grandTotal').textContent = '$42.97';
-    document.getElementById('payBtn').textContent     = '🔥 PAY NOW — $42.97';
+    document.getElementById('grandTotal').textContent = '$0.00';
+    document.getElementById('payBtn').textContent     = '🔥 PAY NOW';
   }
 }
 
