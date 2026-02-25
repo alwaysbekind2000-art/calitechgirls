@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Keke's International Food Spot</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root { --gold:#D4AF37; --gold-light:#F5D76E; --red:#8B1A1A; --red-bright:#c0392b; --cream:#FFF8E7; --dark:#0a0500; --brown:#1a0800; --green:#2ecc71; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--dark); color:var(--cream); font-family:'Montserrat',sans-serif; overflow-x:hidden; }
+.main-nav { position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(10,5,0,0.95); backdrop-filter:blur(20px); border-bottom:1px solid rgba(212,175,55,0.15); padding:0 30px; display:flex; align-items:center; justify-content:space-between; height:65px; }
+.nav-logo { font-family:'Dancing Script',cursive; font-size:1.4rem; color:#D4AF37; text-decoration:none; }
+.nav-links { display:flex; gap:4px; }
+.nav-links a { color:rgba(255,248,231,0.65); text-decoration:none; font-size:0.6rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:600; padding:6px 10px; border-radius:4px; transition:all 0.2s; white-space:nowrap; }
+.nav-links a:hover, .nav-links a.active { color:#D4AF37; background:rgba(212,175,55,0.08); }
+.nav-order-btn { padding:10px 20px; background:linear-gradient(135deg,#8B1A1A,#c0392b); color:#FFF8E7; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; border:none; border-radius:30px; cursor:pointer; text-decoration:none; font-family:'Montserrat',sans-serif; font-weight:700; box-shadow:0 5px 20px rgba(139,26,26,0.5); transition:all 0.3s; white-space:nowrap; }
+
+/* PARTICLES */
+#particles { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+.spark { position:absolute; width:2px; height:2px; background:var(--gold); border-radius:50%; animation:sparkFloat linear infinite; opacity:0; }
+@keyframes sparkFloat { 0%{opacity:0;transform:translateY(100vh)} 10%{opacity:0.8} 90%{opacity:0.2} 100%{opacity:0;transform:translateY(-20px)} }
+
+/* HERO */
+.hero { padding:130px 20px 80px; text-align:center; position:relative; z-index:1; background:radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.07) 0%, transparent 65%); }
+.hero-tag { font-size:0.65rem; letter-spacing:4px; text-transform:uppercase; color:rgba(212,175,55,0.6); margin-bottom:15px; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,6vw,4rem); color:var(--gold); margin-bottom:20px; line-height:1.1; }
+.hero-lead { max-width:650px; margin:0 auto; font-size:1.05rem; color:rgba(255,248,231,0.7); line-height:1.85; }
+
+/* MISSION */
+.mission-section { background:linear-gradient(135deg,rgba(139,26,26,0.15),rgba(212,175,55,0.08)); border:1px solid rgba(212,175,55,0.15); border-left:4px solid var(--gold); margin:0 auto; max-width:800px; padding:40px 50px; border-radius:0 16px 16px 0; position:relative; z-index:1; }
+.mission-label { font-size:0.6rem; letter-spacing:4px; text-transform:uppercase; color:rgba(212,175,55,0.6); margin-bottom:12px; }
+.mission-text { font-family:'Playfair Display',serif; font-size:clamp(1.2rem,3vw,1.7rem); color:var(--cream); line-height:1.6; font-style:italic; }
+
+/* STORY */
+.section { max-width:1100px; margin:0 auto; padding:80px 20px; position:relative; z-index:1; }
+.section-title { font-family:'Playfair Display',serif; font-size:clamp(1.6rem,4vw,2.5rem); color:var(--gold); margin-bottom:10px; }
+.section-sub { color:rgba(255,248,231,0.5); font-size:0.82rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:40px; }
+
+.story-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+@media(max-width:768px){ .story-grid{grid-template-columns:1fr} }
+.story-text p { font-size:0.92rem; color:rgba(255,248,231,0.72); line-height:2; margin-bottom:20px; }
+.story-text p strong { color:var(--gold); }
+.story-visual { background:linear-gradient(135deg,rgba(26,8,0,0.9),rgba(10,5,0,0.95)); border:1px solid rgba(212,175,55,0.2); border-radius:20px; padding:40px; text-align:center; }
+.chef-emoji { font-size:5rem; margin-bottom:15px; display:block; }
+.chef-name { font-family:'Dancing Script',cursive; font-size:2.2rem; color:var(--gold); margin-bottom:5px; }
+.chef-title { font-size:0.7rem; letter-spacing:3px; text-transform:uppercase; color:rgba(255,248,231,0.5); margin-bottom:20px; }
+.chef-stats { display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:20px; }
+.stat-box { background:rgba(212,175,55,0.07); border:1px solid rgba(212,175,55,0.15); border-radius:10px; padding:15px; }
+.stat-num { font-size:1.8rem; font-weight:900; color:var(--gold); font-family:'Playfair Display',serif; }
+.stat-label { font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:rgba(255,248,231,0.4); margin-top:3px; }
+
+/* TIMELINE */
+.timeline { position:relative; padding-left:30px; }
+.timeline::before { content:''; position:absolute; left:0; top:10px; bottom:10px; width:2px; background:linear-gradient(to bottom, rgba(212,175,55,0.6), rgba(212,175,55,0.1)); }
+.tl-item { position:relative; margin-bottom:35px; padding-left:30px; }
+.tl-dot { position:absolute; left:-39px; width:16px; height:16px; border-radius:50%; background:var(--gold); box-shadow:0 0 15px rgba(212,175,55,0.5); top:4px; }
+.tl-year { font-size:0.65rem; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:6px; font-weight:700; }
+.tl-title { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--cream); margin-bottom:5px; }
+.tl-desc { font-size:0.82rem; color:rgba(255,248,231,0.55); line-height:1.7; }
+
+/* VALUES */
+.values-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; }
+.value-card { background:rgba(26,8,0,0.7); border:1px solid rgba(212,175,55,0.1); border-radius:16px; padding:30px 25px; text-align:center; transition:all 0.3s; }
+.value-card:hover { transform:translateY(-5px); border-color:rgba(212,175,55,0.3); }
+.value-icon { font-size:2.5rem; margin-bottom:12px; display:block; }
+.value-name { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--gold); margin-bottom:8px; }
+.value-desc { font-size:0.78rem; color:rgba(255,248,231,0.55); line-height:1.7; }
+
+/* PRESS */
+.press-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; }
+.press-card { background:rgba(26,8,0,0.5); border:1px solid rgba(212,175,55,0.08); border-radius:12px; padding:20px; text-align:center; }
+.press-icon { font-size:2rem; margin-bottom:8px; }
+.press-name { font-size:0.75rem; font-weight:700; color:rgba(255,248,231,0.6); }
+
+/* CTA */
+.cta-section { text-align:center; padding:80px 20px; background:var(--brown); border-top:1px solid rgba(212,175,55,0.08); border-bottom:1px solid rgba(212,175,55,0.08); position:relative; z-index:1; }
+.cta-section h2 { font-family:'Playfair Display',serif; font-size:clamp(1.5rem,4vw,2.5rem); color:var(--gold); margin-bottom:12px; }
+.cta-section p { color:rgba(255,248,231,0.6); margin-bottom:30px; }
+.cta-btns { display:flex; gap:15px; justify-content:center; flex-wrap:wrap; }
+.cta-btn { padding:16px 40px; background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--dark); font-family:'Montserrat',sans-serif; font-weight:800; font-size:0.8rem; letter-spacing:2px; text-transform:uppercase; border-radius:50px; text-decoration:none; box-shadow:0 8px 25px rgba(212,175,55,0.4); transition:all 0.3s; }
+.cta-btn.red { background:linear-gradient(135deg,var(--red),var(--red-bright)); color:var(--cream); box-shadow:0 8px 25px rgba(139,26,26,0.4); }
+.cta-btn:hover { transform:translateY(-3px); }
+
+/* FOOTER */
+.footer { background:#050200; border-top:1px solid rgba(212,175,55,0.15); padding:60px 20px 40px; text-align:center; }
+.footer-inner { max-width:800px; margin:0 auto; }
+.footer-logo { font-family:'Dancing Script',cursive; font-size:2.5rem; color:#D4AF37; margin-bottom:8px; }
+.footer-tagline { color:rgba(255,248,231,0.4); font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:24px; }
+.social-links { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:24px; }
+.social-btn { padding:10px 20px; background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.2); color:rgba(255,248,231,0.7); border-radius:25px; text-decoration:none; font-size:0.7rem; letter-spacing:1px; transition:all 0.3s; }
+.social-btn:hover { background:rgba(212,175,55,0.2); color:#D4AF37; }
+.footer-divider { height:1px; background:rgba(212,175,55,0.1); margin:20px 0; }
+.footer-contact { color:rgba(255,248,231,0.45); font-size:0.8rem; line-height:2; }
+.footer-copy { color:rgba(255,248,231,0.25); font-size:0.7rem; letter-spacing:1px; }
+</style>
+</head>
+<body>
+<div id="particles"></div>
+<nav class="main-nav">
+  <a href="kekesinternational.html" class="nav-logo">Keke's International</a>
+  <div class="nav-links">
+    <a href="kekesinternational.html">Home</a>
+    <a href="kekesinternational-menu.html">Menu</a>
+    <a href="kekesinternational-catering.html">Catering</a>
+    <a href="kekesinternational-events.html">Events</a>
+    <a href="kekesinternational-grand-opening.html">🎉 Reopening</a>
+    <a href="kekesinternational-gallery.html">Gallery</a>
+    <a href="kekesinternational-vip.html">VIP</a>
+    <a href="kekesinternational-about.html" class="active">About</a>
+    <a href="kekesinternational-contact.html">Contact</a>
+    <a href="kekesinternational-tracker.html">Track Order</a>
+    <a href="mississippi-soul-food.html" style="color:#D4AF37;font-size:0.8rem;font-weight:700;padding:6px 12px;border:1px solid #D4AF37;border-radius:20px;text-decoration:none;white-space:nowrap;">🍖 Mississippi Soul</a>
+  </div>
+  <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">🌴 Our Story</div>
+  <h1>THE STORY BEHIND<br>THE FLAVOR</h1>
+  <p class="hero-lead">From a home kitchen in Southern California to 125+ five-star reviews across three locations — this is how Caribbean soul food found its home.</p>
+</div>
+
+<div style="padding:0 20px 60px;position:relative;z-index:1;">
+  <div class="mission-section">
+    <div class="mission-label">Our Mission</div>
+    <div class="mission-text">"Bringing the flavors of the Caribbean to every table, one plate at a time."</div>
+  </div>
+</div>
+
+<!-- STORY -->
+<div class="section" style="padding-top:20px;">
+  <div class="story-grid">
+    <div class="story-text">
+      <div class="section-title">How It All Started</div>
+      <div class="section-sub" style="margin-bottom:30px;">From Home Kitchen to Southern California Icon</div>
+      <p>It started simply: <strong>Chef Keke Chanel Hardy</strong> cooking Caribbean food for family and friends in Moreno Valley. No restaurant, no storefront — just authentic recipes passed down through generations, made with love in her kitchen.</p>
+      <p>Word spread the way it always does with great food: person to person, plate to plate. Friends told friends. Neighbors started requesting plates. The demand was undeniable. <strong>Keke's International Food Spot was born.</strong></p>
+      <p>The formula was simple — <strong>real Caribbean ingredients, slow-cooked with care, served late when everyone else is closed.</strong> Oxtail braised for 8 hours. Jerk chicken marinated for 24. Rice & peas made fresh with coconut milk and thyme. Nothing rushed, nothing fake.</p>
+      <p>Today, <strong>125+ five-star reviews</strong> across Moreno Valley and Long Beach tell the story. Orange County is next. The Grand Reopening in March 2026 marks a new chapter — bigger, bolder, and more Caribbean than ever.</p>
+    </div>
+    <div class="story-visual">
+      <span class="chef-emoji">👩‍🍳</span>
+      <div class="chef-name">Chef Keke Chanel</div>
+      <div class="chef-title">Founder · Head Chef · The Flavor Queen</div>
+      <div style="font-size:0.8rem;color:rgba(255,248,231,0.55);line-height:1.8;">"Every plate I serve is a piece of my Caribbean heritage. I cook with the same love my grandmother cooked with — and that love is in every bite."</div>
+      <div class="chef-stats">
+        <div class="stat-box"><div class="stat-num">125+</div><div class="stat-label">5-Star Reviews</div></div>
+        <div class="stat-box"><div class="stat-num">3</div><div class="stat-label">Locations</div></div>
+        <div class="stat-box"><div class="stat-num">4AM</div><div class="stat-label">Close Time</div></div>
+        <div class="stat-box"><div class="stat-num">7yr</div><div class="stat-label">Of Flavors</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div style="background:var(--brown);border-top:1px solid rgba(212,175,55,0.08);border-bottom:1px solid rgba(212,175,55,0.08);padding:80px 20px;position:relative;z-index:1;">
+  <div style="max-width:700px;margin:0 auto;">
+    <div class="section-title" style="text-align:center;margin-bottom:10px;">The Journey</div>
+    <div class="section-sub" style="text-align:center;margin-bottom:50px;">Every Flavor Has a History</div>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2019 · The Beginning</div><div class="tl-title">Keke's International Food Spot Founded</div><div class="tl-desc">Chef Keke starts cooking Caribbean food for friends and family in Moreno Valley. The word starts spreading through the community. The first official orders taken by phone.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2021 · Expansion</div><div class="tl-title">Long Beach Location Opens</div><div class="tl-desc">Demand from the LA and Long Beach area grows too big to ignore. Keke's expands to Long Beach, bringing authentic Caribbean soul food to a new community. Instagram blows up overnight.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2023 · Recognition</div><div class="tl-title">125 Five-Star Reviews Achieved</div><div class="tl-desc">Keke's crosses a milestone no one expected this fast — 125 five-star reviews across multiple platforms. The community has spoken. This isn't just food; it's an experience.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2026 · The Return</div><div class="tl-title">Grand Reopening — March 19, 2026</div><div class="tl-desc">After a period of reflection and reinvention, Keke's returns bigger, bolder, and more Caribbean than ever. New menu items, extended hours, VIP program, and Orange County in the pipeline.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- VALUES -->
+<div class="section">
+  <div class="section-title" style="text-align:center;">Our Values</div>
+  <div class="section-sub" style="text-align:center;">What We Stand For in Every Plate</div>
+  <div class="values-grid">
+    <div class="value-card"><span class="value-icon">🌴</span><div class="value-name">Authenticity</div><div class="value-desc">Real Caribbean recipes. Real techniques. No shortcuts. Every dish honors the traditions that built this cuisine.</div></div>
+    <div class="value-card"><span class="value-icon">🔥</span><div class="value-name">Quality</div><div class="value-desc">Fresh ingredients, long prep times, and cooked-to-order. We don't compromise on the food, period.</div></div>
+    <div class="value-card"><span class="value-icon">🤝</span><div class="value-name">Community</div><div class="value-desc">We're from here. We feed here. Every order supports a Black-owned, family-run operation rooted in the Inland Empire.</div></div>
+    <div class="value-card"><span class="value-icon">🌙</span><div class="value-name">Late Night Love</div><div class="value-desc">The best meals happen late. We're here till 4AM because hunger doesn't follow a 9-to-5 schedule, and neither do we.</div></div>
+  </div>
+</div>
+
+<!-- PRESS / AWARDS -->
+<div style="background:var(--brown);border-top:1px solid rgba(212,175,55,0.08);padding:60px 20px;position:relative;z-index:1;">
+  <div style="max-width:900px;margin:0 auto;text-align:center;">
+    <div class="section-title" style="margin-bottom:10px;">Recognition & Press</div>
+    <div class="section-sub" style="margin-bottom:35px;">The Word Is Out</div>
+    <div class="press-grid">
+      <div class="press-card"><div class="press-icon">⭐</div><div class="press-name">125+ Five-Star Reviews</div></div>
+      <div class="press-card"><div class="press-icon">🏆</div><div class="press-name">Best Late Night Food · IE Community Awards 2024</div></div>
+      <div class="press-card"><div class="press-icon">📱</div><div class="press-name">Viral on TikTok & Instagram Multiple Times</div></div>
+      <div class="press-card"><div class="press-icon">🎙️</div><div class="press-name">Featured in IE Food Stories Podcast</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Come Taste the Story</h2>
+  <p>Every bite is a chapter. Start yours tonight.</p>
+  <div class="cta-btns">
+    <a href="kekesinternational-menu.html" class="cta-btn">🍽️ Order Now</a>
+    <a href="kekesinternational-catering.html" class="cta-btn red">📅 Book Catering</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Keke's</div>
+    <p class="footer-tagline">International Food Spot · Every Meal Cooked with Love</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/kekesinternationalfoodspot" target="_blank" class="social-btn">📸 @KekesInternational</a>
+      <a href="https://www.instagram.com/longbeach_kekes/" target="_blank" class="social-btn">📸 @LongBeach_Kekes</a>
+      <a href="kekesinternational-catering.html" class="social-btn">🍽️ Book Catering</a>
+      <a href="kekesinternational-events.html" class="social-btn">🎉 Events</a>
+    </div>
+    <div class="footer-divider"></div>
+    <p class="footer-contact">📞 (951) 630-5410 · Call or Text Chef Keke Chanel<br>🚚 Online Orders Only · No Walk-Up · No Dine-In<br>📍 Moreno Valley · Long Beach · Orange County (Coming Soon)<br>🌙 Open Till 4AM</p>
+    <div class="footer-divider"></div>
+    <p class="footer-copy">© 2026 Keke's International Food Spot · Grand Reopening March 2026 🎉</p>
+  </div>
+</footer>
+<script>
+const pc=document.getElementById('particles');
+for(let i=0;i<30;i++){const s=document.createElement('div');s.className='spark';s.style.left=Math.random()*100+'%';s.style.animationDuration=(10+Math.random()*15)+'s';s.style.animationDelay=(Math.random()*10)+'s';s.style.width=s.style.height=(1+Math.random()*2)+'px';pc.appendChild(s);}
+</script>
+</body>
+</html>

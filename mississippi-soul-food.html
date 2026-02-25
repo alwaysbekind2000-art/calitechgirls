@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mississippi Soul Food — Where Every Plate Tells a Story</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Dancing+Script:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --burgundy: #6B1A1A;
+      --deep-maroon: #3D0C0C;
+      --amber: #D4A017;
+      --honey: #F0A500;
+      --cream: #FFF8E7;
+      --brown: #5C3317;
+      --smoke: #1A0A0A;
+      --rust: #8B3A3A;
+      --gold-light: #FFD166;
+      --warm-white: #FAF0DC;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--smoke);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ===== PAGE LOAD FADE ===== */
+    body { animation: fadeInPage 1.2s ease forwards; }
+    @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--deep-maroon); }
+    ::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 4px; }
+
+    /* ===== NAVIGATION ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(61, 12, 12, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--amber);
+      padding: 0 2rem;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.3s ease;
+    }
+    nav.scrolled { background: rgba(26, 4, 4, 0.98); box-shadow: 0 4px 30px rgba(212, 160, 23, 0.2); }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--amber);
+      letter-spacing: 1px;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--cream); font-weight: 400; font-style: italic; font-size: 0.9rem; display: block; line-height: 1; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      transition: color 0.3s;
+      text-transform: uppercase;
+    }
+    .nav-links a:hover { color: var(--honey); }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--amber), var(--honey));
+      color: var(--deep-maroon) !important;
+      padding: 0.5rem 1.4rem;
+      border-radius: 25px;
+      font-weight: 700 !important;
+      transition: all 0.3s !important;
+      text-transform: uppercase;
+      font-size: 0.85rem !important;
+    }
+    .nav-cta:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(212, 160, 23, 0.5); background: linear-gradient(135deg, var(--honey), var(--gold-light)) !important; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    .hamburger span { width: 26px; height: 2px; background: var(--amber); display: block; transition: 0.3s; }
+
+    /* ===== HERO SECTION ===== */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--smoke) 0%, #2A0808 40%, #1A0505 100%);
+    }
+
+    #ember-canvas {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center bottom, rgba(212, 160, 23, 0.15) 0%, rgba(107, 26, 26, 0.4) 50%, rgba(26, 10, 10, 0.8) 100%);
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 2rem;
+      max-width: 900px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      color: var(--honey);
+      letter-spacing: 3px;
+      margin-bottom: 1rem;
+      animation: slideDown 0.8s ease 0.3s both;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      font-weight: 900;
+      line-height: 0.9;
+      color: var(--cream);
+      text-shadow: 0 0 60px rgba(212, 160, 23, 0.4), 3px 3px 0 rgba(61, 12, 12, 0.8);
+      margin-bottom: 1.2rem;
+      animation: heroTitleAnim 1s ease 0.5s both;
+    }
+    .hero-title .highlight { color: var(--amber); display: block; }
+
+    .hero-tagline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      font-style: italic;
+      color: var(--honey);
+      margin-bottom: 0.8rem;
+      animation: slideUp 0.8s ease 0.8s both;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: rgba(255, 248, 231, 0.8);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      animation: slideUp 0.8s ease 1s both;
+    }
+    .hero-sub span { color: var(--amber); }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: slideUp 0.8s ease 1.2s both;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--amber), var(--honey));
+      color: var(--deep-maroon);
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s;
+      box-shadow: 0 6px 30px rgba(212, 160, 23, 0.4);
+    }
+    .btn-primary:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 10px 40px rgba(212, 160, 23, 0.6); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--cream);
+      padding: 1rem 2.5rem;
+      border: 2px solid var(--amber);
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s;
+    }
+    .btn-outline:hover { background: rgba(212, 160, 23, 0.15); transform: translateY(-3px); border-color: var(--honey); color: var(--honey); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(255, 248, 231, 0.5);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: bounce 2s infinite 2s;
+    }
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--amber), transparent);
+    }
+
+    @keyframes heroTitleAnim { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+
+    /* ===== SECTION COMMON ===== */
+    section { padding: 6rem 2rem; }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      color: var(--cream);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .section-subtitle {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      color: var(--honey);
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-divider {
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--amber), transparent);
+      margin: 0.8rem auto 1rem;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== STORY SECTION ===== */
+    #story {
+      background: linear-gradient(135deg, #2A0808 0%, #3D1010 50%, #2A0808 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    #story::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(212, 160, 23, 0.08) 0%, transparent 60%);
+    }
+    #story::after {
+      content: '"';
+      position: absolute;
+      top: -2rem;
+      left: 3rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 20rem;
+      color: rgba(212, 160, 23, 0.04);
+      line-height: 1;
+    }
+
+    .story-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .story-text p {
+      font-size: 1.15rem;
+      line-height: 1.9;
+      color: rgba(255, 248, 231, 0.85);
+      margin-bottom: 1.5rem;
+    }
+
+    .story-quote {
+      border-left: 4px solid var(--amber);
+      padding: 1rem 1.5rem;
+      margin: 2rem 0;
+      background: rgba(212, 160, 23, 0.06);
+      border-radius: 0 8px 8px 0;
+    }
+    .story-quote p {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem !important;
+      color: var(--honey) !important;
+      margin: 0 !important;
+      line-height: 1.4 !important;
+    }
+    .story-quote cite {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: rgba(255, 248, 231, 0.6);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .story-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .stat-card {
+      background: rgba(212, 160, 23, 0.08);
+      border: 1px solid rgba(212, 160, 23, 0.25);
+      border-radius: 12px;
+      padding: 1.8rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .stat-card:hover { background: rgba(212, 160, 23, 0.15); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(212, 160, 23, 0.15); }
+    .stat-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--amber);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat-label { font-size: 0.85rem; color: rgba(255, 248, 231, 0.7); text-transform: uppercase; letter-spacing: 1px; }
+
+    .story-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .story-badge {
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212, 160, 23, 0.15), rgba(107, 26, 26, 0.3));
+      border: 2px solid rgba(212, 160, 23, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+    .story-badge .badge-icon { font-size: 4rem; margin-bottom: 1rem; }
+    .story-badge .badge-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--amber);
+      line-height: 1.3;
+    }
+    .story-badge .badge-sub {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.1rem;
+      color: rgba(255, 248, 231, 0.7);
+      margin-top: 0.4rem;
+    }
+    @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 30px rgba(212, 160, 23, 0.2); } 50% { box-shadow: 0 0 60px rgba(212, 160, 23, 0.4), 0 0 100px rgba(212, 160, 23, 0.1); } }
+
+    /* ===== MENU SECTION ===== */
+    #menu {
+      background: var(--smoke);
+      position: relative;
+    }
+
+    .menu-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+    .menu-tab {
+      background: transparent;
+      border: 2px solid rgba(212, 160, 23, 0.3);
+      color: rgba(255, 248, 231, 0.7);
+      padding: 0.6rem 1.8rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .menu-tab:hover { border-color: var(--amber); color: var(--cream); }
+    .menu-tab.active {
+      background: linear-gradient(135deg, var(--amber), var(--honey));
+      border-color: var(--amber);
+      color: var(--deep-maroon);
+      box-shadow: 0 4px 20px rgba(212, 160, 23, 0.4);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .menu-panel { display: none; }
+    .menu-panel.active { display: block; }
+
+    .menu-card {
+      background: linear-gradient(135deg, rgba(61, 12, 12, 0.8), rgba(42, 8, 8, 0.9));
+      border: 1px solid rgba(212, 160, 23, 0.2);
+      border-radius: 16px;
+      padding: 1.8rem;
+      transition: all 0.35s;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .menu-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top left, rgba(212, 160, 23, 0.08), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .menu-card:hover { transform: translateY(-6px) scale(1.02); border-color: var(--amber); box-shadow: 0 15px 40px rgba(212, 160, 23, 0.25); }
+    .menu-card:hover::before { opacity: 1; }
+
+    /* Steam effect */
+    .menu-card:hover .card-icon::after {
+      animation: steam 1.5s ease-in-out infinite;
+    }
+    .card-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+      position: relative;
+    }
+    .card-icon::after {
+      content: '〰️';
+      position: absolute;
+      top: -1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1rem;
+      opacity: 0;
+    }
+    @keyframes steam {
+      0% { opacity: 0; transform: translateX(-50%) translateY(0) scaleX(1); }
+      50% { opacity: 0.6; transform: translateX(-50%) translateY(-10px) scaleX(1.5); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-20px) scaleX(0.5); }
+    }
+
+    .card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+    .card-desc {
+      font-size: 0.85rem;
+      color: rgba(255, 248, 231, 0.65);
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--honey);
+    }
+    .add-btn {
+      background: linear-gradient(135deg, var(--amber), var(--honey));
+      color: var(--deep-maroon);
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .add-btn:hover { transform: scale(1.08); box-shadow: 0 4px 15px rgba(212, 160, 23, 0.5); }
+    .add-btn:active { transform: scale(0.95); }
+
+    /* Catering cards */
+    .catering-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .catering-card {
+      background: linear-gradient(135deg, rgba(61, 12, 12, 0.8), rgba(42, 8, 8, 0.9));
+      border: 1px solid rgba(212, 160, 23, 0.2);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+    .catering-tier {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      color: var(--honey);
+      margin-bottom: 0.3rem;
+    }
+    .catering-serves { font-size: 0.8rem; color: rgba(255, 248, 231, 0.6); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
+    .catering-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--amber);
+      margin-bottom: 1.2rem;
+    }
+    .catering-includes { list-style: none; margin-bottom: 1.5rem; }
+    .catering-includes li { padding: 0.4rem 0; border-bottom: 1px solid rgba(212, 160, 23, 0.1); font-size: 0.9rem; color: rgba(255, 248, 231, 0.8); }
+    .catering-includes li::before { content: '✓ '; color: var(--amber); font-weight: 700; }
+
+    /* ===== ORDER TRAY ===== */
+    #order-tray {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 999;
+      background: rgba(61, 12, 12, 0.97);
+      border-top: 2px solid var(--amber);
+      backdrop-filter: blur(15px);
+      padding: 0.8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 -8px 40px rgba(212, 160, 23, 0.2);
+    }
+    #order-tray.visible { transform: translateY(0); }
+    .tray-left { display: flex; align-items: center; gap: 1.2rem; }
+    .tray-icon { font-size: 1.8rem; }
+    .tray-count {
+      background: var(--amber);
+      color: var(--deep-maroon);
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .tray-label { font-size: 0.9rem; color: rgba(255, 248, 231, 0.8); }
+    .tray-items-preview { font-size: 0.8rem; color: rgba(255, 248, 231, 0.5); margin-top: 0.1rem; }
+    .tray-center { display: flex; gap: 0.8rem; align-items: center; flex: 1; overflow: hidden; padding: 0 1.5rem; flex-wrap: wrap; }
+    .tray-item-chip {
+      background: rgba(212, 160, 23, 0.15);
+      border: 1px solid rgba(212, 160, 23, 0.3);
+      border-radius: 20px;
+      padding: 0.25rem 0.8rem;
+      font-size: 0.75rem;
+      color: var(--honey);
+      white-space: nowrap;
+    }
+    .tray-right { display: flex; align-items: center; gap: 1.5rem; }
+    .tray-total {
+      text-align: right;
+    }
+    .tray-total .label { font-size: 0.7rem; color: rgba(255, 248, 231, 0.5); text-transform: uppercase; letter-spacing: 1px; }
+    .tray-total .amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--amber);
+    }
+    .complete-btn {
+      background: linear-gradient(135deg, var(--amber), var(--honey));
+      color: var(--deep-maroon);
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+    .complete-btn:hover { transform: scale(1.05); box-shadow: 0 6px 25px rgba(212, 160, 23, 0.5); }
+    .clear-tray {
+      background: none;
+      border: 1px solid rgba(212, 160, 23, 0.3);
+      color: rgba(255, 248, 231, 0.5);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .clear-tray:hover { color: var(--cream); border-color: var(--amber); }
+
+    /* ===== SUNDAY SPECIAL ===== */
+    #sunday-special {
+      background: linear-gradient(135deg, var(--burgundy) 0%, #4A0E0E 50%, var(--burgundy) 100%);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    #sunday-special::before {
+      content: '☀️';
+      position: absolute;
+      font-size: 25rem;
+      top: -8rem;
+      right: -5rem;
+      opacity: 0.04;
+      pointer-events: none;
+    }
+
+    .special-badge {
+      display: inline-block;
+      background: var(--amber);
+      color: var(--deep-maroon);
+      padding: 0.4rem 1.5rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+
+    .special-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 900;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+    .special-dish {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--honey);
+      margin-bottom: 0.5rem;
+    }
+    .special-includes {
+      font-size: 1rem;
+      color: rgba(255, 248, 231, 0.8);
+      margin-bottom: 0.8rem;
+    }
+    .special-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--amber);
+      margin-bottom: 2rem;
+    }
+
+    .countdown {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+    .countdown-block {
+      background: rgba(26, 10, 10, 0.5);
+      border: 1px solid rgba(212, 160, 23, 0.3);
+      border-radius: 12px;
+      padding: 1.2rem 1.8rem;
+      min-width: 90px;
+      text-align: center;
+    }
+    .countdown-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--amber);
+      line-height: 1;
+      display: block;
+    }
+    .countdown-label { font-size: 0.7rem; color: rgba(255, 248, 231, 0.6); text-transform: uppercase; letter-spacing: 1px; margin-top: 0.3rem; }
+
+    /* ===== CATERING SECTION ===== */
+    #catering {
+      background: linear-gradient(180deg, var(--smoke) 0%, #1E0606 100%);
+    }
+
+    .event-types {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .event-chip {
+      background: rgba(107, 26, 26, 0.4);
+      border: 1px solid rgba(212, 160, 23, 0.25);
+      color: rgba(255, 248, 231, 0.8);
+      padding: 0.5rem 1.3rem;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .catering-packages {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto 4rem;
+    }
+    .package-card {
+      background: linear-gradient(160deg, rgba(61, 12, 12, 0.9), rgba(42, 8, 8, 0.95));
+      border: 1px solid rgba(212, 160, 23, 0.2);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      position: relative;
+      transition: all 0.3s;
+    }
+    .package-card.popular {
+      border-color: var(--amber);
+      box-shadow: 0 0 30px rgba(212, 160, 23, 0.2);
+    }
+    .popular-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--amber), var(--honey));
+      color: var(--deep-maroon);
+      padding: 0.3rem 1.2rem;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+    .package-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(212, 160, 23, 0.2); }
+    .package-tier {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem;
+      color: var(--honey);
+      margin-bottom: 0.3rem;
+    }
+    .package-serves { font-size: 0.8rem; color: rgba(255, 248, 231, 0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
+    .package-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--amber);
+      margin-bottom: 1.5rem;
+    }
+    .package-price span { font-size: 1rem; font-weight: 400; color: rgba(255, 248, 231, 0.5); }
+    .package-includes { list-style: none; text-align: left; margin-bottom: 2rem; }
+    .package-includes li { padding: 0.5rem 0; border-bottom: 1px solid rgba(212, 160, 23, 0.1); font-size: 0.9rem; color: rgba(255, 248, 231, 0.8); display: flex; align-items: center; gap: 0.6rem; }
+    .package-includes li::before { content: '🍽️'; font-size: 0.9rem; }
+
+    /* Catering form */
+    .catering-form-section {
+      max-width: 700px;
+      margin: 0 auto;
+      background: rgba(61, 12, 12, 0.4);
+      border: 1px solid rgba(212, 160, 23, 0.2);
+      border-radius: 20px;
+      padding: 3rem 2.5rem;
+    }
+    .form-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 0.3rem;
+    }
+    .form-sub { font-family: 'Dancing Script', cursive; font-size: 1.2rem; color: var(--honey); margin-bottom: 2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .form-group label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: rgba(255, 248, 231, 0.7); }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(26, 10, 10, 0.7);
+      border: 1px solid rgba(212, 160, 23, 0.25);
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      color: var(--cream);
+      font-family: 'Lato', sans-serif;
+      font-size: 0.95rem;
+      transition: border-color 0.3s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.1); }
+    .form-group select option { background: var(--deep-maroon); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--amber), var(--honey));
+      color: var(--deep-maroon);
+      border: none;
+      padding: 1.1rem;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: all 0.3s;
+    }
+    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(212, 160, 23, 0.5); }
+
+    /* ===== TESTIMONIALS ===== */
+    #testimonials {
+      background: linear-gradient(135deg, #2A0808 0%, var(--smoke) 100%);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .testimonial-card {
+      background: linear-gradient(135deg, rgba(61, 12, 12, 0.7), rgba(42, 8, 8, 0.8));
+      border: 1px solid rgba(212, 160, 23, 0.2);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all 0.3s;
+      position: relative;
+    }
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      color: rgba(212, 160, 23, 0.12);
+      line-height: 1;
+    }
+    .testimonial-card:hover { transform: translateY(-5px); border-color: rgba(212, 160, 23, 0.4); box-shadow: 0 15px 40px rgba(212, 160, 23, 0.15); }
+    .t-stars { font-size: 1.1rem; margin-bottom: 1rem; letter-spacing: 2px; }
+    .t-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: rgba(255, 248, 231, 0.9);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .t-author { display: flex; align-items: center; gap: 0.8rem; }
+    .t-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--burgundy), var(--amber));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .t-name { font-weight: 700; color: var(--cream); font-size: 0.95rem; }
+    .t-role { font-size: 0.8rem; color: rgba(255, 248, 231, 0.5); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--deep-maroon);
+      border-top: 2px solid rgba(212, 160, 23, 0.3);
+      padding: 4rem 2rem 2rem;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-brand .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--amber);
+      margin-bottom: 0.3rem;
+    }
+    .footer-brand .brand-sub {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1rem;
+      color: rgba(255, 248, 231, 0.6);
+      margin-bottom: 1rem;
+    }
+    .footer-brand p { font-size: 0.9rem; color: rgba(255, 248, 231, 0.6); line-height: 1.7; margin-bottom: 1.2rem; }
+    .footer-social { display: flex; gap: 0.8rem; }
+    .social-btn {
+      width: 38px; height: 38px;
+      background: rgba(212, 160, 23, 0.1);
+      border: 1px solid rgba(212, 160, 23, 0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: var(--cream);
+    }
+    .social-btn:hover { background: rgba(212, 160, 23, 0.25); transform: translateY(-2px); }
+    .footer-col h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--amber);
+      margin-bottom: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.6rem; }
+    .footer-col ul li a { color: rgba(255, 248, 231, 0.65); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+    .footer-col ul li a:hover { color: var(--honey); }
+    .footer-hours p { font-size: 0.9rem; color: rgba(255, 248, 231, 0.65); margin-bottom: 0.4rem; }
+    .footer-hours strong { color: var(--cream); }
+    .footer-hours .badge-note {
+      display: inline-block;
+      background: rgba(212, 160, 23, 0.1);
+      border: 1px solid rgba(212, 160, 23, 0.25);
+      color: var(--honey);
+      padding: 0.3rem 0.8rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      margin-top: 0.8rem;
+    }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(212, 160, 23, 0.15);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-bottom p { font-size: 0.8rem; color: rgba(255, 248, 231, 0.4); }
+    .footer-bottom .love { color: var(--amber); }
+
+    /* ===== ORDER MODAL ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 4, 4, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      padding: 1rem;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    .modal-box {
+      background: linear-gradient(160deg, #3D0C0C, #2A0808);
+      border: 1px solid rgba(212, 160, 23, 0.3);
+      border-radius: 20px;
+      padding: 2.5rem;
+      max-width: 500px;
+      width: 100%;
+      transform: scale(0.9);
+      transition: transform 0.3s;
+    }
+    .modal-overlay.active .modal-box { transform: scale(1); }
+    .modal-box h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--cream); margin-bottom: 0.5rem; }
+    .modal-box p { color: rgba(255, 248, 231, 0.7); margin-bottom: 1.5rem; font-size: 0.95rem; }
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: none;
+      border: none;
+      color: rgba(255, 248, 231, 0.5);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .modal-close:hover { color: var(--cream); }
+    .modal-box { position: relative; }
+    .modal-order-list { list-style: none; margin-bottom: 1.5rem; }
+    .modal-order-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(212, 160, 23, 0.1);
+      font-size: 0.9rem;
+      color: rgba(255, 248, 231, 0.85);
+    }
+    .modal-total {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 0;
+      border-top: 1px solid rgba(212, 160, 23, 0.3);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+    .modal-total .t-label { color: var(--cream); font-size: 1rem; }
+    .modal-total .t-val { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--amber); }
+    .modal-note {
+      background: rgba(212, 160, 23, 0.06);
+      border: 1px solid rgba(212, 160, 23, 0.2);
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      font-size: 0.8rem;
+      color: rgba(255, 248, 231, 0.6);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Add to plate animation */
+    .fly-item {
+      position: fixed;
+      font-size: 2rem;
+      z-index: 5000;
+      pointer-events: none;
+      transition: all 0.7s cubic-bezier(0.5, -0.5, 0.5, 1.5);
+    }
+
+    /* ===== TOAST NOTIFICATION ===== */
+    .toast {
+      position: fixed;
+      top: 90px;
+      right: 1.5rem;
+      background: linear-gradient(135deg, var(--burgundy), var(--deep-maroon));
+      border: 1px solid var(--amber);
+      border-radius: 12px;
+      padding: 0.8rem 1.5rem;
+      color: var(--cream);
+      font-size: 0.9rem;
+      z-index: 3000;
+      transform: translateX(120%);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      max-width: 280px;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast-icon { font-size: 1.2rem; margin-right: 0.5rem; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-links.mobile-open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 70px; left: 0; right: 0;
+        background: rgba(26, 4, 4, 0.98);
+        padding: 1.5rem;
+        gap: 1.2rem;
+        border-bottom: 2px solid var(--amber);
+      }
+      .story-inner { grid-template-columns: 1fr; }
+      .story-stats { grid-template-columns: 1fr 1fr; }
+      .story-badge { width: 250px; height: 250px; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      /* Catering tier cards: stack to single column on mobile */
+      [style*="grid-template-columns:1fr 1fr;gap:2.5rem"] {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    @media (max-width: 480px) {
+      .footer-inner { grid-template-columns: 1fr; }
+      .story-stats { grid-template-columns: 1fr; }
+    }
+
+    /* ===== AUDIO TOGGLE ===== */
+    #audio-toggle {
+      position: fixed;
+      bottom: 100px;
+      right: 1.5rem;
+      z-index: 998;
+      background: rgba(61, 12, 12, 0.9);
+      border: 1px solid rgba(212, 160, 23, 0.3);
+      border-radius: 50%;
+      width: 46px; height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      backdrop-filter: blur(10px);
+    }
+    #audio-toggle:hover { border-color: var(--amber); background: rgba(107, 26, 26, 0.95); transform: scale(1.1); }
+    #audio-toggle.muted { opacity: 0.5; }
+
+    /* ===== BACK TO TOP ===== */
+    #back-to-top {
+      position: fixed;
+      bottom: 160px;
+      right: 1.5rem;
+      z-index: 998;
+      background: rgba(61, 12, 12, 0.9);
+      border: 1px solid rgba(212, 160, 23, 0.3);
+      border-radius: 50%;
+      width: 46px; height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    #back-to-top.visible { opacity: 1; pointer-events: all; }
+    #back-to-top:hover { border-color: var(--amber); transform: scale(1.1); }
+
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    Mississippi Soul Food
+    <span>Authentic Southern Kitchen</span>
+  </a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#catering">Catering Packages</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="kekesinternational.html" style="color:#D4AF37;font-size:0.8rem;font-weight:700;padding:6px 12px;border:1px solid #D4AF37;border-radius:20px;text-decoration:none;white-space:nowrap;">🍛 Keke's International</a></li>
+    <li><a href="#catering" class="nav-cta">BOOK CATERING</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <canvas id="ember-canvas"></canvas>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">✦ Est. Since Grandma's Kitchen ✦</div>
+    <h1 class="hero-title">
+      Mississippi
+      <span class="highlight">Soul Food</span>
+    </h1>
+    <p class="hero-tagline">Premium Catering & Soul Food Trays</p>
+    <p class="hero-sub">
+      Events Starting at <span>$40/Head</span> · Pickup or Delivery Available
+    </p>
+    <div class="hero-buttons">
+      <a href="#catering" class="btn-primary">🎉 Book Catering</a>
+      <a href="#story" class="btn-outline">📖 Our Story</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">Scroll Down</div>
+</section>
+
+<!-- ===== STORY SECTION ===== -->
+<section id="story">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-title">The Story Behind the Plate</div>
+      <div class="section-subtitle">A Legacy Born in Mississippi</div>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="story-inner">
+      <div class="story-text reveal">
+        <p>Born in the heart of Mississippi, our recipes have been passed down through three generations. Every dish carries the love, sweat, and soul of the women who came before us.</p>
+        <p>From the cast iron skillets seasoned over decades to the slow-cooked greens that simmer all morning long — this is not just food. This is memory. This is home. This is family gathered around a table, heads bowed in gratitude.</p>
+        <p>We cook the way grandma cooked: with patience, with pride, and with prayers whispered over every pot.</p>
+
+        <div class="story-quote">
+          <p>"The secret ingredient is always love."</p>
+          <cite>— Big Mama's Kitchen Rule #1</cite>
+        </div>
+
+        <div class="story-stats">
+          <div class="stat-card">
+            <div class="stat-icon">👵🏾</div>
+            <div class="stat-number">3</div>
+            <div class="stat-label">Generations of Recipes</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🌅</div>
+            <div class="stat-number">Daily</div>
+            <div class="stat-label">Made Fresh</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🫶🏾</div>
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Made With Love</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🍽️</div>
+            <div class="stat-number">Zero</div>
+            <div class="stat-label">Shortcuts Taken</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-visual reveal">
+        <div class="story-badge">
+          <div class="badge-icon">🏡</div>
+          <div class="badge-text">Slow Cooked<br/>Southern Comfort</div>
+          <div class="badge-sub">Like Sunday never ended</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CATERING TIERS INTRO ===== -->
+<section id="menu" style="background:linear-gradient(135deg,#1E0606 0%,#2A0808 50%,#1A0505 100%);padding:6rem 2rem;">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-title">Catering & Soul Food Trays</div>
+      <div class="section-subtitle">Premium Packages · Events Starting at $40/Head</div>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="reveal" style="max-width:860px;margin:0 auto 4rem;text-align:center;">
+      <p style="font-size:1.1rem;color:rgba(255,248,231,0.8);line-height:1.9;margin-bottom:1.5rem;">We no longer offer individual plate orders — Mississippi Soul Food has gone <strong style="color:var(--honey);">full catering</strong>. Every dish is made from scratch in large catering trays, bringing the full Sunday dinner experience directly to your event.</p>
+      <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:1rem;">
+        <div style="background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.25);border-radius:25px;padding:0.5rem 1.2rem;font-size:0.85rem;color:var(--cream);">⛪ Church Dinners</div>
+        <div style="background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.25);border-radius:25px;padding:0.5rem 1.2rem;font-size:0.85rem;color:var(--cream);">👨‍👩‍👧‍👦 Family Reunions</div>
+        <div style="background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.25);border-radius:25px;padding:0.5rem 1.2rem;font-size:0.85rem;color:var(--cream);">🏢 Corporate Events</div>
+        <div style="background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.25);border-radius:25px;padding:0.5rem 1.2rem;font-size:0.85rem;color:var(--cream);">💒 Weddings</div>
+        <div style="background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.25);border-radius:25px;padding:0.5rem 1.2rem;font-size:0.85rem;color:var(--cream);">🎂 Birthday Parties</div>
+        <div style="background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.25);border-radius:25px;padding:0.5rem 1.2rem;font-size:0.85rem;color:var(--cream);">🕊️ Repast & Memorial</div>
+      </div>
+    </div>
+
+    <!-- TIER 1 -->
+    <div class="reveal" style="background:linear-gradient(160deg,rgba(61,12,12,0.9),rgba(42,8,8,0.95));border:1px solid rgba(212,160,23,0.3);border-radius:24px;padding:3rem 2.5rem;max-width:900px;margin:0 auto 2.5rem;position:relative;">
+      <div style="position:absolute;top:-16px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--amber),var(--honey));color:var(--deep-maroon);padding:0.35rem 1.4rem;border-radius:20px;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;white-space:nowrap;">⭐ Most Popular</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start;">
+        <div>
+          <div style="font-family:'Dancing Script',cursive;font-size:1.5rem;color:var(--honey);margin-bottom:0.3rem;">Tier 1</div>
+          <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--cream);margin-bottom:0.5rem;">Family Soul Trays</div>
+          <div style="font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--amber);margin-bottom:0.3rem;">$40<span style="font-size:1rem;font-weight:400;color:rgba(255,248,231,0.5);">/person</span></div>
+          <div style="background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.2);border-radius:10px;padding:0.6rem 1rem;font-size:0.8rem;color:var(--honey);margin-bottom:1.5rem;">Minimum 15 people · $600 minimum</div>
+          <p style="font-size:0.95rem;color:rgba(255,248,231,0.75);line-height:1.8;margin-bottom:1.5rem;">Served in large catering trays — perfect for family reunions, office events, and birthday parties. Pickup or delivery available.</p>
+          <a href="kekesinternational-catering.html" class="btn-primary">🍽️ Book This Package</a>
+        </div>
+        <div>
+          <ul style="list-style:none;padding:0;">
+            <li style="padding:0.6rem 0;border-bottom:1px solid rgba(212,160,23,0.1);font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> Choice of 2 Proteins (fried chicken, catfish, oxtail, or ribs)</li>
+            <li style="padding:0.6rem 0;border-bottom:1px solid rgba(212,160,23,0.1);font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> 3 Soul Sides of Your Choice</li>
+            <li style="padding:0.6rem 0;border-bottom:1px solid rgba(212,160,23,0.1);font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> Cast Iron Skillet Cornbread</li>
+            <li style="padding:0.6rem 0;border-bottom:1px solid rgba(212,160,23,0.1);font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> Sweet Tea or Lemonade</li>
+            <li style="padding:0.6rem 0;font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> Pickup or Delivery Available</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIER 2 -->
+    <div class="reveal" style="background:linear-gradient(160deg,rgba(61,12,12,0.9),rgba(42,8,8,0.95));border:1px solid rgba(212,160,23,0.2);border-radius:24px;padding:3rem 2.5rem;max-width:900px;margin:0 auto 2.5rem;position:relative;">
+      <div style="position:absolute;top:-16px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#8B1A1A,#6B1A1A);color:#FFF8E7;padding:0.35rem 1.4rem;border-radius:20px;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;white-space:nowrap;border:1px solid rgba(212,160,23,0.4);">🏆 Best Value</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start;">
+        <div>
+          <div style="font-family:'Dancing Script',cursive;font-size:1.5rem;color:var(--honey);margin-bottom:0.3rem;">Tier 2</div>
+          <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--cream);margin-bottom:0.5rem;">Sunday Dinner Experience</div>
+          <div style="font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--amber);margin-bottom:0.3rem;">$75<span style="font-size:1rem;font-weight:400;color:rgba(255,248,231,0.5);">/person</span></div>
+          <div style="background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.2);border-radius:10px;padding:0.6rem 1rem;font-size:0.8rem;color:var(--honey);margin-bottom:1.5rem;">Minimum 20 people · $1,500 minimum</div>
+          <p style="font-size:0.95rem;color:rgba(255,248,231,0.75);line-height:1.8;margin-bottom:1.5rem;">White linen tray presentation with serving utensils included. Setup assistance available. The full Sunday dinner, brought to your event.</p>
+          <a href="kekesinternational-catering.html" class="btn-primary">🍽️ Book This Package</a>
+        </div>
+        <div>
+          <ul style="list-style:none;padding:0;">
+            <li style="padding:0.6rem 0;border-bottom:1px solid rgba(212,160,23,0.1);font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> Choice of 3 Proteins</li>
+            <li style="padding:0.6rem 0;border-bottom:1px solid rgba(212,160,23,0.1);font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> 4 Soul Sides of Your Choice</li>
+            <li style="padding:0.6rem 0;border-bottom:1px solid rgba(212,160,23,0.1);font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> Cornbread</li>
+            <li style="padding:0.6rem 0;border-bottom:1px solid rgba(212,160,23,0.1);font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> Dessert (Peach Cobbler or Banana Pudding)</li>
+            <li style="padding:0.6rem 0;border-bottom:1px solid rgba(212,160,23,0.1);font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> Sweet Tea & Lemonade</li>
+            <li style="padding:0.6rem 0;font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> White Linen Presentation & Setup Assistance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIER 3 -->
+    <div class="reveal" style="background:linear-gradient(160deg,rgba(61,12,12,0.95),rgba(30,6,6,0.98));border:2px solid rgba(212,160,23,0.5);border-radius:24px;padding:3rem 2.5rem;max-width:900px;margin:0 auto 0;position:relative;box-shadow:0 0 50px rgba(212,160,23,0.15);">
+      <div style="position:absolute;top:-16px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#D4AF37,#F0A500);color:var(--deep-maroon);padding:0.35rem 1.4rem;border-radius:20px;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;white-space:nowrap;">✨ Premium Experience</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start;">
+        <div>
+          <div style="font-family:'Dancing Script',cursive;font-size:1.5rem;color:var(--honey);margin-bottom:0.3rem;">Tier 3</div>
+          <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--cream);margin-bottom:0.5rem;">Grand Buffet Affair</div>
+          <div style="font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--amber);margin-bottom:0.3rem;">$125<span style="font-size:1rem;font-weight:400;color:rgba(255,248,231,0.5);">/person</span></div>
+          <div style="background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.2);border-radius:10px;padding:0.6rem 1rem;font-size:0.8rem;color:var(--honey);margin-bottom:1.5rem;">Minimum 30 people · $3,750 minimum</div>
+          <p style="font-size:0.95rem;color:rgba(255,248,231,0.75);line-height:1.8;margin-bottom:1.5rem;">The full Mississippi buffet spread — chef-attended, professionally set up, with a 3-hour service window. Perfect for weddings, corporate events, and grand celebrations.</p>
+          <a href="kekesinternational-catering.html" class="btn-primary">🍽️ Book This Package</a>
+        </div>
+        <div>
+          <ul style="list-style:none;padding:0;">
+            <li style="padding:0.6rem 0;border-bottom:1px solid rgba(212,160,23,0.1);font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> Full Buffet — ALL Proteins Included</li>
+            <li style="padding:0.6rem 0;border-bottom:1px solid rgba(212,160,23,0.1);font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> ALL Sides Included</li>
+            <li style="padding:0.6rem 0;border-bottom:1px solid rgba(212,160,23,0.1);font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> Cornbread + 2 Desserts</li>
+            <li style="padding:0.6rem 0;border-bottom:1px solid rgba(212,160,23,0.1);font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> Full Beverage Station (Sweet Tea, Lemonade, Water)</li>
+            <li style="padding:0.6rem 0;border-bottom:1px solid rgba(212,160,23,0.1);font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> Chef-Attended Buffet Line</li>
+            <li style="padding:0.6rem 0;border-bottom:1px solid rgba(212,160,23,0.1);font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> Professional Setup & Breakdown</li>
+            <li style="padding:0.6rem 0;font-size:0.95rem;color:rgba(255,248,231,0.85);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--amber);font-weight:700;font-size:1rem;">✓</span> 3-Hour Service Window</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CATERING SECTION ===== -->
+<section id="catering">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-title">Ready to Book?</div>
+      <div class="section-subtitle">Let's Feed Your People Right</div>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="reveal" style="text-align:center;margin-bottom:3rem;">
+      <p style="font-size:1.05rem;color:rgba(255,248,231,0.8);max-width:700px;margin:0 auto 2rem;line-height:1.8;">Choose your package above and book through our catering portal. We'll reach out within 24 hours to confirm your date, headcount, and customize your menu selections.</p>
+      <a href="kekesinternational-catering.html" class="btn-primary" style="font-size:1.1rem;padding:1.1rem 3rem;">🎉 Book Your Catering Package →</a>
+    </div>
+
+    <!-- Catering Inquiry Form -->
+    <div id="catering-form" class="catering-form-section reveal">
+      <div class="form-title">Send a Catering Inquiry</div>
+      <div class="form-sub">We'll call you within 24 hours 🙏🏾</div>
+      <form onsubmit="submitCateringForm(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name *</label>
+            <input type="text" placeholder="Full Name" required />
+          </div>
+          <div class="form-group">
+            <label>Phone Number *</label>
+            <input type="tel" placeholder="(555) 000-0000" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label>Package Interest *</label>
+            <select required>
+              <option value="">Select a Package</option>
+              <option>Tier 1 — Family Soul Trays ($40/person)</option>
+              <option>Tier 2 — Sunday Dinner Experience ($75/person)</option>
+              <option>Tier 3 — Grand Buffet Affair ($125/person)</option>
+              <option>Not sure yet — need a quote</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Event Date *</label>
+            <input type="date" required />
+          </div>
+          <div class="form-group">
+            <label>Number of Guests *</label>
+            <input type="number" placeholder="e.g. 75" min="15" required />
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+          <label>Tell Us More</label>
+          <textarea placeholder="Event type, location, dietary needs, special requests..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">✉️ Send Catering Inquiry</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section id="testimonials">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-title">Community Love Wall</div>
+      <div class="section-subtitle">What the People Say</div>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="t-stars">⭐⭐⭐⭐⭐</div>
+        <div class="t-quote">"Child, I took one bite of that smothered oxtail and I closed my eyes. I was right back in Mama's kitchen on Sunday afternoon. This place doesn't just feed you — it heals you."</div>
+        <div class="t-author">
+          <div class="t-avatar">👩🏾</div>
+          <div>
+            <div class="t-name">Sister Johnson</div>
+            <div class="t-role">Church Choir Director</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <div class="t-stars">⭐⭐⭐⭐⭐</div>
+        <div class="t-quote">"We hired Mississippi Soul Food for our family reunion — 80 people — and not a single soul left hungry. The collard greens disappeared in the first ten minutes. We're booking again next year."</div>
+        <div class="t-author">
+          <div class="t-avatar">👨🏾</div>
+          <div>
+            <div class="t-name">Deacon Williams</div>
+            <div class="t-role">Family Patriarch, Williams Reunion 2025</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <div class="t-stars">⭐⭐⭐⭐⭐</div>
+        <div class="t-quote">"The fried chicken is dangerous. I said what I said. I ordered it for myself and ended up ordering a second plate 'for the road.' The crust alone deserves an award."</div>
+        <div class="t-author">
+          <div class="t-avatar">👩🏽</div>
+          <div>
+            <div class="t-name">Mama T</div>
+            <div class="t-role">Loyal Customer, Weekly Regular</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <div class="t-stars">⭐⭐⭐⭐⭐</div>
+        <div class="t-quote">"They catered my grandmother's repast. The food was so good it had people telling stories and laughing through tears. It brought comfort when we needed it most. Deeply grateful."</div>
+        <div class="t-author">
+          <div class="t-avatar">👩🏿</div>
+          <div>
+            <div class="t-name">Rev. Tanya Brooks</div>
+            <div class="t-role">Pastor, New Light Community Church</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <div class="t-stars">⭐⭐⭐⭐⭐</div>
+        <div class="t-quote">"The sweet potato pie made me call my mama. That's all I have to say about that."</div>
+        <div class="t-author">
+          <div class="t-avatar">👨🏾</div>
+          <div>
+            <div class="t-name">Marcus D.</div>
+            <div class="t-role">First-time Customer, Repeat Offender</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <div class="t-stars">⭐⭐⭐⭐⭐</div>
+        <div class="t-quote">"I've eaten at soul food restaurants all over this country. Mississippi Soul Food is the real deal. The baked mac and cheese alone is worth every single penny. Real Southern love in every bite."</div>
+        <div class="t-author">
+          <div class="t-avatar">👩🏾</div>
+          <div>
+            <div class="t-name">Aunt Cecelia</div>
+            <div class="t-role">Retired Schoolteacher & Food Critic</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="brand-name">Mississippi Soul Food</div>
+      <div class="brand-sub">Where Every Plate Tells a Story</div>
+      <p>Authentic Southern soul food made the way it's always been made — slow, from scratch, and with love. Serving comfort, one plate at a time.</p>
+      <div class="footer-social">
+        <a href="#" class="social-btn" aria-label="Instagram">📸</a>
+        <a href="#" class="social-btn" aria-label="Facebook">📘</a>
+        <a href="#" class="social-btn" aria-label="TikTok">🎵</a>
+        <a href="#" class="social-btn" aria-label="Twitter">🐦</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#catering">Catering Packages</a></li>
+        <li><a href="#menu">Package Tiers</a></li>
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="kekesinternational.html" style="color:#D4AF37;font-size:0.8rem;font-weight:700;padding:6px 12px;border:1px solid #D4AF37;border-radius:20px;text-decoration:none;white-space:nowrap;">🍛 Keke's International</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Packages</h4>
+      <ul>
+        <li><a href="#menu">Family Soul Trays — $40/head</a></li>
+        <li><a href="#menu">Sunday Dinner — $75/head</a></li>
+        <li><a href="#menu">Grand Buffet — $125/head</a></li>
+        <li><a href="#catering-form">Get a Quote</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col footer-hours">
+      <h4>Hours & Info</h4>
+      <p><strong>Tuesday – Sunday</strong></p>
+      <p>11:00 AM – 9:00 PM</p>
+      <p style="margin-top:0.8rem; color: rgba(255,248,231,0.5); font-size:0.8rem;">Closed Mondays</p>
+      <div class="badge-note">📱 Online Orders Only</div>
+      <p style="margin-top: 0.8rem; font-size:0.8rem; color: rgba(255,248,231,0.6);">Delivery & Pickup Available</p>
+    </div>
+  </div>
+
+  <div style="max-width:1200px;margin:0 auto 2rem;padding:0;">
+    <div style="margin-top:20px;padding:20px;border:1px solid rgba(212,160,23,0.3);border-radius:12px;text-align:center;">
+      <p style="color:#D4A017;font-weight:700;margin-bottom:8px;">🍛 Also Visit Keke's International Food Spot</p>
+      <p style="font-size:0.85rem;opacity:0.8;margin-bottom:12px;">Caribbean flavors, jerk chicken, oxtail & more — order online 24/7</p>
+      <a href="kekesinternational.html" style="background:linear-gradient(135deg,#D4AF37,#8B1A1A);color:#fff;padding:10px 24px;border-radius:20px;text-decoration:none;font-weight:700;">Visit Keke's →</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 Mississippi Soul Food. All rights reserved.</p>
+    <p>Made with <span class="love">♥</span> and a whole lot of seasoning.</p>
+  </div>
+</footer>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast">
+  <span class="toast-icon" id="toast-icon">✅</span>
+  <span id="toast-msg">Inquiry sent!</span>
+</div>
+
+<!-- ===== AUDIO TOGGLE ===== -->
+<button id="audio-toggle" title="Toggle Sound" onclick="toggleAudio()">🔊</button>
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to Top">⬆</button>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+  // ===== EMBER PARTICLE SYSTEM (Three.js) =====
+  (function() {
+    const canvas = document.getElementById('ember-canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.z = 5;
+
+    const EMBER_COUNT = 180;
+    const positions = new Float32Array(EMBER_COUNT * 3);
+    const colors = new Float32Array(EMBER_COUNT * 3);
+    const sizes = new Float32Array(EMBER_COUNT);
+    const velocities = [];
+    const lifetimes = [];
+
+    function randomEmber(i) {
+      positions[i * 3]     = (Math.random() - 0.5) * 20;
+      positions[i * 3 + 1] = -8 - Math.random() * 4;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 5;
+
+      const warmth = Math.random();
+      if (warmth < 0.4) {
+        colors[i * 3]     = 1.0;
+        colors[i * 3 + 1] = 0.6 + Math.random() * 0.3;
+        colors[i * 3 + 2] = 0.1;
+      } else if (warmth < 0.75) {
+        colors[i * 3]     = 1.0;
+        colors[i * 3 + 1] = 0.4 + Math.random() * 0.3;
+        colors[i * 3 + 2] = 0.05;
+      } else {
+        colors[i * 3]     = 0.9 + Math.random() * 0.1;
+        colors[i * 3 + 1] = 0.8 + Math.random() * 0.2;
+        colors[i * 3 + 2] = 0.2;
+      }
+
+      sizes[i] = 0.5 + Math.random() * 3.5;
+      velocities[i] = { x: (Math.random() - 0.5) * 0.02, y: 0.015 + Math.random() * 0.03, drift: (Math.random() - 0.5) * 0.008 };
+      lifetimes[i] = Math.random();
+    }
+
+    for (let i = 0; i < EMBER_COUNT; i++) {
+      randomEmber(i);
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+    const material = new THREE.PointsMaterial({
+      size: 0.08,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.85,
+      sizeAttenuation: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    let mouseX = 0, mouseY = 0;
+    document.addEventListener('mousemove', e => {
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 0.3;
+      mouseY = -(e.clientY / window.innerHeight - 0.5) * 0.3;
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const pos = geometry.attributes.position.array;
+      for (let i = 0; i < EMBER_COUNT; i++) {
+        pos[i * 3]     += velocities[i].x + Math.sin(lifetimes[i] * 10) * 0.005;
+        pos[i * 3 + 1] += velocities[i].y;
+        pos[i * 3 + 2] += velocities[i].drift;
+        lifetimes[i] += 0.005;
+        if (pos[i * 3 + 1] > 10) randomEmber(i);
+      }
+      geometry.attributes.position.needsUpdate = true;
+      camera.position.x += (mouseX - camera.position.x) * 0.03;
+      camera.position.y += (mouseY - camera.position.y) * 0.03;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+    });
+  })();
+
+  // ===== PARALLAX HERO =====
+  document.addEventListener('mousemove', (e) => {
+    const overlay = document.querySelector('.hero-overlay');
+    if (!overlay) return;
+    const x = (e.clientX / window.innerWidth - 0.5) * 15;
+    const y = (e.clientY / window.innerHeight - 0.5) * 10;
+    overlay.style.transform = `translate(${x}px, ${y}px)`;
+  });
+
+  // ===== NAVBAR SCROLL =====
+  const navbar = document.getElementById('navbar');
+  const backToTop = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) {
+      navbar.classList.add('scrolled');
+      backToTop.classList.add('visible');
+    } else {
+      navbar.classList.remove('scrolled');
+      backToTop.classList.remove('visible');
+    }
+  });
+
+  // ===== HAMBURGER =====
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('nav-links').classList.toggle('mobile-open');
+  });
+
+  // ===== SCROLL REVEAL =====
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, idx) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), idx * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ===== TOAST =====
+  let toastTimer;
+  function showToast(icon, msg) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toast-icon').textContent = icon;
+    document.getElementById('toast-msg').textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  // ===== AUDIO TOGGLE =====
+  let audioEnabled = false;
+  const sizzleCtx = new (window.AudioContext || window.webkitAudioContext || class { createBuffer(){} createBufferSource(){return{connect:()=>{},start:()=>{},buffer:null};} createGain(){return{connect:()=>{},gain:{setValueAtTime:()=>{},exponentialRampToValueAtTime:()=>{}}};} get destination(){return null;} get sampleRate(){return 44100;} get currentTime(){return 0;} })();
+
+  function createSizzle() {
+    try {
+      const bufSize = sizzleCtx.sampleRate * 0.3;
+      const buffer = sizzleCtx.createBuffer(1, bufSize, sizzleCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1) * 0.15;
+      const src = sizzleCtx.createBufferSource();
+      src.buffer = buffer;
+      const gain = sizzleCtx.createGain();
+      gain.gain.setValueAtTime(0.3, sizzleCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, sizzleCtx.currentTime + 0.3);
+      src.connect(gain);
+      gain.connect(sizzleCtx.destination);
+      src.start();
+    } catch(e) {}
+  }
+
+  function toggleAudio() {
+    audioEnabled = !audioEnabled;
+    const btn = document.getElementById('audio-toggle');
+    btn.textContent = audioEnabled ? '🔊' : '🔇';
+    btn.classList.toggle('muted', !audioEnabled);
+    if (audioEnabled) {
+      if (sizzleCtx.resume) sizzleCtx.resume();
+      showToast('🔊', 'Sizzle sound enabled!');
+    } else {
+      showToast('🔇', 'Sound muted');
+    }
+  }
+
+  // ===== CATERING FORM =====
+  function submitCateringForm(e) {
+    e.preventDefault();
+    showToast('✅', 'Inquiry sent! We\'ll call you within 24 hours.');
+    e.target.reset();
+  }
+
+
+</script>
+
+</body>
+</html>

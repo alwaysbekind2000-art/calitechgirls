@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Careers — Keke's International Food Spot</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root { --gold:#D4AF37; --gold-light:#F5D76E; --red:#8B1A1A; --red-bright:#c0392b; --cream:#FFF8E7; --dark:#0a0500; --brown:#1a0800; --green:#2ecc71; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--dark); color:var(--cream); font-family:'Montserrat',sans-serif; overflow-x:hidden; }
+.main-nav { position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(10,5,0,0.95); backdrop-filter:blur(20px); border-bottom:1px solid rgba(212,175,55,0.15); padding:0 30px; display:flex; align-items:center; justify-content:space-between; height:65px; }
+.nav-logo { font-family:'Dancing Script',cursive; font-size:1.4rem; color:#D4AF37; text-decoration:none; }
+.nav-links { display:flex; gap:4px; }
+.nav-links a { color:rgba(255,248,231,0.65); text-decoration:none; font-size:0.6rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:600; padding:6px 10px; border-radius:4px; transition:all 0.2s; white-space:nowrap; }
+.nav-links a:hover, .nav-links a.active { color:#D4AF37; background:rgba(212,175,55,0.08); }
+.nav-order-btn { padding:10px 20px; background:linear-gradient(135deg,#8B1A1A,#c0392b); color:#FFF8E7; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; border:none; border-radius:30px; cursor:pointer; text-decoration:none; font-family:'Montserrat',sans-serif; font-weight:700; box-shadow:0 5px 20px rgba(139,26,26,0.5); transition:all 0.3s; white-space:nowrap; }
+
+#particles { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+.spark { position:absolute; width:2px; height:2px; background:var(--gold); border-radius:50%; animation:sparkFloat linear infinite; opacity:0; }
+@keyframes sparkFloat { 0%{opacity:0;transform:translateY(100vh)} 10%{opacity:0.6} 90%{opacity:0.1} 100%{opacity:0;transform:translateY(-20px)} }
+
+/* HERO */
+.hero { min-height:65vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:120px 20px 70px; text-align:center; position:relative; z-index:1; background:radial-gradient(ellipse at 50% 30%, rgba(212,175,55,0.08) 0%, transparent 60%); }
+.hero-tag { font-size:0.65rem; letter-spacing:5px; text-transform:uppercase; color:rgba(212,175,55,0.6); margin-bottom:18px; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,7vw,4.5rem); color:var(--gold); margin-bottom:15px; line-height:1.1; }
+.hero p { color:rgba(255,248,231,0.65); font-size:0.95rem; max-width:560px; margin:0 auto 30px; line-height:1.8; }
+
+/* HIRING BANNER */
+.hiring-banner { background:linear-gradient(135deg,rgba(212,175,55,0.12),rgba(212,175,55,0.05)); border:1px solid rgba(212,175,55,0.3); border-radius:16px; padding:22px 35px; max-width:750px; margin:0 auto 50px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:15px; position:relative; z-index:1; animation:bannerPulse 3s ease-in-out infinite; }
+@keyframes bannerPulse { 0%,100%{box-shadow:0 0 20px rgba(212,175,55,0.1)} 50%{box-shadow:0 0 40px rgba(212,175,55,0.25)} }
+.banner-text { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--gold); }
+.banner-sub { font-size:0.78rem; color:rgba(255,248,231,0.6); margin-top:3px; }
+.banner-badge { padding:8px 20px; background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--dark); border-radius:20px; font-size:0.65rem; font-weight:800; letter-spacing:2px; text-transform:uppercase; white-space:nowrap; }
+
+/* POSITIONS */
+.section { max-width:1100px; margin:0 auto; padding:60px 20px; position:relative; z-index:1; }
+.section-title { font-family:'Playfair Display',serif; font-size:clamp(1.7rem,4vw,2.5rem); color:var(--gold); text-align:center; margin-bottom:10px; }
+.section-sub { text-align:center; color:rgba(255,248,231,0.5); font-size:0.78rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:50px; }
+
+.positions-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:22px; }
+.pos-card { background:rgba(26,8,0,0.8); border:1px solid rgba(212,175,55,0.1); border-radius:18px; padding:32px; transition:all 0.3s; position:relative; overflow:hidden; }
+.pos-card:hover { transform:translateY(-5px); border-color:rgba(212,175,55,0.3); box-shadow:0 20px 50px rgba(0,0,0,0.5); }
+.pos-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--gold)); opacity:0; transition:opacity 0.3s; }
+.pos-card:hover::before { opacity:1; }
+.pos-type { font-size:0.58rem; letter-spacing:3px; text-transform:uppercase; padding:5px 12px; border-radius:15px; display:inline-block; font-weight:700; margin-bottom:14px; }
+.pos-type.full { background:rgba(46,204,113,0.12); color:var(--green); border:1px solid rgba(46,204,113,0.2); }
+.pos-type.part { background:rgba(212,175,55,0.1); color:var(--gold); border:1px solid rgba(212,175,55,0.2); }
+.pos-type.remote { background:rgba(52,152,219,0.12); color:#74b9ff; border:1px solid rgba(52,152,219,0.2); }
+.pos-icon { font-size:2.5rem; margin-bottom:12px; }
+.pos-title { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--cream); margin-bottom:6px; }
+.pos-location { font-size:0.72rem; color:rgba(212,175,55,0.7); margin-bottom:15px; display:flex; align-items:center; gap:5px; }
+.pos-desc { font-size:0.8rem; color:rgba(255,248,231,0.6); line-height:1.8; margin-bottom:18px; }
+.pos-reqs { list-style:none; display:flex; flex-direction:column; gap:6px; margin-bottom:22px; }
+.pos-reqs li { font-size:0.77rem; color:rgba(255,248,231,0.55); padding-left:16px; position:relative; }
+.pos-reqs li::before { content:'→'; position:absolute; left:0; color:var(--gold); font-size:0.7rem; }
+.apply-btn { display:block; padding:12px; text-align:center; background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.2); color:var(--gold); border-radius:10px; font-size:0.68rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; text-decoration:none; transition:all 0.3s; cursor:pointer; font-family:'Montserrat',sans-serif; }
+.apply-btn:hover { background:rgba(212,175,55,0.15); border-color:rgba(212,175,55,0.4); }
+
+/* WHY WORK */
+.why-section { background:var(--brown); padding:80px 20px; border-top:1px solid rgba(212,175,55,0.06); border-bottom:1px solid rgba(212,175,55,0.06); position:relative; z-index:1; }
+.why-grid { max-width:900px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:18px; }
+.why-card { background:rgba(10,5,0,0.6); border:1px solid rgba(212,175,55,0.08); border-radius:14px; padding:28px 22px; text-align:center; }
+.why-icon { font-size:2rem; margin-bottom:10px; }
+.why-title { font-size:0.88rem; font-weight:700; color:var(--gold); margin-bottom:6px; }
+.why-desc { font-size:0.75rem; color:rgba(255,248,231,0.5); line-height:1.7; }
+
+/* APPLICATION FORM */
+.app-section { max-width:750px; margin:0 auto; padding:60px 20px 80px; position:relative; z-index:1; }
+.app-form { background:rgba(26,8,0,0.7); border:1px solid rgba(212,175,55,0.12); border-radius:20px; padding:45px; }
+.form-group { margin-bottom:16px; }
+.form-label { display:block; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:rgba(212,175,55,0.7); margin-bottom:7px; }
+.form-input { width:100%; padding:13px 15px; background:rgba(255,255,255,0.04); border:1px solid rgba(212,175,55,0.12); border-radius:9px; color:var(--cream); font-family:'Montserrat',sans-serif; font-size:0.88rem; transition:all 0.3s; }
+.form-input:focus { outline:none; border-color:var(--gold); }
+.form-input::placeholder { color:rgba(255,248,231,0.2); }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+textarea.form-input { resize:vertical; min-height:100px; }
+.app-submit { width:100%; padding:18px; background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--dark); font-family:'Montserrat',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:3px; text-transform:uppercase; border:none; border-radius:12px; cursor:pointer; margin-top:10px; box-shadow:0 10px 35px rgba(212,175,55,0.4); transition:all 0.3s; }
+.app-submit:hover { transform:translateY(-2px); }
+.app-note { text-align:center; margin-top:15px; font-size:0.75rem; color:rgba(255,248,231,0.4); }
+
+/* FOOTER */
+.footer { background:#050200; border-top:1px solid rgba(212,175,55,0.15); padding:60px 20px 40px; text-align:center; }
+.footer-inner { max-width:800px; margin:0 auto; }
+.footer-logo { font-family:'Dancing Script',cursive; font-size:2.5rem; color:#D4AF37; margin-bottom:8px; }
+.footer-tagline { color:rgba(255,248,231,0.4); font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:24px; }
+.social-links { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:24px; }
+.social-btn { padding:10px 20px; background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.2); color:rgba(255,248,231,0.7); border-radius:25px; text-decoration:none; font-size:0.7rem; letter-spacing:1px; transition:all 0.3s; }
+.social-btn:hover { background:rgba(212,175,55,0.2); color:#D4AF37; }
+.footer-divider { height:1px; background:rgba(212,175,55,0.1); margin:20px 0; }
+.footer-contact { color:rgba(255,248,231,0.45); font-size:0.8rem; line-height:2; }
+.footer-copy { color:rgba(255,248,231,0.25); font-size:0.7rem; letter-spacing:1px; }
+</style>
+</head>
+<body>
+<div id="particles"></div>
+<nav class="main-nav">
+  <a href="kekesinternational.html" class="nav-logo">Keke's International</a>
+  <div class="nav-links">
+    <a href="kekesinternational.html">Home</a>
+    <a href="kekesinternational-menu.html">Menu</a>
+    <a href="kekesinternational-catering.html">Catering</a>
+    <a href="kekesinternational-events.html">Events</a>
+    <a href="kekesinternational-grand-opening.html">🎉 Reopening</a>
+    <a href="kekesinternational-gallery.html">Gallery</a>
+    <a href="kekesinternational-vip.html">VIP</a>
+    <a href="kekesinternational-about.html">About</a>
+    <a href="kekesinternational-contact.html">Contact</a>
+    <a href="kekesinternational-tracker.html">Track Order</a>
+    <a href="mississippi-soul-food.html" style="color:#D4AF37;font-size:0.8rem;font-weight:700;padding:6px 12px;border:1px solid #D4AF37;border-radius:20px;text-decoration:none;white-space:nowrap;">🍖 Mississippi Soul</a>
+  </div>
+  <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">💼 Now Hiring</div>
+  <h1>JOIN THE<br>KEKE'S FAMILY</h1>
+  <p>We're growing fast and we want passionate people who believe in great food, great service, and great energy. Come build something special with us.</p>
+</div>
+
+<div style="max-width:750px;margin:0 auto;padding:0 20px;position:relative;z-index:1;">
+  <div class="hiring-banner">
+    <div>
+      <div class="banner-text">🎉 We're Growing!</div>
+      <div class="banner-sub">Now Hiring for Grand Reopening · March 2026 · All Positions Open</div>
+    </div>
+    <div class="banner-badge">APPLY TODAY</div>
+  </div>
+</div>
+
+<!-- POSITIONS -->
+<div class="section" id="positions">
+  <div class="section-title">Open Positions</div>
+  <div class="section-sub">Join the team making Southern California's best Caribbean food</div>
+  <div class="positions-grid">
+
+    <div class="pos-card">
+      <span class="pos-type full">Full Time</span>
+      <div class="pos-icon">👨‍🍳</div>
+      <div class="pos-title">Line Cook</div>
+      <div class="pos-location">📍 Moreno Valley, CA</div>
+      <div class="pos-desc">Be part of the kitchen team crafting Keke's legendary Caribbean and soul food. If you love cooking and want to work in a fast-paced, passion-driven environment, this is your spot.</div>
+      <ul class="pos-reqs">
+        <li>1+ year kitchen or cooking experience</li>
+        <li>Knowledge of Caribbean or soul food a plus</li>
+        <li>Available evenings and late nights (we're open till 4AM)</li>
+        <li>Team player with a strong work ethic</li>
+        <li>Reliable transportation required</li>
+      </ul>
+      <button class="apply-btn" onclick="setPosition('Line Cook - Moreno Valley')">Apply for This Role →</button>
+    </div>
+
+    <div class="pos-card">
+      <span class="pos-type part">Part Time</span>
+      <div class="pos-icon">🚗</div>
+      <div class="pos-title">Delivery Driver</div>
+      <div class="pos-location">📍 Moreno Valley & Long Beach</div>
+      <div class="pos-desc">Deliver Keke's legendary food directly to our customers across Moreno Valley and Long Beach. Flexible hours, great tips, and free staff meals every shift.</div>
+      <ul class="pos-reqs">
+        <li>Valid California driver's license</li>
+        <li>Clean driving record (3 years)</li>
+        <li>Reliable personal vehicle with insurance</li>
+        <li>Smartphone for delivery coordination</li>
+        <li>Friendly and professional attitude</li>
+      </ul>
+      <button class="apply-btn" onclick="setPosition('Delivery Driver')">Apply for This Role →</button>
+    </div>
+
+    <div class="pos-card">
+      <span class="pos-type remote">Remote / Part Time</span>
+      <div class="pos-icon">📱</div>
+      <div class="pos-title">Social Media Manager</div>
+      <div class="pos-location">🌐 Remote · Southern California Preferred</div>
+      <div class="pos-desc">Grow Keke's brand across Instagram and beyond. Create fire content that showcases our food and culture. If you eat, breathe, and sleep content creation, apply now.</div>
+      <ul class="pos-reqs">
+        <li>2+ years managing a food or lifestyle brand</li>
+        <li>Strong photography and video editing skills</li>
+        <li>Deep understanding of Instagram & TikTok</li>
+        <li>Ability to create 3-5 posts per week consistently</li>
+        <li>Portfolio of past work required</li>
+      </ul>
+      <button class="apply-btn" onclick="setPosition('Social Media Manager')">Apply for This Role →</button>
+    </div>
+
+    <div class="pos-card">
+      <span class="pos-type part">Part Time</span>
+      <div class="pos-icon">🎉</div>
+      <div class="pos-title">Event Coordinator</div>
+      <div class="pos-location">📍 Moreno Valley & Long Beach</div>
+      <div class="pos-desc">Coordinate Keke's catering events, pop-ups, and in-person experiences. You'll be the face of Keke's at events, managing logistics and ensuring every guest has an incredible experience.</div>
+      <ul class="pos-reqs">
+        <li>Experience in event coordination or hospitality</li>
+        <li>Strong organizational and communication skills</li>
+        <li>Available on weekends (most events happen then)</li>
+        <li>Passion for food, culture, and community</li>
+        <li>Professional appearance and demeanor</li>
+      </ul>
+      <button class="apply-btn" onclick="setPosition('Event Coordinator')">Apply for This Role →</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- WHY WORK -->
+<div class="why-section">
+  <div style="text-align:center;margin-bottom:40px;">
+    <div class="section-title">Why Work at Keke's?</div>
+    <div class="section-sub">It's more than a job — it's a family</div>
+  </div>
+  <div class="why-grid">
+    <div class="why-card"><div class="why-icon">🌙</div><div class="why-title">Flexible Hours</div><div class="why-desc">Evening and late-night schedules that work around your life. We're open till 4AM and need people who thrive at night.</div></div>
+    <div class="why-card"><div class="why-icon">🍽️</div><div class="why-title">Free Staff Meals</div><div class="why-desc">Every shift, eat what we serve. Oxtail, jerk chicken, curry goat — staff eat like royalty at Keke's.</div></div>
+    <div class="why-card"><div class="why-icon">📈</div><div class="why-title">Growing Brand</div><div class="why-desc">Join early at a brand with 125+ 5-star reviews and a Grand Reopening. Your career grows with us.</div></div>
+    <div class="why-card"><div class="why-icon">👑</div><div class="why-title">Community</div><div class="why-desc">Keke's is more than food — we're culture. Be part of something that matters in the community.</div></div>
+    <div class="why-card"><div class="why-icon">🎓</div><div class="why-title">Mentorship</div><div class="why-desc">Chef Keke invests in her team. Learn Caribbean and soul food techniques directly from the chef herself.</div></div>
+    <div class="why-card"><div class="why-icon">💰</div><div class="why-title">Competitive Pay</div><div class="why-desc">Competitive hourly rates + tips for delivery. We believe in paying our people well for excellent work.</div></div>
+  </div>
+</div>
+
+<!-- APPLICATION FORM -->
+<div class="app-section" id="applicationForm">
+  <div class="section-title" style="text-align:center;margin-bottom:10px;">Apply Now</div>
+  <div class="section-sub" style="text-align:center;margin-bottom:35px;">We'll contact you within 48 hours</div>
+  <div class="app-form">
+    <form onsubmit="submitApp(event)">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-input" id="aFirst" placeholder="Your First Name" required></div>
+        <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-input" id="aLast" placeholder="Your Last Name" required></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="aEmail" placeholder="you@email.com" required></div>
+        <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-input" id="aPhone" placeholder="(555) 000-0000" required></div>
+      </div>
+      <div class="form-group"><label class="form-label">Position Applying For</label>
+        <select class="form-input" id="aPosition">
+          <option>Line Cook - Full Time - Moreno Valley</option>
+          <option>Delivery Driver - Part Time</option>
+          <option>Social Media Manager - Remote Part Time</option>
+          <option>Event Coordinator - Part Time</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Resume / Portfolio Link (URL or Drive Link)</label><input type="url" class="form-input" id="aResume" placeholder="https://drive.google.com/..."></div>
+      <div class="form-group"><label class="form-label">Why Do You Want to Work at Keke's?</label><textarea class="form-input" id="aWhy" placeholder="Tell us what draws you to Keke's and what you'd bring to the team..." required></textarea></div>
+      <div class="form-group"><label class="form-label">Availability</label>
+        <select class="form-input" id="aAvail">
+          <option>Evenings (5PM-11PM)</option>
+          <option>Late Night (11PM-4AM)</option>
+          <option>Daytime (10AM-5PM)</option>
+          <option>Flexible / All Shifts</option>
+          <option>Weekends Only</option>
+        </select>
+      </div>
+      <button type="submit" class="app-submit">🔥 SUBMIT APPLICATION</button>
+    </form>
+    <div id="appSuccess" style="display:none;margin-top:20px;padding:22px;background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.3);border-radius:12px;text-align:center;">
+      <div style="font-size:1.8rem;margin-bottom:8px;">🎉</div>
+      <div style="font-family:'Playfair Display',serif;color:var(--gold);font-size:1.2rem;margin-bottom:8px;">Application Received!</div>
+      <div style="color:rgba(255,248,231,0.65);font-size:0.82rem;line-height:1.8;">Thank you for applying to join the Keke's family! We'll review your application and contact you within <strong style="color:var(--cream)">48 hours</strong> via phone or email. In the meantime, follow us on Instagram @kekesinternationalfoodspot!</div>
+    </div>
+    <div class="app-note">Questions about positions? Text Chef Keke at (951) 630-5410</div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Keke's</div>
+    <p class="footer-tagline">International Food Spot · Every Meal Cooked with Love</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/kekesinternationalfoodspot" target="_blank" class="social-btn">📸 @KekesInternational</a>
+      <a href="https://www.instagram.com/longbeach_kekes/" target="_blank" class="social-btn">📸 @LongBeach_Kekes</a>
+      <a href="kekesinternational-catering.html" class="social-btn">🍽️ Book Catering</a>
+      <a href="kekesinternational-events.html" class="social-btn">🎉 Events</a>
+    </div>
+    <div class="footer-divider"></div>
+    <p class="footer-contact">📞 (951) 630-5410 · Call or Text Chef Keke Chanel<br>🚚 Online Orders Only · No Walk-Up · No Dine-In<br>📍 Moreno Valley · Long Beach · Orange County (Coming Soon)<br>🌙 Open Till 4AM</p>
+    <div class="footer-divider"></div>
+    <p class="footer-copy">© 2026 Keke's International Food Spot · Grand Reopening March 2026 🎉</p>
+  </div>
+</footer>
+<script>
+const pc=document.getElementById('particles');
+for(let i=0;i<30;i++){const s=document.createElement('div');s.className='spark';s.style.left=Math.random()*100+'%';s.style.animationDuration=(8+Math.random()*16)+'s';s.style.animationDelay=(Math.random()*12)+'s';s.style.width=s.style.height=(1+Math.random()*2)+'px';pc.appendChild(s);}
+
+function setPosition(pos){
+  document.getElementById('aPosition').value=pos;
+  document.getElementById('applicationForm').scrollIntoView({behavior:'smooth'});
+}
+
+function submitApp(e){
+  e.preventDefault();
+  const data={name:document.getElementById('aFirst').value+' '+document.getElementById('aLast').value,email:document.getElementById('aEmail').value,phone:document.getElementById('aPhone').value,position:document.getElementById('aPosition').value,resume:document.getElementById('aResume').value,why:document.getElementById('aWhy').value,availability:document.getElementById('aAvail').value,applied:new Date().toISOString()};
+  const apps=JSON.parse(localStorage.getItem('jobApplications')||'[]');
+  apps.push(data);
+  localStorage.setItem('jobApplications',JSON.stringify(apps));
+  document.getElementById('appSuccess').style.display='block';
+  e.target.reset();
+  document.getElementById('appSuccess').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>

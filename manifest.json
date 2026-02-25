@@ -1,0 +1,43 @@
+{
+  "name": "Keke's International Food Spot",
+  "short_name": "Keke's",
+  "description": "Caribbean & Soul Food — Order Online, Catering, Events. Grand Reopening March 19, 2026!",
+  "start_url": "/kekesinternational.html",
+  "display": "standalone",
+  "background_color": "#0a0500",
+  "theme_color": "#D4A017",
+  "orientation": "portrait-primary",
+  "categories": ["food", "lifestyle", "shopping"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%230a0500'/><text y='120' font-size='120' text-anchor='middle' x='96'>🍛</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%230a0500'/><text y='320' font-size='320' text-anchor='middle' x='256'>🍛</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Order Now",
+      "url": "/kekesinternational-menu.html",
+      "description": "Jump straight to the menu"
+    },
+    {
+      "name": "Catering",
+      "url": "/kekesinternational-catering.html",
+      "description": "Book catering for your event"
+    },
+    {
+      "name": "Track My Order",
+      "url": "/kekesinternational-tracker.html",
+      "description": "Check your order status"
+    }
+  ]
+}

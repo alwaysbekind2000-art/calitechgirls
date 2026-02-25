@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catering — Keke's International Food Spot</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root { --gold:#D4AF37; --gold-light:#F5D76E; --red:#8B1A1A; --red-bright:#c0392b; --cream:#FFF8E7; --dark:#0a0500; --brown:#1a0800; --green:#2ecc71; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--dark); color:var(--cream); font-family:'Montserrat',sans-serif; min-height:100vh; overflow-x:hidden; }
+.main-nav { position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(10,5,0,0.95); backdrop-filter:blur(20px); border-bottom:1px solid rgba(212,175,55,0.15); padding:0 30px; display:flex; align-items:center; justify-content:space-between; height:65px; }
+.nav-logo { font-family:'Dancing Script',cursive; font-size:1.4rem; color:#D4AF37; text-decoration:none; }
+.nav-links { display:flex; gap:4px; }
+.nav-links a { color:rgba(255,248,231,0.65); text-decoration:none; font-size:0.6rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:600; padding:6px 10px; border-radius:4px; transition:all 0.2s; white-space:nowrap; }
+.nav-links a:hover, .nav-links a.active { color:#D4AF37; background:rgba(212,175,55,0.08); }
+.nav-order-btn { padding:10px 20px; background:linear-gradient(135deg,#8B1A1A,#c0392b); color:#FFF8E7; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; border:none; border-radius:30px; cursor:pointer; text-decoration:none; font-family:'Montserrat',sans-serif; font-weight:700; box-shadow:0 5px 20px rgba(139,26,26,0.5); transition:all 0.3s; white-space:nowrap; }
+
+/* HERO */
+.hero { min-height:60vh; display:flex; align-items:center; justify-content:center; text-align:center; padding:120px 20px 80px; position:relative; overflow:hidden; }
+.hero-bg { position:absolute; inset:0; background:radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.08) 0%, transparent 70%); }
+.hero-tag { font-size:0.65rem; letter-spacing:4px; text-transform:uppercase; color:rgba(212,175,55,0.7); margin-bottom:15px; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.2rem,6vw,4.5rem); color:var(--gold); line-height:1.1; margin-bottom:18px; }
+.hero p { font-size:1.1rem; color:rgba(255,248,231,0.7); max-width:600px; margin:0 auto 30px; line-height:1.7; }
+.travel-badge { display:inline-flex; align-items:center; gap:10px; padding:12px 25px; background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.3); border-radius:30px; font-size:0.8rem; color:var(--gold); }
+
+/* PACKAGES */
+.section { max-width:1100px; margin:0 auto; padding:60px 20px; }
+.section-title { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4vw,2.8rem); color:var(--gold); text-align:center; margin-bottom:10px; }
+.section-sub { text-align:center; color:rgba(255,248,231,0.5); font-size:0.85rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:50px; }
+
+.packages-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:25px; }
+.pkg-card { background:rgba(26,8,0,0.8); border:1px solid rgba(212,175,55,0.15); border-radius:20px; padding:35px 28px; position:relative; transition:all 0.3s; overflow:hidden; }
+.pkg-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,transparent,var(--gold),transparent); opacity:0; transition:opacity 0.3s; }
+.pkg-card:hover { transform:translateY(-6px); border-color:rgba(212,175,55,0.35); box-shadow:0 20px 60px rgba(0,0,0,0.5); }
+.pkg-card:hover::before { opacity:1; }
+.pkg-card.featured { border-color:rgba(212,175,55,0.5); background:rgba(30,12,0,0.9); }
+.pkg-card.featured::before { opacity:1; }
+.pkg-badge { position:absolute; top:16px; right:16px; background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--dark); padding:4px 12px; border-radius:12px; font-size:0.58rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; }
+.pkg-icon { font-size:2.5rem; margin-bottom:15px; }
+.pkg-name { font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--gold); margin-bottom:5px; }
+.pkg-headcount { font-size:0.75rem; color:rgba(255,248,231,0.5); letter-spacing:1px; margin-bottom:15px; }
+.pkg-price { font-size:2rem; font-weight:900; color:var(--cream); margin-bottom:5px; }
+.pkg-price span { font-size:1rem; color:rgba(255,248,231,0.5); font-weight:400; }
+.pkg-includes { list-style:none; margin:20px 0; display:flex; flex-direction:column; gap:8px; }
+.pkg-includes li { font-size:0.78rem; color:rgba(255,248,231,0.7); padding-left:18px; position:relative; line-height:1.5; }
+.pkg-includes li::before { content:'✦'; position:absolute; left:0; color:var(--gold); font-size:0.6rem; }
+.pkg-btn { display:block; padding:14px; background:linear-gradient(135deg,var(--red),var(--red-bright)); color:var(--cream); text-align:center; border-radius:10px; text-decoration:none; font-size:0.72rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; transition:all 0.3s; border:none; cursor:pointer; width:100%; font-family:'Montserrat',sans-serif; box-shadow:0 5px 20px rgba(139,26,26,0.3); }
+.pkg-btn:hover { background:linear-gradient(135deg,#a02020,#e04040); transform:translateY(-2px); box-shadow:0 8px 30px rgba(139,26,26,0.5); }
+.pkg-btn.gold { background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--dark); box-shadow:0 5px 20px rgba(212,175,55,0.3); }
+.pkg-btn.gold:hover { box-shadow:0 8px 30px rgba(212,175,55,0.5); }
+
+/* BOOKING FORM */
+.form-section { background:rgba(26,8,0,0.6); border:1px solid rgba(212,175,55,0.12); border-radius:24px; padding:50px 40px; max-width:800px; margin:0 auto; }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+@media(max-width:600px){ .form-grid{grid-template-columns:1fr} }
+.form-group { margin-bottom:0; }
+.form-group.full { grid-column:1/-1; }
+.form-label { display:block; font-size:0.62rem; letter-spacing:2px; text-transform:uppercase; color:rgba(212,175,55,0.7); margin-bottom:8px; }
+.form-input { width:100%; padding:14px 16px; background:rgba(255,255,255,0.04); border:1px solid rgba(212,175,55,0.12); border-radius:10px; color:var(--cream); font-family:'Montserrat',sans-serif; font-size:0.88rem; transition:all 0.3s; }
+.form-input:focus { outline:none; border-color:var(--gold); background:rgba(212,175,55,0.05); }
+.form-input::placeholder { color:rgba(255,248,231,0.2); }
+textarea.form-input { resize:vertical; min-height:100px; }
+.submit-btn { width:100%; padding:20px; background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--dark); font-family:'Montserrat',sans-serif; font-size:0.9rem; font-weight:800; letter-spacing:3px; text-transform:uppercase; border:none; border-radius:12px; cursor:pointer; margin-top:10px; box-shadow:0 10px 40px rgba(212,175,55,0.4); transition:all 0.3s; }
+.submit-btn:hover { transform:translateY(-3px); box-shadow:0 15px 50px rgba(212,175,55,0.6); }
+
+/* TESTIMONIALS */
+.testimonials-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; }
+.testi-card { background:rgba(26,8,0,0.7); border:1px solid rgba(212,175,55,0.1); border-radius:16px; padding:28px; }
+.testi-stars { color:var(--gold); font-size:1rem; margin-bottom:12px; letter-spacing:3px; }
+.testi-text { font-size:0.85rem; color:rgba(255,248,231,0.75); line-height:1.8; font-style:italic; margin-bottom:18px; }
+.testi-name { font-size:0.72rem; font-weight:700; color:var(--gold); letter-spacing:1px; }
+.testi-event { font-size:0.65rem; color:rgba(255,248,231,0.4); margin-top:3px; }
+
+/* FAQ */
+.faq-item { border-bottom:1px solid rgba(212,175,55,0.08); }
+.faq-q { padding:18px 0; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-size:0.9rem; font-weight:600; color:rgba(255,248,231,0.85); transition:color 0.3s; }
+.faq-q:hover { color:var(--gold); }
+.faq-q .arrow { color:var(--gold); transition:transform 0.3s; }
+.faq-q.open .arrow { transform:rotate(180deg); }
+.faq-a { max-height:0; overflow:hidden; transition:max-height 0.4s ease; }
+.faq-a-inner { padding:0 0 16px; font-size:0.83rem; color:rgba(255,248,231,0.55); line-height:1.8; }
+
+/* DARK SECTION */
+.dark-section { background:var(--brown); padding:80px 20px; border-top:1px solid rgba(212,175,55,0.08); border-bottom:1px solid rgba(212,175,55,0.08); }
+
+/* SUCCESS */
+#successMsg { display:none; text-align:center; padding:30px; background:rgba(46,204,113,0.1); border:1px solid rgba(46,204,113,0.3); border-radius:12px; color:var(--green); margin-top:20px; }
+
+/* FOOTER */
+.footer { background:#050200; border-top:1px solid rgba(212,175,55,0.15); padding:60px 20px 40px; text-align:center; }
+.footer-inner { max-width:800px; margin:0 auto; }
+.footer-logo { font-family:'Dancing Script',cursive; font-size:2.5rem; color:#D4AF37; margin-bottom:8px; }
+.footer-tagline { color:rgba(255,248,231,0.4); font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:24px; }
+.social-links { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:24px; }
+.social-btn { padding:10px 20px; background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.2); color:rgba(255,248,231,0.7); border-radius:25px; text-decoration:none; font-size:0.7rem; letter-spacing:1px; transition:all 0.3s; }
+.social-btn:hover { background:rgba(212,175,55,0.2); color:#D4AF37; }
+.footer-divider { height:1px; background:rgba(212,175,55,0.1); margin:20px 0; }
+.footer-contact { color:rgba(255,248,231,0.45); font-size:0.8rem; line-height:2; }
+.footer-copy { color:rgba(255,248,231,0.25); font-size:0.7rem; letter-spacing:1px; }
+</style>
+</head>
+<body>
+<nav class="main-nav">
+  <a href="kekesinternational.html" class="nav-logo">Keke's International</a>
+  <div class="nav-links">
+    <a href="kekesinternational.html">Home</a>
+    <a href="kekesinternational-menu.html">Menu</a>
+    <a href="kekesinternational-catering.html" class="active">Catering</a>
+    <a href="kekesinternational-events.html">Events</a>
+    <a href="kekesinternational-grand-opening.html">🎉 Reopening</a>
+    <a href="kekesinternational-gallery.html">Gallery</a>
+    <a href="kekesinternational-vip.html">VIP</a>
+    <a href="kekesinternational-about.html">About</a>
+    <a href="kekesinternational-contact.html">Contact</a>
+    <a href="kekesinternational-tracker.html">Track Order</a>
+    <a href="mississippi-soul-food.html" style="color:#D4AF37;font-size:0.8rem;font-weight:700;padding:6px 12px;border:1px solid #D4AF37;border-radius:20px;text-decoration:none;white-space:nowrap;">🍖 Mississippi Soul</a>
+  </div>
+  <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div>
+    <div class="hero-tag">🍽️ Full Service Catering</div>
+    <h1>LET KEKE'S CATER<br>YOUR NEXT EVENT</h1>
+    <p>From intimate dinners to massive celebrations — Chef Keke Chanel brings authentic Caribbean soul food straight to your event.</p>
+    <div class="travel-badge">🚗 We Travel! Available for All of Southern California</div>
+  </div>
+</div>
+
+<!-- PACKAGES -->
+<div class="section">
+  <div class="section-title">Catering Packages</div>
+  <div class="section-sub">Choose Your Experience · Customize Everything</div>
+  <div class="packages-grid">
+    <div class="pkg-card">
+      <div class="pkg-icon">🌴</div>
+      <div class="pkg-name">The Vibe</div>
+      <div class="pkg-headcount">Feeds 15–20 Guests</div>
+      <div class="pkg-price">$350<span> flat</span></div>
+      <ul class="pkg-includes">
+        <li>2 Entrée Choices (Jerk Chicken, Brown Stew, Curry Goat, or Oxtail)</li>
+        <li>3 Sides (Rice & Peas, Plantains, Coleslaw, Festival)</li>
+        <li>House Drinks (Sorrel, Ginger Beer, Lemonade)</li>
+        <li>Serving Trays & Utensils Included</li>
+        <li>Delivery to Your Venue</li>
+      </ul>
+      <button class="pkg-btn" onclick="selectPkg('The Vibe - $350')">Book The Vibe</button>
+    </div>
+    <div class="pkg-card featured">
+      <div class="pkg-badge">⭐ Most Popular</div>
+      <div class="pkg-icon">🔥</div>
+      <div class="pkg-name">The Takeover</div>
+      <div class="pkg-headcount">Feeds 30–40 Guests</div>
+      <div class="pkg-price">$600<span> flat</span></div>
+      <ul class="pkg-includes">
+        <li>3 Entrée Choices (Any from the menu)</li>
+        <li>4 Sides + Fried Plantains</li>
+        <li>All House Drinks Selection</li>
+        <li>Banana Pudding or Rum Cake Dessert</li>
+        <li>Full Setup & Breakdown Service</li>
+        <li>Dedicated Catering Staff Member</li>
+      </ul>
+      <button class="pkg-btn gold" onclick="selectPkg('The Takeover - $600')">Book The Takeover</button>
+    </div>
+    <div class="pkg-card">
+      <div class="pkg-icon">👑</div>
+      <div class="pkg-name">The Full Experience</div>
+      <div class="pkg-headcount">Feeds 50–60 Guests</div>
+      <div class="pkg-price">$950<span> flat</span></div>
+      <ul class="pkg-includes">
+        <li>Full Menu Access (All Entrées)</li>
+        <li>All Sides & Desserts</li>
+        <li>Premium Drink Station</li>
+        <li>Chef Keke Present at Your Event</li>
+        <li>Full Setup, Service & Breakdown</li>
+        <li>Custom Menu Printed for Guests</li>
+        <li>Event Photography (30 min)</li>
+      </ul>
+      <button class="pkg-btn" onclick="selectPkg('The Full Experience - $950')">Book Full Experience</button>
+    </div>
+    <div class="pkg-card">
+      <div class="pkg-icon">🏢</div>
+      <div class="pkg-name">Custom / Corporate</div>
+      <div class="pkg-headcount">Any Size · Any Event</div>
+      <div class="pkg-price" style="font-size:1.4rem;">Call for<span> Quote</span></div>
+      <ul class="pkg-includes">
+        <li>Corporate Office Lunches</li>
+        <li>Weddings & Large Receptions</li>
+        <li>Film & TV Set Catering</li>
+        <li>Festival & Pop-Up Events</li>
+        <li>Recurring Weekly Catering</li>
+        <li>100% Customizable Menu</li>
+      </ul>
+      <a href="tel:9516305410" class="pkg-btn">📞 Call for Quote</a>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING FORM -->
+<div class="dark-section">
+  <div class="section" style="padding-top:0;padding-bottom:0;">
+    <div class="section-title">Book Your Catering</div>
+    <div class="section-sub">Tell Us About Your Event</div>
+    <div class="form-section">
+      <form id="cateringForm" onsubmit="submitCatering(event)">
+        <div class="form-grid">
+          <div class="form-group"><label class="form-label">Your Name *</label><input type="text" class="form-input" id="cName" placeholder="Full Name" required></div>
+          <div class="form-group"><label class="form-label">Phone Number *</label><input type="tel" class="form-input" id="cPhone" placeholder="(555) 000-0000" required></div>
+          <div class="form-group"><label class="form-label">Email Address *</label><input type="email" class="form-input" id="cEmail" placeholder="you@email.com" required></div>
+          <div class="form-group"><label class="form-label">Event Date *</label><input type="date" class="form-input" id="cDate" required></div>
+          <div class="form-group"><label class="form-label">Event Type</label>
+            <select class="form-input" id="cType">
+              <option value="">Select Event Type</option>
+              <option>Birthday Party</option><option>Wedding</option><option>Corporate Event</option>
+              <option>Baby Shower</option><option>Graduation Party</option><option>Block Party</option>
+              <option>Holiday Party</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">Expected Headcount</label><input type="number" class="form-input" id="cCount" placeholder="e.g. 50" min="10"></div>
+          <div class="form-group"><label class="form-label">Package Selection</label>
+            <select class="form-input" id="cPkg">
+              <option value="">Select a Package</option>
+              <option>The Vibe - $350 (15-20 guests)</option>
+              <option>The Takeover - $600 (30-40 guests)</option>
+              <option>The Full Experience - $950 (50-60 guests)</option>
+              <option>Custom / Corporate - Call for Quote</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">Event Location</label><input type="text" class="form-input" id="cLoc" placeholder="City, CA"></div>
+          <div class="form-group full"><label class="form-label">Special Requests & Dietary Notes</label><textarea class="form-input" id="cNotes" placeholder="Dietary restrictions, preferred menu items, special requests..."></textarea></div>
+        </div>
+        <button type="submit" class="submit-btn">🍽️ SUBMIT CATERING REQUEST</button>
+        <div id="successMsg">🎉 Request Submitted! Chef Keke will contact you within 24 hours to discuss your event. Get ready for an unforgettable experience!</div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="section">
+  <div class="section-title">What Our Clients Say</div>
+  <div class="section-sub">Real Reviews from Real Events</div>
+  <div class="testimonials-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Chef Keke catered my daughter's quinceañera and the food was INCREDIBLE. The oxtail literally made people stop mid-conversation just to talk about it. Everyone asked for the catering info. We've booked her twice since!"</div>
+      <div class="testi-name">Maria Gonzalez</div>
+      <div class="testi-event">🎉 Quinceañera · Moreno Valley · 65 Guests</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"We hired Keke's for our company holiday party and it was a total hit. Professional setup, arrived early, food was hot and perfectly seasoned. The jerk chicken tacos disappeared in 10 minutes flat. 10/10 would hire again."</div>
+      <div class="testi-name">Damon Carter</div>
+      <div class="testi-event">🏢 Corporate Holiday Party · Long Beach · 45 Guests</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Best decision I ever made for my wedding reception. Chef Keke was there personally, made sure everything was perfect. My Caribbean family from New York said it tasted just like home. Absolute royalty treatment."</div>
+      <div class="testi-name">Jasmine & Terrell Williams</div>
+      <div class="testi-event">💍 Wedding Reception · Orange County · 80 Guests</div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="dark-section">
+  <div class="section" style="padding-top:0;padding-bottom:0;max-width:750px;">
+    <div class="section-title">Catering FAQ</div>
+    <div class="section-sub">Common Questions Answered</div>
+    <div id="faqWrap">
+      <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)">Is a deposit required to book? <span class="arrow">▾</span></div><div class="faq-a"><div class="faq-a-inner">Yes, a 50% deposit is required to secure your date. The remaining balance is due 48 hours before your event. We accept cash, Zelle, and Cash App. Stripe payments coming soon.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)">How far in advance should I book? <span class="arrow">▾</span></div><div class="faq-a"><div class="faq-a-inner">We recommend booking at least 2 weeks in advance, especially for weekends. For large events (50+ guests), 3–4 weeks is ideal. We occasionally accommodate last-minute requests — call us!</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)">Can you accommodate dietary restrictions? <span class="arrow">▾</span></div><div class="faq-a"><div class="faq-a-inner">Absolutely! We can accommodate vegetarian, gluten-free, and most dietary needs. Please note any restrictions in your booking form and we'll customize your menu accordingly.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)">How far do you travel for catering? <span class="arrow">▾</span></div><div class="faq-a"><div class="faq-a-inner">We travel throughout all of Southern California! This includes the Inland Empire, Los Angeles, Orange County, San Diego, and beyond. Travel fees may apply for events outside 30 miles from Moreno Valley.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)">What is the minimum headcount? <span class="arrow">▾</span></div><div class="faq-a"><div class="faq-a-inner">Our minimum for full catering service is 15 guests. For smaller gatherings, we offer a "small party tray" option — contact us at (951) 630-5410 to discuss your needs.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div style="text-align:center;padding:80px 20px;">
+  <div style="font-family:'Playfair Display',serif;font-size:clamp(1.5rem,4vw,2.5rem);color:var(--gold);margin-bottom:15px;">Ready to Feed Your Crowd?</div>
+  <p style="color:rgba(255,248,231,0.6);margin-bottom:30px;font-size:0.95rem;">Call or text Chef Keke directly to start planning your perfect event</p>
+  <a href="tel:9516305410" style="display:inline-block;padding:18px 50px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--dark);font-family:'Montserrat',sans-serif;font-weight:800;font-size:0.9rem;letter-spacing:3px;text-transform:uppercase;border-radius:50px;text-decoration:none;box-shadow:0 10px 40px rgba(212,175,55,0.4);">📞 (951) 630-5410</a>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Keke's</div>
+    <p class="footer-tagline">International Food Spot · Every Meal Cooked with Love</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/kekesinternationalfoodspot" target="_blank" class="social-btn">📸 @KekesInternational</a>
+      <a href="https://www.instagram.com/longbeach_kekes/" target="_blank" class="social-btn">📸 @LongBeach_Kekes</a>
+      <a href="kekesinternational-catering.html" class="social-btn">🍽️ Book Catering</a>
+      <a href="kekesinternational-events.html" class="social-btn">🎉 Events</a>
+    </div>
+    <div class="footer-divider"></div>
+    <p class="footer-contact">📞 (951) 630-5410 · Call or Text Chef Keke Chanel<br>🚚 Online Orders Only · No Walk-Up · No Dine-In<br>📍 Moreno Valley · Long Beach · Orange County (Coming Soon)<br>🌙 Open Till 4AM</p>
+    <div class="footer-divider"></div>
+    <p class="footer-copy">© 2026 Keke's International Food Spot · Grand Reopening March 2026 🎉</p>
+  </div>
+</footer>
+
+<script>
+function selectPkg(pkg){ document.getElementById('cPkg').value=pkg; document.getElementById('cateringForm').scrollIntoView({behavior:'smooth'}); }
+function toggleFAQ(el){ el.classList.toggle('open'); const a=el.nextElementSibling; a.style.maxHeight=el.classList.contains('open')? a.scrollHeight+'px':'0'; }
+function submitCatering(e){
+  e.preventDefault();
+  const data={name:document.getElementById('cName').value,phone:document.getElementById('cPhone').value,email:document.getElementById('cEmail').value,date:document.getElementById('cDate').value,type:document.getElementById('cType').value,count:document.getElementById('cCount').value,pkg:document.getElementById('cPkg').value,loc:document.getElementById('cLoc').value,notes:document.getElementById('cNotes').value,submitted:new Date().toISOString()};
+  const requests=JSON.parse(localStorage.getItem('cateringRequests')||'[]');
+  requests.push(data);
+  localStorage.setItem('cateringRequests',JSON.stringify(requests));
+  document.getElementById('successMsg').style.display='block';
+  document.getElementById('cateringForm').querySelector('.submit-btn').style.display='none';
+}
+</script>
+</body>
+</html>

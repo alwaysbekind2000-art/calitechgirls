@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — Keke's International Food Spot</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root { --gold:#D4AF37; --gold-light:#F5D76E; --red:#8B1A1A; --red-bright:#c0392b; --cream:#FFF8E7; --dark:#0a0500; --brown:#1a0800; --green:#2ecc71; --orange:#e67e22; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--dark); color:var(--cream); font-family:'Montserrat',sans-serif; min-height:100vh; }
+
+/* LOGIN */
+.login-screen { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; background:radial-gradient(ellipse at 50% 50%, rgba(212,175,55,0.06) 0%, transparent 70%); }
+.login-box { background:rgba(26,8,0,0.9); border:1px solid rgba(212,175,55,0.25); border-radius:24px; padding:50px 40px; max-width:420px; width:100%; text-align:center; }
+.login-logo { font-family:'Dancing Script',cursive; font-size:2.5rem; color:var(--gold); margin-bottom:5px; }
+.login-sub { font-size:0.65rem; letter-spacing:3px; text-transform:uppercase; color:rgba(255,248,231,0.4); margin-bottom:35px; }
+.login-title { font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--cream); margin-bottom:25px; }
+.login-group { margin-bottom:16px; text-align:left; }
+.login-label { display:block; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:rgba(212,175,55,0.7); margin-bottom:7px; }
+.login-input { width:100%; padding:14px 16px; background:rgba(255,255,255,0.04); border:1px solid rgba(212,175,55,0.15); border-radius:10px; color:var(--cream); font-family:'Montserrat',sans-serif; font-size:0.9rem; outline:none; transition:all 0.3s; }
+.login-input:focus { border-color:var(--gold); }
+.login-btn { width:100%; padding:16px; background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--dark); font-family:'Montserrat',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:2px; text-transform:uppercase; border:none; border-radius:12px; cursor:pointer; margin-top:5px; box-shadow:0 8px 25px rgba(212,175,55,0.3); transition:all 0.3s; }
+.login-btn:hover { transform:translateY(-2px); }
+.login-error { color:#ff6b6b; font-size:0.78rem; margin-top:10px; display:none; }
+.login-hint { color:rgba(255,248,231,0.25); font-size:0.65rem; margin-top:15px; }
+
+/* DASHBOARD */
+.dashboard { display:none; }
+.dash-header { background:rgba(26,8,0,0.95); border-bottom:1px solid rgba(212,175,55,0.15); padding:15px 30px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
+.dash-logo { font-family:'Dancing Script',cursive; font-size:1.4rem; color:var(--gold); }
+.dash-title { font-size:0.65rem; letter-spacing:3px; text-transform:uppercase; color:rgba(255,248,231,0.4); }
+.dash-logout { padding:8px 18px; background:rgba(255,100,100,0.1); border:1px solid rgba(255,100,100,0.2); color:rgba(255,100,100,0.7); border-radius:20px; font-size:0.65rem; letter-spacing:1px; text-transform:uppercase; font-weight:700; cursor:pointer; transition:all 0.3s; font-family:'Montserrat',sans-serif; }
+.dash-logout:hover { background:rgba(255,100,100,0.2); }
+
+.dash-body { padding:30px; max-width:1400px; margin:0 auto; }
+
+/* STATS */
+.stats-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:18px; margin-bottom:30px; }
+.stat-card { background:rgba(26,8,0,0.7); border:1px solid rgba(212,175,55,0.12); border-radius:14px; padding:22px; }
+.stat-icon { font-size:1.8rem; margin-bottom:8px; }
+.stat-val { font-size:1.8rem; font-weight:900; color:var(--gold); font-family:'Playfair Display',serif; line-height:1; margin-bottom:4px; }
+.stat-label { font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:rgba(255,248,231,0.4); }
+.stat-card.green .stat-val { color:var(--green); }
+.stat-card.red .stat-val { color:#ff6b6b; }
+.stat-card.orange .stat-val { color:var(--orange); }
+
+/* SECTION HEADER */
+.section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+.section-title { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--gold); }
+.add-btn { padding:8px 18px; background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.25); color:var(--gold); border-radius:20px; font-size:0.65rem; letter-spacing:1px; text-transform:uppercase; font-weight:700; cursor:pointer; transition:all 0.3s; font-family:'Montserrat',sans-serif; }
+.add-btn:hover { background:rgba(212,175,55,0.2); }
+.action-btn { padding:6px 14px; background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.15); color:rgba(255,248,231,0.6); border-radius:8px; font-size:0.62rem; letter-spacing:1px; text-transform:uppercase; font-weight:700; cursor:pointer; font-family:'Montserrat',sans-serif; transition:all 0.2s; }
+.action-btn:hover { background:rgba(212,175,55,0.15); color:var(--gold); }
+.action-btn.danger { border-color:rgba(255,100,100,0.2); color:rgba(255,100,100,0.6); }
+.action-btn.danger:hover { background:rgba(255,100,100,0.1); color:#ff6b6b; }
+
+/* ORDERS TABLE */
+.orders-section { background:rgba(26,8,0,0.6); border:1px solid rgba(212,175,55,0.1); border-radius:16px; padding:25px; margin-bottom:25px; }
+.orders-table { width:100%; border-collapse:collapse; }
+.orders-table th { text-align:left; padding:10px 12px; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:rgba(212,175,55,0.6); border-bottom:1px solid rgba(212,175,55,0.1); white-space:nowrap; }
+.orders-table td { padding:13px 12px; border-bottom:1px solid rgba(255,255,255,0.04); font-size:0.82rem; vertical-align:middle; }
+.orders-table tr:last-child td { border-bottom:none; }
+.order-num { color:var(--gold); font-weight:700; }
+.status-select { padding:5px 10px; background:rgba(26,8,0,0.8); border:1px solid rgba(212,175,55,0.2); border-radius:8px; color:var(--cream); font-size:0.72rem; font-family:'Montserrat',sans-serif; cursor:pointer; }
+.status-badge { padding:4px 10px; border-radius:10px; font-size:0.6rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+.status-badge.received { background:rgba(212,175,55,0.1); color:var(--gold); border:1px solid rgba(212,175,55,0.2); }
+.status-badge.preparing { background:rgba(230,126,34,0.12); color:var(--orange); border:1px solid rgba(230,126,34,0.25); }
+.status-badge.ready { background:rgba(46,204,113,0.1); color:var(--green); border:1px solid rgba(46,204,113,0.2); }
+.status-badge.delivered { background:rgba(46,204,113,0.06); color:rgba(46,204,113,0.5); border:1px solid rgba(46,204,113,0.1); }
+
+/* GRID 2 COL */
+.dash-grid { display:grid; grid-template-columns:1fr 1fr; gap:25px; margin-bottom:25px; }
+@media(max-width:900px){ .dash-grid{grid-template-columns:1fr} }
+
+/* MENU MANAGEMENT */
+.menu-section { background:rgba(26,8,0,0.6); border:1px solid rgba(212,175,55,0.1); border-radius:16px; padding:25px; }
+.menu-item-row { display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04); gap:10px; }
+.menu-item-row:last-child { border-bottom:none; }
+.menu-item-info { flex:1; }
+.menu-item-name { font-size:0.85rem; font-weight:600; color:var(--cream); }
+.menu-item-price { font-size:0.72rem; color:var(--gold); margin-top:2px; }
+.toggle-available { width:36px; height:20px; border-radius:10px; border:none; cursor:pointer; position:relative; transition:all 0.3s; flex-shrink:0; }
+.toggle-available.on { background:rgba(46,204,113,0.3); border:1px solid rgba(46,204,113,0.4); }
+.toggle-available.off { background:rgba(255,100,100,0.2); border:1px solid rgba(255,100,100,0.3); }
+.toggle-available::after { content:''; position:absolute; top:2px; width:14px; height:14px; border-radius:50%; background:var(--cream); transition:left 0.3s; }
+.toggle-available.on::after { left:18px; background:var(--green); }
+.toggle-available.off::after { left:3px; background:#ff6b6b; }
+
+/* ADD ITEM FORM */
+.add-form { background:rgba(26,8,0,0.6); border:1px solid rgba(212,175,55,0.1); border-radius:16px; padding:25px; }
+.form-group { margin-bottom:14px; }
+.form-label { display:block; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:rgba(212,175,55,0.6); margin-bottom:6px; }
+.form-input { width:100%; padding:11px 13px; background:rgba(255,255,255,0.03); border:1px solid rgba(212,175,55,0.12); border-radius:8px; color:var(--cream); font-family:'Montserrat',sans-serif; font-size:0.85rem; }
+.form-input:focus { outline:none; border-color:var(--gold); }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.save-btn { padding:12px 25px; background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--dark); font-family:'Montserrat',sans-serif; font-weight:800; font-size:0.72rem; letter-spacing:2px; text-transform:uppercase; border:none; border-radius:10px; cursor:pointer; box-shadow:0 5px 15px rgba(212,175,55,0.3); transition:all 0.3s; }
+
+/* QUICK ACTIONS */
+.qa-section { background:rgba(26,8,0,0.6); border:1px solid rgba(212,175,55,0.1); border-radius:16px; padding:25px; }
+.qa-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.qa-btn { padding:16px; background:rgba(212,175,55,0.06); border:1px solid rgba(212,175,55,0.12); border-radius:10px; text-align:center; cursor:pointer; transition:all 0.3s; font-size:0.75rem; font-weight:600; color:rgba(255,248,231,0.7); font-family:'Montserrat',sans-serif; }
+.qa-btn:hover { background:rgba(212,175,55,0.12); color:var(--gold); border-color:rgba(212,175,55,0.25); }
+.qa-icon { font-size:1.5rem; margin-bottom:6px; display:block; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">Keke's</div>
+    <div class="login-sub">Admin Dashboard</div>
+    <div class="login-title">🔐 Staff Access Only</div>
+    <div class="login-group">
+      <label class="login-label">Username</label>
+      <input type="text" class="login-input" id="loginUser" placeholder="admin" value="admin">
+    </div>
+    <div class="login-group">
+      <label class="login-label">Password</label>
+      <input type="password" class="login-input" id="loginPass" placeholder="••••••••••••" onkeydown="if(event.key==='Enter')checkLogin()">
+    </div>
+    <button class="login-btn" onclick="checkLogin()">🔓 ACCESS DASHBOARD</button>
+    <div class="login-error" id="loginError">❌ Incorrect password. Contact Chef Keke.</div>
+    <div class="login-hint">Hint: Password is kekesadmin2026</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+  <div class="dash-header">
+    <div>
+      <div class="dash-logo">Keke's Admin</div>
+      <div class="dash-title">🔐 Staff Dashboard · International Food Spot</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:15px;">
+      <div style="font-size:0.7rem;color:rgba(255,248,231,0.4);" id="dashTime"></div>
+      <button class="dash-logout" onclick="logout()">🚪 Logout</button>
+    </div>
+  </div>
+
+  <div class="dash-body">
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-val">12</div><div class="stat-label">Today's Orders</div></div>
+      <div class="stat-card green"><div class="stat-icon">💰</div><div class="stat-val" id="revenueVal">$387</div><div class="stat-label">Revenue Today</div></div>
+      <div class="stat-card orange"><div class="stat-icon">⏳</div><div class="stat-val" id="pendingVal">3</div><div class="stat-label">Pending Orders</div></div>
+      <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-val">125</div><div class="stat-label">5-Star Reviews</div></div>
+      <div class="stat-card"><div class="stat-icon">👑</div><div class="stat-val" id="vipCount">0</div><div class="stat-label">VIP Members</div></div>
+      <div class="stat-card"><div class="stat-icon">🍽️</div><div class="stat-val" id="cateringCount">0</div><div class="stat-label">Catering Requests</div></div>
+    </div>
+
+    <!-- LIVE ORDERS -->
+    <div class="orders-section">
+      <div class="section-header">
+        <div class="section-title">🔴 Live Orders</div>
+        <div style="display:flex;gap:10px;">
+          <button class="add-btn" onclick="exportCSV()">📥 Export CSV</button>
+          <button class="add-btn" onclick="addSampleOrder()">+ Add Sample Order</button>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="orders-table" id="ordersTable">
+          <thead><tr><th>#</th><th>Customer</th><th>Items</th><th>Total</th><th>Type</th><th>Status</th><th>Time</th><th>Actions</th></tr></thead>
+          <tbody id="ordersBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="dash-grid">
+      <!-- MENU MANAGEMENT -->
+      <div class="menu-section">
+        <div class="section-header">
+          <div class="section-title">🍽️ Menu Management</div>
+        </div>
+        <div id="menuList"></div>
+      </div>
+
+      <!-- ADD MENU ITEM + QUICK ACTIONS -->
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div class="add-form">
+          <div class="section-header"><div class="section-title">➕ Add Menu Item</div></div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Item Name</label><input type="text" class="form-input" id="newItemName" placeholder="Curry Chicken"></div>
+            <div class="form-group"><label class="form-label">Price</label><input type="text" class="form-input" id="newItemPrice" placeholder="$00.00"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Category</label>
+              <select class="form-input" id="newItemCat">
+                <option>Chef's Specialties</option><option>Street Eats</option><option>Sides & Combos</option><option>House Drinks</option><option>Desserts</option>
+              </select>
+            </div>
+            <div class="form-group"><label class="form-label">Description</label><input type="text" class="form-input" id="newItemDesc" placeholder="Brief description"></div>
+          </div>
+          <button class="save-btn" onclick="addMenuItem()">✦ ADD TO MENU</button>
+          <div id="addSuccess" style="display:none;margin-top:10px;color:var(--green);font-size:0.78rem;">✅ Item added to menu!</div>
+        </div>
+
+        <div class="qa-section">
+          <div class="section-header"><div class="section-title">⚡ Quick Actions</div></div>
+          <div class="qa-grid">
+            <div class="qa-btn" onclick="alert('Opening Catering Requests...\n\nLoaded: '+JSON.parse(localStorage.getItem(\'cateringRequests\')||\'[]\').length+\' requests\')"><span class="qa-icon">🍽️</span>View Catering Requests</div>
+            <div class="qa-btn" onclick="exportCSV()"><span class="qa-icon">📊</span>Export Orders CSV</div>
+            <div class="qa-btn" onclick="alert('VIP Members: '+JSON.parse(localStorage.getItem(\'vipMembers\')||\'[]\').length+'\nEvent RSVPs: '+JSON.parse(localStorage.getItem(\'eventRSVPs\')||\'[]\').length)"><span class="qa-icon">👑</span>View VIP Members</div>
+            <div class="qa-btn" onclick="alert('Grand Opening Subscribers: '+JSON.parse(localStorage.getItem(\'grandOpeningSubscribers\')||\'[]\').length)"><span class="qa-icon">📧</span>Email Subscribers</div>
+            <div class="qa-btn" onclick="window.open('kekesinternational-menu.html')"><span class="qa-icon">🌐</span>View Live Menu</div>
+            <div class="qa-btn" onclick="window.open('kekesinternational.html')"><span class="qa-icon">🏠</span>View Website</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// LOGIN
+function checkLogin(){
+  const pass = document.getElementById('loginPass').value;
+  if(pass === 'kekesadmin2026'){
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('dashboard').style.display='block';
+    initDashboard();
+  } else {
+    document.getElementById('loginError').style.display='block';
+    document.getElementById('loginPass').value='';
+  }
+}
+function logout(){
+  document.getElementById('loginScreen').style.display='flex';
+  document.getElementById('dashboard').style.display='none';
+  document.getElementById('loginPass').value='';
+}
+
+// TIME
+function updateTime(){
+  document.getElementById('dashTime').textContent=new Date().toLocaleString('en-US',{weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+setInterval(updateTime,1000);
+
+// SAMPLE ORDERS
+const sampleOrders = [
+  {id:'KK-0487',customer:'Marcus Williams',items:'1x Jerk Chicken, 2x Rice & Peas',total:'$32.99',type:'🚚 Delivery',status:'preparing',time:'11:42 PM'},
+  {id:'KK-0486',customer:'Jasmine Rodriguez',items:'1x Oxtail, 1x Festival, 1x Sorrel',total:'$38.99',type:'🚚 Delivery',status:'received',time:'11:38 PM'},
+  {id:'KK-0485',customer:'Terrell Davis',items:'3x Jerk Tacos, 1x Loaded Fries',total:'$28.99',type:'🏃 Pickup',status:'ready',time:'11:25 PM'},
+  {id:'KK-0484',customer:'Angela Moore',items:'1x Curry Goat, 2x Plantains',total:'$36.99',type:'🚚 Delivery',status:'delivered',time:'11:10 PM'},
+  {id:'KK-0483',customer:'Devon King',items:'2x Brown Stew Chicken, 1x Rum Cake',total:'$42.99',type:'🏃 Pickup',status:'delivered',time:'10:55 PM'},
+];
+
+let orders = JSON.parse(localStorage.getItem('adminOrders')||'null') || [...sampleOrders];
+
+const menuItems = [
+  {name:'Jerk Chicken',price:'$18',cat:"Chef's Specialties",available:true},
+  {name:'Oxtail',price:'$28',cat:"Chef's Specialties",available:true},
+  {name:'Curry Goat',price:'$24',cat:"Chef's Specialties",available:true},
+  {name:'Brown Stew Chicken',price:'$17',cat:"Chef's Specialties",available:true},
+  {name:'Jerk Chicken Tacos (3)',price:'$16',cat:'Street Eats',available:true},
+  {name:'Oxtail Tacos (3)',price:'$20',cat:'Street Eats',available:true},
+  {name:'Loaded Fries',price:'$12',cat:'Street Eats',available:true},
+  {name:'Rice & Peas',price:'$6',cat:'Sides',available:true},
+  {name:'Fried Plantains',price:'$6',cat:'Sides',available:true},
+  {name:'Festival (2pc)',price:'$5',cat:'Sides',available:true},
+  {name:'Sorrel',price:'$5',cat:'House Drinks',available:true},
+  {name:'Ginger Beer',price:'$5',cat:'House Drinks',available:true},
+  {name:'Rum Cake',price:'$8',cat:'Desserts',available:true},
+  {name:'Banana Pudding',price:'$7',cat:'Desserts',available:true},
+];
+
+let menuList = JSON.parse(localStorage.getItem('adminMenu')||'null') || [...menuItems];
+
+function initDashboard(){
+  updateTime();
+  renderOrders();
+  renderMenu();
+  updateStats();
+}
+
+function renderOrders(){
+  const tbody = document.getElementById('ordersBody');
+  tbody.innerHTML = orders.map((o,idx)=>`
+    <tr>
+      <td class="order-num">${o.id}</td>
+      <td>${o.customer}</td>
+      <td style="font-size:0.75rem;color:rgba(255,248,231,0.6);max-width:200px">${o.items}</td>
+      <td style="color:var(--gold);font-weight:700">${o.total}</td>
+      <td style="font-size:0.72rem">${o.type}</td>
+      <td>
+        <select class="status-select" onchange="updateStatus(${idx},this.value)">
+          <option value="received" ${o.status==='received'?'selected':''}>📲 Received</option>
+          <option value="preparing" ${o.status==='preparing'?'selected':''}>👩‍🍳 Preparing</option>
+          <option value="ready" ${o.status==='ready'?'selected':''}>🍽️ Ready</option>
+          <option value="delivered" ${o.status==='delivered'?'selected':''}>✅ Delivered</option>
+        </select>
+      </td>
+      <td style="font-size:0.72rem;color:rgba(255,248,231,0.4)">${o.time}</td>
+      <td>
+        <button class="action-btn danger" onclick="removeOrder(${idx})">Remove</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function updateStatus(idx, status){
+  orders[idx].status=status;
+  localStorage.setItem('adminOrders',JSON.stringify(orders));
+  const pending=orders.filter(o=>o.status==='received'||o.status==='preparing').length;
+  document.getElementById('pendingVal').textContent=pending;
+}
+
+function removeOrder(idx){
+  orders.splice(idx,1);
+  localStorage.setItem('adminOrders',JSON.stringify(orders));
+  renderOrders();
+  updateStats();
+}
+
+function addSampleOrder(){
+  const names=['DeShawn Taylor','Alicia Roberts','Marcus Brown','Keisha Johnson','Tony Ramirez'];
+  const items=[['1x Oxtail, 1x Sorrel','$33.99'],['2x Jerk Tacos, 1x Plantains','$22.99'],['1x Curry Goat, 2x Rice & Peas','$36.99'],['1x Jerk Chicken, 1x Rum Cake','$26.99']];
+  const now=new Date();
+  const time=now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  const pick=items[Math.floor(Math.random()*items.length)];
+  const num='KK-0'+String(480+orders.length).padStart(4,'0');
+  orders.unshift({id:num,customer:names[Math.floor(Math.random()*names.length)],items:pick[0],total:pick[1],type:Math.random()>0.5?'🚚 Delivery':'🏃 Pickup',status:'received',time});
+  localStorage.setItem('adminOrders',JSON.stringify(orders));
+  renderOrders();
+  updateStats();
+}
+
+function renderMenu(){
+  const list=document.getElementById('menuList');
+  list.innerHTML=menuList.map((item,idx)=>`
+    <div class="menu-item-row">
+      <div class="menu-item-info">
+        <div class="menu-item-name">${item.name}</div>
+        <div class="menu-item-price">${item.price} · ${item.cat}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button class="toggle-available ${item.available?'on':'off'}" onclick="toggleItem(${idx})" title="${item.available?'Available':'Unavailable'}"></button>
+        <button class="action-btn" onclick="editItem(${idx})">Edit</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleItem(idx){
+  menuList[idx].available=!menuList[idx].available;
+  localStorage.setItem('adminMenu',JSON.stringify(menuList));
+  renderMenu();
+}
+function editItem(idx){ const name=prompt('Edit item name:',menuList[idx].name); if(name){ menuList[idx].name=name; localStorage.setItem('adminMenu',JSON.stringify(menuList)); renderMenu(); } }
+
+function addMenuItem(){
+  const name=document.getElementById('newItemName').value.trim();
+  const price=document.getElementById('newItemPrice').value.trim();
+  const cat=document.getElementById('newItemCat').value;
+  const desc=document.getElementById('newItemDesc').value.trim();
+  if(!name||!price){ alert('Please enter a name and price.'); return; }
+  menuList.push({name,price,cat,desc,available:true});
+  localStorage.setItem('adminMenu',JSON.stringify(menuList));
+  renderMenu();
+  document.getElementById('newItemName').value='';
+  document.getElementById('newItemPrice').value='';
+  document.getElementById('newItemDesc').value='';
+  document.getElementById('addSuccess').style.display='block';
+  setTimeout(()=>document.getElementById('addSuccess').style.display='none',2500);
+}
+
+function updateStats(){
+  const pending=orders.filter(o=>o.status==='received'||o.status==='preparing').length;
+  document.getElementById('pendingVal').textContent=pending;
+  document.getElementById('vipCount').textContent=JSON.parse(localStorage.getItem('vipMembers')||'[]').length;
+  document.getElementById('cateringCount').textContent=JSON.parse(localStorage.getItem('cateringRequests')||'[]').length;
+}
+
+function exportCSV(){
+  const headers=['Order #','Customer','Items','Total','Type','Status','Time'];
+  const rows=orders.map(o=>[o.id,o.customer,'"'+o.items+'"',o.total,o.type,o.status,o.time]);
+  const csv=[headers.join(','),...rows.map(r=>r.join(','))].join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='kekes_orders_'+new Date().toISOString().split('T')[0]+'.csv';a.click();
+}
+</script>
+</body>
+</html>

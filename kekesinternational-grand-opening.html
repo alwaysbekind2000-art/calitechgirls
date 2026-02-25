@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grand Reopening March 2026 — Keke's International Food Spot</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root { --gold:#D4AF37; --gold-light:#F5D76E; --red:#8B1A1A; --red-bright:#c0392b; --cream:#FFF8E7; --dark:#0a0500; --brown:#1a0800; --green:#2ecc71; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { height:100%; }
+body { background:#000; color:var(--cream); font-family:'Montserrat',sans-serif; overflow-x:hidden; }
+
+/* NAV */
+.main-nav { position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(0,0,0,0.85); backdrop-filter:blur(20px); border-bottom:1px solid rgba(212,175,55,0.1); padding:0 30px; display:flex; align-items:center; justify-content:space-between; height:65px; }
+.nav-logo { font-family:'Dancing Script',cursive; font-size:1.4rem; color:#D4AF37; text-decoration:none; }
+.nav-links { display:flex; gap:4px; }
+.nav-links a { color:rgba(255,248,231,0.65); text-decoration:none; font-size:0.6rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:600; padding:6px 10px; border-radius:4px; transition:all 0.2s; white-space:nowrap; }
+.nav-links a:hover, .nav-links a.active { color:#D4AF37; background:rgba(212,175,55,0.08); }
+.nav-order-btn { padding:10px 20px; background:linear-gradient(135deg,#8B1A1A,#c0392b); color:#FFF8E7; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; border:none; border-radius:30px; cursor:pointer; text-decoration:none; font-family:'Montserrat',sans-serif; font-weight:700; box-shadow:0 5px 20px rgba(139,26,26,0.5); transition:all 0.3s; white-space:nowrap; }
+
+/* CANVAS PARTICLES */
+#canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+
+/* HERO FULL SCREEN */
+.hero-screen { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:80px 20px 60px; position:relative; z-index:1; }
+
+/* FIRE EMOJIS */
+.fire-container { position:fixed; top:0; left:0; right:0; bottom:0; pointer-events:none; z-index:1; overflow:hidden; }
+.fire-emoji { position:absolute; font-size:1.5rem; animation:fireRain linear infinite; opacity:0; }
+@keyframes fireRain { 0%{transform:translateY(-50px) rotate(0deg);opacity:0} 10%{opacity:1} 80%{opacity:0.7} 100%{transform:translateY(110vh) rotate(360deg);opacity:0} }
+
+/* WE'RE BACK */
+.comeback-label { font-size:clamp(0.6rem,2vw,0.9rem); letter-spacing:8px; text-transform:uppercase; color:rgba(212,175,55,0.6); margin-bottom:20px; animation:fadeInUp 1s ease both; }
+.main-title { font-family:'Playfair Display',serif; font-size:clamp(3.5rem,12vw,9rem); font-weight:900; line-height:0.9; margin-bottom:10px; animation:fadeInUp 1s ease 0.2s both; }
+.main-title .we { display:block; color:rgba(255,248,231,0.15); font-style:italic; font-size:0.5em; }
+.main-title .back { display:block; color:var(--gold); text-shadow:0 0 60px rgba(212,175,55,0.5), 0 0 120px rgba(212,175,55,0.2); animation:flicker 3s ease-in-out infinite; }
+@keyframes flicker { 0%,100%{text-shadow:0 0 60px rgba(212,175,55,0.5),0 0 120px rgba(212,175,55,0.2)} 92%{text-shadow:0 0 60px rgba(212,175,55,0.5),0 0 120px rgba(212,175,55,0.2)} 93%{text-shadow:none;color:rgba(212,175,55,0.6)} 94%{text-shadow:0 0 60px rgba(212,175,55,0.5),0 0 120px rgba(212,175,55,0.2)} 96%{text-shadow:none;color:rgba(212,175,55,0.7)} 97%{text-shadow:0 0 60px rgba(212,175,55,0.5),0 0 120px rgba(212,175,55,0.2)} }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+.subtitle { font-size:clamp(0.8rem,3vw,1.2rem); letter-spacing:6px; text-transform:uppercase; color:rgba(255,248,231,0.7); font-weight:300; margin-bottom:40px; animation:fadeInUp 1s ease 0.4s both; }
+
+/* COUNTDOWN */
+.countdown-massive { display:flex; justify-content:center; gap:clamp(10px,3vw,30px); margin-bottom:50px; animation:fadeInUp 1s ease 0.6s both; flex-wrap:wrap; }
+.cd-unit { text-align:center; }
+.cd-num { font-size:clamp(3rem,10vw,8rem); font-weight:900; color:var(--gold); font-family:'Playfair Display',serif; line-height:1; text-shadow:0 0 40px rgba(212,175,55,0.4); }
+.cd-label { font-size:clamp(0.55rem,1.5vw,0.8rem); letter-spacing:4px; text-transform:uppercase; color:rgba(255,248,231,0.35); margin-top:8px; }
+.cd-sep { font-size:clamp(2rem,6vw,5rem); color:rgba(212,175,55,0.25); align-self:center; margin-top:-20px; }
+
+/* DATE */
+.event-date { display:inline-flex; align-items:center; gap:15px; padding:14px 35px; background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.3); border-radius:50px; font-size:clamp(0.75rem,2vw,1rem); color:var(--gold); font-weight:700; letter-spacing:3px; text-transform:uppercase; margin-bottom:40px; animation:fadeInUp 1s ease 0.8s both; }
+
+/* EMAIL FORM */
+.subscribe-form { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; animation:fadeInUp 1s ease 1s both; margin-bottom:30px; }
+.subscribe-input { padding:16px 24px; background:rgba(255,255,255,0.06); border:1px solid rgba(212,175,55,0.25); border-radius:50px; color:var(--cream); font-family:'Montserrat',sans-serif; font-size:0.88rem; outline:none; transition:all 0.3s; min-width:280px; }
+.subscribe-input:focus { border-color:var(--gold); background:rgba(212,175,55,0.08); }
+.subscribe-input::placeholder { color:rgba(255,248,231,0.25); }
+.subscribe-btn { padding:16px 35px; background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--dark); font-family:'Montserrat',sans-serif; font-weight:800; font-size:0.8rem; letter-spacing:2px; text-transform:uppercase; border:none; border-radius:50px; cursor:pointer; box-shadow:0 8px 30px rgba(212,175,55,0.4); transition:all 0.3s; white-space:nowrap; }
+.subscribe-btn:hover { transform:translateY(-3px); box-shadow:0 12px 40px rgba(212,175,55,0.6); }
+#subSuccess { color:var(--green); font-size:0.8rem; margin-top:10px; display:none; }
+
+/* WHAT TO EXPECT */
+.expect-section { padding:100px 20px; position:relative; z-index:1; }
+.expect-title { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,5vw,3rem); color:var(--gold); text-align:center; margin-bottom:50px; }
+.expect-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; max-width:1000px; margin:0 auto; }
+.expect-card { background:rgba(26,8,0,0.8); border:1px solid rgba(212,175,55,0.15); border-radius:20px; padding:40px 30px; text-align:center; transition:all 0.4s; position:relative; overflow:hidden; }
+.expect-card::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 50% 0%, rgba(212,175,55,0.05), transparent 60%); }
+.expect-card:hover { transform:translateY(-8px); border-color:rgba(212,175,55,0.4); box-shadow:0 25px 60px rgba(0,0,0,0.6); }
+.expect-icon { font-size:3.5rem; margin-bottom:18px; display:block; }
+.expect-name { font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--gold); margin-bottom:10px; }
+.expect-desc { font-size:0.83rem; color:rgba(255,248,231,0.6); line-height:1.8; }
+
+/* SOCIAL SHARE */
+.share-section { text-align:center; padding:60px 20px; position:relative; z-index:1; }
+.share-title { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--gold); margin-bottom:20px; }
+.share-btns { display:flex; gap:15px; justify-content:center; flex-wrap:wrap; }
+.share-btn { padding:12px 25px; border-radius:30px; border:1px solid rgba(212,175,55,0.3); background:rgba(212,175,55,0.06); color:rgba(255,248,231,0.8); text-decoration:none; font-size:0.75rem; font-weight:700; letter-spacing:1px; transition:all 0.3s; }
+.share-btn:hover { background:rgba(212,175,55,0.15); color:var(--gold); }
+
+/* BACK HOME */
+.back-home { text-align:center; padding:30px 20px 60px; position:relative; z-index:1; }
+.back-home a { color:rgba(212,175,55,0.5); text-decoration:none; font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; transition:color 0.3s; }
+.back-home a:hover { color:var(--gold); }
+
+/* FOOTER */
+.footer { background:#050200; border-top:1px solid rgba(212,175,55,0.15); padding:60px 20px 40px; text-align:center; position:relative; z-index:1; }
+.footer-inner { max-width:800px; margin:0 auto; }
+.footer-logo { font-family:'Dancing Script',cursive; font-size:2.5rem; color:#D4AF37; margin-bottom:8px; }
+.footer-tagline { color:rgba(255,248,231,0.4); font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:24px; }
+.social-links { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:24px; }
+.social-btn { padding:10px 20px; background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.2); color:rgba(255,248,231,0.7); border-radius:25px; text-decoration:none; font-size:0.7rem; letter-spacing:1px; transition:all 0.3s; }
+.social-btn:hover { background:rgba(212,175,55,0.2); color:#D4AF37; }
+.footer-divider { height:1px; background:rgba(212,175,55,0.1); margin:20px 0; }
+.footer-contact { color:rgba(255,248,231,0.45); font-size:0.8rem; line-height:2; }
+.footer-copy { color:rgba(255,248,231,0.25); font-size:0.7rem; letter-spacing:1px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div class="fire-container" id="fireContainer"></div>
+
+<nav class="main-nav">
+  <a href="kekesinternational.html" class="nav-logo">Keke's International</a>
+  <div class="nav-links">
+    <a href="kekesinternational.html">Home</a>
+    <a href="kekesinternational-menu.html">Menu</a>
+    <a href="kekesinternational-catering.html">Catering</a>
+    <a href="kekesinternational-events.html">Events</a>
+    <a href="kekesinternational-grand-opening.html" class="active">🎉 Reopening</a>
+    <a href="kekesinternational-gallery.html">Gallery</a>
+    <a href="kekesinternational-vip.html">VIP</a>
+    <a href="kekesinternational-about.html">About</a>
+    <a href="kekesinternational-contact.html">Contact</a>
+    <a href="kekesinternational-tracker.html">Track Order</a>
+    <a href="mississippi-soul-food.html" style="color:#D4AF37;font-size:0.8rem;font-weight:700;padding:6px 12px;border:1px solid #D4AF37;border-radius:20px;text-decoration:none;white-space:nowrap;">🍖 Mississippi Soul</a>
+  </div>
+  <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
+</nav>
+
+<div class="hero-screen">
+  <div class="comeback-label">✦ After Everything ✦ We Rise Again ✦</div>
+  <h1 class="main-title">
+    <span class="we">we're</span>
+    <span class="back">BACK</span>
+  </h1>
+  <div class="subtitle">Grand Reopening · March 2026</div>
+
+  <div class="countdown-massive">
+    <div class="cd-unit"><div class="cd-num" id="days">--</div><div class="cd-label">Days</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><div class="cd-num" id="hours">--</div><div class="cd-label">Hours</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><div class="cd-num" id="minutes">--</div><div class="cd-label">Minutes</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><div class="cd-num" id="seconds">--</div><div class="cd-label">Seconds</div></div>
+  </div>
+
+  <div class="event-date">📅 March 19, 2026 · Moreno Valley, CA · Starts 6PM</div>
+
+  <div>
+    <div style="font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,248,231,0.4);margin-bottom:15px;">Be the first to know when we open</div>
+    <div class="subscribe-form">
+      <input type="email" class="subscribe-input" id="subEmail" placeholder="your@email.com">
+      <button class="subscribe-btn" onclick="subscribe()">🔥 NOTIFY ME</button>
+    </div>
+    <div id="subSuccess">🎉 You're on the list! Get ready for the biggest Caribbean food night in SoCal.</div>
+  </div>
+</div>
+
+<!-- WHAT TO EXPECT -->
+<div class="expect-section">
+  <div class="expect-title">✦ What to Expect ✦</div>
+  <div class="expect-grid">
+    <div class="expect-card">
+      <span class="expect-icon">🍽️</span>
+      <div class="expect-name">New Menu Items</div>
+      <div class="expect-desc">Chef Keke has been cooking up something SPECIAL. Exclusive dishes, new combinations, and fan favorites with an upgraded twist. The menu is bigger and better than ever.</div>
+    </div>
+    <div class="expect-card">
+      <span class="expect-icon">🌙</span>
+      <div class="expect-name">Extended Hours</div>
+      <div class="expect-desc">Now open till 4AM every night. Because the best Caribbean food deserves to be available whenever the craving hits — midnight, 2AM, 3AM, we're there.</div>
+    </div>
+    <div class="expect-card">
+      <span class="expect-icon">👑</span>
+      <div class="expect-name">VIP Night Launch</div>
+      <div class="expect-desc">Introducing Keke's VIP program — exclusive deals, priority ordering, Chef's Table access, and membership perks. Grand Reopening Night is the official launch.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SOCIAL SHARE -->
+<div class="share-section">
+  <div class="share-title">Spread the Word 🔥</div>
+  <div class="share-btns">
+    <a href="https://www.instagram.com/kekesinternationalfoodspot" target="_blank" class="share-btn">📸 Follow on Instagram</a>
+    <a href="https://www.instagram.com/longbeach_kekes/" target="_blank" class="share-btn">📸 @LongBeach_Kekes</a>
+    <a href="kekesinternational-events.html" class="share-btn">📅 RSVP for the Event</a>
+    <a href="kekesinternational-vip.html" class="share-btn">👑 Join VIP Early</a>
+  </div>
+</div>
+
+<div class="back-home">
+  <a href="kekesinternational.html">← Back to Home</a>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Keke's</div>
+    <p class="footer-tagline">International Food Spot · Every Meal Cooked with Love</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/kekesinternationalfoodspot" target="_blank" class="social-btn">📸 @KekesInternational</a>
+      <a href="https://www.instagram.com/longbeach_kekes/" target="_blank" class="social-btn">📸 @LongBeach_Kekes</a>
+      <a href="kekesinternational-catering.html" class="social-btn">🍽️ Book Catering</a>
+      <a href="kekesinternational-events.html" class="social-btn">🎉 Events</a>
+    </div>
+    <div class="footer-divider"></div>
+    <p class="footer-contact">📞 (951) 630-5410 · Call or Text Chef Keke Chanel<br>🚚 Online Orders Only · No Walk-Up · No Dine-In<br>📍 Moreno Valley · Long Beach · Orange County (Coming Soon)<br>🌙 Open Till 4AM</p>
+    <div class="footer-divider"></div>
+    <p class="footer-copy">© 2026 Keke's International Food Spot · Grand Reopening March 2026 🎉</p>
+  </div>
+</footer>
+
+<script>
+// GOLD PARTICLE EXPLOSION CANVAS
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+window.addEventListener('resize',()=>{ canvas.width=window.innerWidth; canvas.height=window.innerHeight; });
+
+const particles = [];
+class Particle {
+  constructor(){
+    this.reset();
+  }
+  reset(){
+    this.x = Math.random()*canvas.width;
+    this.y = Math.random()*canvas.height;
+    this.vx = (Math.random()-0.5)*0.8;
+    this.vy = (Math.random()-0.5)*0.8 - 0.3;
+    this.alpha = Math.random();
+    this.size = Math.random()*2+0.5;
+    this.color = Math.random()>0.7 ? '#F5D76E' : Math.random()>0.5 ? '#D4AF37' : '#8B1A1A';
+    this.life = Math.random()*150+80;
+    this.maxLife = this.life;
+  }
+  update(){
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life--;
+    this.alpha = (this.life/this.maxLife)*0.8;
+    if(this.life<=0) this.reset();
+  }
+  draw(){
+    ctx.save();
+    ctx.globalAlpha = this.alpha;
+    ctx.fillStyle = this.color;
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+// Burst particles
+class Burst {
+  constructor(x,y){
+    this.x = x; this.y = y;
+    this.vx = (Math.random()-0.5)*12;
+    this.vy = (Math.random()-0.5)*12 - 4;
+    this.size = Math.random()*3+1;
+    this.color = Math.random()>0.5?'#D4AF37':'#F5D76E';
+    this.alpha = 1;
+    this.life = 60;
+    this.gravity = 0.15;
+  }
+  update(){ this.x+=this.vx; this.y+=this.vy; this.vy+=this.gravity; this.life--; this.alpha=this.life/60; }
+  draw(){ ctx.save(); ctx.globalAlpha=this.alpha; ctx.fillStyle=this.color; ctx.shadowBlur=15; ctx.shadowColor=this.color; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); ctx.restore(); }
+}
+
+for(let i=0;i<180;i++) particles.push(new Particle());
+const bursts = [];
+
+function spawnBurst(){
+  const x=Math.random()*canvas.width;
+  const y=Math.random()*canvas.height*0.7;
+  for(let i=0;i<25;i++) bursts.push(new Burst(x,y));
+}
+setInterval(spawnBurst, 2500);
+spawnBurst();
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{p.update();p.draw();});
+  for(let i=bursts.length-1;i>=0;i--){
+    bursts[i].update(); bursts[i].draw();
+    if(bursts[i].life<=0) bursts.splice(i,1);
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+
+// FIRE EMOJIS
+const fireContainer = document.getElementById('fireContainer');
+const fireEmojis = ['🔥','🌶️','✨','⭐','🌟','💫','🎇','🎆'];
+function spawnFire(){
+  const f = document.createElement('div');
+  f.className = 'fire-emoji';
+  f.textContent = fireEmojis[Math.floor(Math.random()*fireEmojis.length)];
+  f.style.left = Math.random()*100+'%';
+  f.style.animationDuration = (4+Math.random()*8)+'s';
+  f.style.animationDelay = (Math.random()*5)+'s';
+  f.style.fontSize = (0.8+Math.random()*1.5)+'rem';
+  fireContainer.appendChild(f);
+  setTimeout(()=>f.remove(),(12+Math.random()*5)*1000);
+}
+for(let i=0;i<20;i++) spawnFire();
+setInterval(spawnFire, 800);
+
+// COUNTDOWN
+function updateCountdown(){
+  const target = new Date('March 19, 2026 18:00:00').getTime();
+  const diff = target - Date.now();
+  if(diff<=0){ ['days','hours','minutes','seconds'].forEach(id=>document.getElementById(id).textContent='0'); return; }
+  document.getElementById('days').textContent=Math.floor(diff/86400000);
+  document.getElementById('hours').textContent=Math.floor((diff%86400000)/3600000);
+  document.getElementById('minutes').textContent=Math.floor((diff%3600000)/60000);
+  document.getElementById('seconds').textContent=Math.floor((diff%60000)/1000);
+}
+setInterval(updateCountdown,1000);
+updateCountdown();
+
+// SUBSCRIBE
+function subscribe(){
+  const email = document.getElementById('subEmail').value;
+  if(!email||!email.includes('@')){ alert('Please enter a valid email.'); return; }
+  const subs = JSON.parse(localStorage.getItem('grandOpeningSubscribers')||'[]');
+  subs.push({email,date:new Date().toISOString()});
+  localStorage.setItem('grandOpeningSubscribers',JSON.stringify(subs));
+  document.getElementById('subSuccess').style.display='block';
+  document.getElementById('subEmail').value='';
+  spawnBurst();spawnBurst();spawnBurst();
+}
+</script>
+</body>
+</html>
