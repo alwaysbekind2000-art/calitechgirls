@@ -1173,26 +1173,47 @@
     #back-to-top.visible { opacity: 1; pointer-events: all; }
     #back-to-top:hover { border-color: var(--amber); transform: scale(1.1); }
 
+  
+   @media (max-width: 1200px) {
+     .hamburger { display: block; }
+     .nav-links {
+       display: none;
+       position: absolute;
+       top: 65px; left: 0; right: 0;
+       background: rgba(10,5,0,0.97);
+       backdrop-filter: blur(20px);
+       flex-direction: column;
+       padding: 20px;
+       gap: 8px;
+       border-bottom: 1px solid rgba(212,175,55,0.2);
+     }
+   }
   </style>
 </head>
 <body>
 
 <!-- ===== NAVIGATION ===== -->
-<nav id="navbar">
-  <a href="#hero" class="nav-logo">
-    Mississippi Soul Food
-    <span>Authentic Southern Kitchen</span>
-  </a>
-  <ul class="nav-links" id="nav-links">
-    <li><a href="#story">Our Story</a></li>
-    <li><a href="#catering">Catering Packages</a></li>
-    <li><a href="#testimonials">Reviews</a></li>
-    <li><a href="#" style="color:#D4AF37;font-size:0.8rem;font-weight:700;padding:6px 12px;border:1px solid #D4AF37;border-radius:20px;text-decoration:none;white-space:nowrap;">🍛 Keke's International</a></li>
-    <li><a href="#catering" class="nav-cta">BOOK CATERING</a></li>
-  </ul>
-  <button class="hamburger" id="hamburger" aria-label="Menu">
+<nav class="main-nav">
+  <a href="kekesinternational-14.html" class="nav-logo">Keke's International</a>
+  <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open');this.classList.toggle('active');" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
+  <div class="nav-links">
+    <a href="kekesinternational-menu.html">Menu</a>
+    <a href="kekesinternational-catering.html">Catering</a>
+    <a href="kekesinternational-events.html">Events</a>
+    <a href="kekesinternational-grand-opening.html">🎉 Reopening</a>
+    <a href="kekesinternational-gallery.html">Gallery</a>
+    <a href="kekesinternational-vip.html">VIP</a>
+    <a href="kekesinternational-about.html">About</a>
+    <a href="kekesinternational-contact.html">Contact</a>
+    <a href="kekesinternational-tracker.html">Track Order</a>
+    <a href="mississippi-soul-food.html" style="background:linear-gradient(135deg,#6B1A1A,#3D0C0C);border:1px solid #D4A017;border-radius:20px;padding:5px 12px;font-size:0.78rem;font-weight:700;letter-spacing:0.5px;color:#F0A500 !important;text-shadow:0 0 8px rgba(212,160,23,0.5);box-shadow:0 2px 10px rgba(107,26,26,0.4);">✨ Mississippi Soul Food</a>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
+    <button id="pwa-install-btn" onclick="triggerPWAInstall()" style="display:none;background:linear-gradient(135deg,#D4AF37,#8B1A1A);color:#fff;border:none;padding:8px 14px;border-radius:20px;font-weight:700;font-size:0.8rem;cursor:pointer;animation:pulse-gold 2s infinite;">📱 Add App</button>
+  </div>
 </nav>
 
 <!-- ===== HERO ===== -->
