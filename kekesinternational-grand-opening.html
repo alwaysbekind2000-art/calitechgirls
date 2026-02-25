@@ -63,6 +63,34 @@ body{background:var(--dark);color:var(--cream);font-family:'Montserrat',sans-ser
 .share-btns{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;margin-top:25px;}
 .share-btn{padding:14px 28px;background:rgba(255,255,255,.05);border:1px solid rgba(212,175,55,.2);border-radius:8px;color:var(--cream);text-decoration:none;font-family:'Montserrat',sans-serif;font-size:.75rem;letter-spacing:2px;transition:all .3s;display:flex;align-items:center;gap:8px;}
 .share-btn:hover{background:rgba(212,175,55,.1);border-color:var(--gold);}
+
+
+.nav-links { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+/* Hamburger Menu Styles */
+.hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; z-index: 1001; }
+.hamburger span { display: block; width: 25px; height: 2px; background: var(--gold, #D4AF37); margin: 5px 0; transition: all 0.3s; }
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+@media (max-width: 1200px) {
+  .hamburger { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 65px; left: 0; right: 0;
+    background: rgba(10,5,0,0.97);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    padding: 20px;
+    gap: 8px;
+    border-bottom: 1px solid rgba(212,175,55,0.2);
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { font-size: 0.85rem; padding: 12px 20px; width: 100%; }
+}
+
+
+.main-nav { position: relative; }
 </style>
 </head>
 <body>
@@ -70,6 +98,9 @@ body{background:var(--dark);color:var(--cream);font-family:'Montserrat',sans-ser
 <!-- NAV -->
 <nav class="main-nav">
   <a href="kekesinternational-14.html" class="nav-logo">Keke's International</a>
+  <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open');this.classList.toggle('active');" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
   <div class="nav-links">
     <a href="kekesinternational-menu.html">Menu</a>
     <a href="kekesinternational-catering.html">Catering</a>
