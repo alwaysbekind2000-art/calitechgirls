@@ -1,0 +1,12 @@
+# Netlify Configuration
+
+[build]
+  publish = "./dist"
+  command = "npm run build"
+
+[dev]
+  command = "npm run dev"
+  port = 3000
+
+[functions]
+  directory = "./functions"
