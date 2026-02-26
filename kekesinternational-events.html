@@ -89,7 +89,30 @@ body{background:var(--dark);color:var(--cream);font-family:'Montserrat',sans-ser
 
 .main-nav { position: relative; }
   body { padding-top: 65px; }
-  </style>
+  
+/* INTERACTIVE CALENDAR */
+.calendar-section{padding:80px 40px;max-width:900px;margin:0 auto;text-align:center;}
+.calendar-container{background:linear-gradient(135deg,rgba(26,8,0,.9),rgba(10,5,0,.95));border:1px solid rgba(212,175,55,.3);border-radius:20px;padding:40px;margin-top:30px;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+.calendar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;}
+.calendar-month{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);}
+.calendar-nav{background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.3);color:var(--gold);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:1.2rem;transition:all .3s;}
+.calendar-nav:hover{background:rgba(212,175,55,.2);}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.calendar-day-header{font-size:.65rem;letter-spacing:2px;color:rgba(255,248,231,.4);padding:10px 0;text-transform:uppercase;}
+.calendar-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:10px;font-family:'Montserrat',sans-serif;font-size:.9rem;color:rgba(255,248,231,.6);transition:all .3s;cursor:default;}
+.calendar-day.has-event{background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.3);color:var(--gold);cursor:pointer;animation:borderPulse 3s ease-in-out infinite;}
+.calendar-day.has-event:hover{background:rgba(212,175,55,.25);transform:scale(1.1);box-shadow:0 0 20px rgba(212,175,55,.3);}
+.calendar-day.grand-opening{background:linear-gradient(135deg,#8B1A1A,#c0392b) !important;border:2px solid var(--gold) !important;color:var(--cream) !important;font-weight:800;box-shadow:0 0 30px rgba(139,26,26,.6),0 0 15px rgba(212,175,55,.3);animation:pulse-event 2s ease-in-out infinite;}
+.calendar-day.today{border:1px solid rgba(255,248,231,.5);color:var(--cream);}
+.calendar-day.empty{opacity:0;}
+@keyframes pulse-event{0%,100%{box-shadow:0 0 30px rgba(139,26,26,.6),0 0 15px rgba(212,175,55,.3)}50%{box-shadow:0 0 50px rgba(139,26,26,.8),0 0 30px rgba(212,175,55,.5)}}
+@keyframes borderPulse{0%,100%{border-color:rgba(212,175,55,.3)}50%{border-color:rgba(212,175,55,.6)}}
+.event-tooltip{background:rgba(10,5,0,.95);border:1px solid var(--gold);border-radius:12px;padding:15px 20px;margin-top:15px;text-align:left;display:none;animation:fadeUp .3s ease;}
+.event-tooltip.show{display:block;}
+.event-tooltip-title{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.1rem;margin-bottom:5px;}
+.event-tooltip-desc{color:rgba(255,248,231,.7);font-size:.85rem;line-height:1.5;}
+
+</style>
 </head>
 <body>
 
@@ -146,6 +169,26 @@ body{background:var(--dark);color:var(--cream);font-family:'Montserrat',sans-ser
     <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:20px;">
       <a href="kekesinternational-grand-opening.html" class="btn-primary">VIEW DETAILS</a>
       <a href="kekesinternational-vip.html" class="btn-secondary">GET VIP ACCESS</a>
+    </div>
+  </div>
+
+
+  <!-- INTERACTIVE CALENDAR -->
+  <div class="calendar-section" style="padding-top:0;">
+    <p class="section-label">Plan Your Visit</p>
+    <h2 class="section-title">Event Calendar</h2>
+    <div class="section-divider"></div>
+    <div class="calendar-container">
+      <div class="calendar-header">
+        <button class="calendar-nav" onclick="changeMonth(-1)">◀</button>
+        <div class="calendar-month" id="calMonthYear"></div>
+        <button class="calendar-nav" onclick="changeMonth(1)">▶</button>
+      </div>
+      <div class="calendar-grid" id="calGrid"></div>
+      <div class="event-tooltip" id="eventTooltip">
+        <div class="event-tooltip-title" id="tooltipTitle"></div>
+        <div class="event-tooltip-desc" id="tooltipDesc"></div>
+      </div>
     </div>
   </div>
 
@@ -257,6 +300,64 @@ if (container) {
     container.appendChild(p);
   }
 }
+
+// Interactive Calendar
+const calEvents = {
+  '2026-03-19': { title: '🔥 GRAND REOPENING', desc: 'Keke\'s International Food Spot opens the doors! New menu, new energy, same soul. 12:00 PM - Moreno Valley, CA' },
+  '2026-03-20': { title: '🍽️ Opening Weekend Special', desc: 'Special opening weekend pricing and surprise menu items. Don\'t miss it!' },
+  '2026-03-21': { title: '🍽️ Opening Weekend Special', desc: 'Last day of opening weekend specials. VIP members get extra perks!' }
+};
+let calMonth = 2; // March (0-indexed)
+let calYear = 2026;
+
+function renderCalendar() {
+  const grid = document.getElementById('calGrid');
+  const monthYear = document.getElementById('calMonthYear');
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  monthYear.textContent = months[calMonth] + ' ' + calYear;
+  
+  const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+  let html = days.map(d => '<div class="calendar-day-header">' + d + '</div>').join('');
+  
+  const firstDay = new Date(calYear, calMonth, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  const today = new Date();
+  
+  for (let i = 0; i < firstDay; i++) html += '<div class="calendar-day empty"></div>';
+  
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = calYear + '-' + String(calMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+    const ev = calEvents[dateStr];
+    const isToday = (today.getDate() === d && today.getMonth() === calMonth && today.getFullYear() === calYear);
+    const isGrand = dateStr === '2026-03-19';
+    let cls = 'calendar-day';
+    if (isGrand) cls += ' grand-opening';
+    else if (ev) cls += ' has-event';
+    if (isToday) cls += ' today';
+    const onclick = ev ? ' onclick="showEvent(\'' + dateStr + '\')"' : '';
+    html += '<div class="' + cls + '"' + onclick + '>' + d + '</div>';
+  }
+  grid.innerHTML = html;
+  document.getElementById('eventTooltip').classList.remove('show');
+}
+
+function changeMonth(dir) {
+  calMonth += dir;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  renderCalendar();
+}
+
+function showEvent(dateStr) {
+  const ev = calEvents[dateStr];
+  if (!ev) return;
+  document.getElementById('tooltipTitle').textContent = ev.title;
+  document.getElementById('tooltipDesc').textContent = ev.desc;
+  document.getElementById('eventTooltip').classList.add('show');
+}
+
+renderCalendar();
+
 </script>
 </body>
 </html>
