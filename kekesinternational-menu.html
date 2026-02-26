@@ -361,6 +361,117 @@
 }
 
 
+
+    .tray-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      padding: 15px 0;
+      gap: 15px;
+    }
+    .tray-arrow {
+      color: var(--gold);
+      font-size: 1rem;
+      transition: transform .3s;
+    }
+    .tray-arrow.down { transform: rotate(180deg); }
+    .tray-items {
+      max-height: 0;
+      overflow-y: auto;
+      transition: max-height .4s ease;
+    }
+    .tray-items.expanded {
+      max-height: 300px;
+      padding: 10px 0;
+      border-top: 1px solid rgba(212,175,55,.2);
+    }
+    .tray-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(212,175,55,.1);
+    }
+    .tray-item-name {
+      font-size: .85rem;
+      color: var(--cream);
+      flex: 1;
+    }
+    .tray-item-price {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold);
+      font-size: .9rem;
+      min-width: 60px;
+      text-align: right;
+    }
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 15px;
+    }
+    .qty-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,175,55,.4);
+      background: transparent;
+      color: var(--gold);
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+    }
+    .qty-btn:hover {
+      background: rgba(212,175,55,.2);
+    }
+    .qty-num {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--cream);
+      min-width: 20px;
+      text-align: center;
+    }
+    .remove-btn {
+      background: none;
+      border: none;
+      color: rgba(255,100,100,.7);
+      cursor: pointer;
+      font-size: .75rem;
+      padding: 4px 8px;
+      transition: color .2s;
+    }
+    .remove-btn:hover { color: #ff4444; }
+    .tray-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid rgba(212,175,55,.2);
+    }
+    .clear-tray-btn {
+      background: none;
+      border: 1px solid rgba(255,100,100,.3);
+      color: rgba(255,100,100,.7);
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .7rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .clear-tray-btn:hover {
+      border-color: #ff4444;
+      color: #ff4444;
+    }
+    .add-btn.added {
+      background: linear-gradient(135deg, #2d6a30, #1a8a1a) !important;
+    }
+
 .main-nav { position: relative; }
 </style>
 </head>
@@ -409,8 +520,8 @@
       <div class="menu-card-tag">⭐ POPULAR</div>
       <div class="menu-card-desc">House-marinated jerk chicken, slow-cooked with island spices. Served with rice & peas and festival bread.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$18</div>
-        <button class="add-btn" onclick="addToTray('Jerk Chicken', 18)">ADD</button>
+        <div class="menu-card-price">$28</div>
+        <button class="add-btn" onclick="addToTray('Jerk Chicken', 28)">ADD</button>
       </div>
     </div>
 
@@ -420,8 +531,8 @@
       <div class="menu-card-tag">⭐ POPULAR</div>
       <div class="menu-card-desc">Fall-off-the-bone oxtail braised for hours in our secret gravy. A Keke's staple that sells out fast.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$26</div>
-        <button class="add-btn" onclick="addToTray('Slow Braised Oxtail', 26)">ADD</button>
+        <div class="menu-card-price">$36</div>
+        <button class="add-btn" onclick="addToTray('Slow Braised Oxtail', 36)">ADD</button>
       </div>
     </div>
 
@@ -431,8 +542,8 @@
       <div class="menu-card-tag">🌶️ SPICY</div>
       <div class="menu-card-desc">Tender goat slow-simmered in fragrant Caribbean curry. Served with white rice and roti.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$24</div>
-        <button class="add-btn" onclick="addToTray('Curry Goat', 24)">ADD</button>
+        <div class="menu-card-price">$34</div>
+        <button class="add-btn" onclick="addToTray('Curry Goat', 34)">ADD</button>
       </div>
     </div>
 
@@ -442,8 +553,8 @@
       <div class="menu-card-tag">⭐ POPULAR</div>
       <div class="menu-card-desc">Seasoned cornmeal-crusted catfish, golden fried. Served with mac & cheese and collard greens.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$20</div>
-        <button class="add-btn" onclick="addToTray('Crispy Catfish Platter', 20)">ADD</button>
+        <div class="menu-card-price">$30</div>
+        <button class="add-btn" onclick="addToTray('Crispy Catfish Platter', 30)">ADD</button>
       </div>
     </div>
   </div>
@@ -458,8 +569,8 @@
       <div class="menu-card-name">Baked Mac & Cheese</div>
       <div class="menu-card-desc">Creamy four-cheese blend baked to a golden crust. Made from scratch every morning.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$12</div>
-        <button class="add-btn" onclick="addToTray('Baked Mac & Cheese', 12)">ADD</button>
+        <div class="menu-card-price">$22</div>
+        <button class="add-btn" onclick="addToTray('Baked Mac & Cheese', 22)">ADD</button>
       </div>
     </div>
 
@@ -468,8 +579,8 @@
       <div class="menu-card-name">Collard Greens</div>
       <div class="menu-card-desc">Southern slow-cooked collard greens seasoned with smoked turkey. A comfort classic.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$10</div>
-        <button class="add-btn" onclick="addToTray('Collard Greens', 10)">ADD</button>
+        <div class="menu-card-price">$20</div>
+        <button class="add-btn" onclick="addToTray('Collard Greens', 20)">ADD</button>
       </div>
     </div>
 
@@ -478,8 +589,8 @@
       <div class="menu-card-name">Candied Yams</div>
       <div class="menu-card-desc">Sweet and buttery yams slow-baked with brown sugar, cinnamon, and nutmeg. Pure soul.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$10</div>
-        <button class="add-btn" onclick="addToTray('Candied Yams', 10)">ADD</button>
+        <div class="menu-card-price">$20</div>
+        <button class="add-btn" onclick="addToTray('Candied Yams', 20)">ADD</button>
       </div>
     </div>
 
@@ -489,8 +600,8 @@
       <div class="menu-card-tag">NEW</div>
       <div class="menu-card-desc">Fluffy golden cornbread with a jalapeño kick. Baked fresh and served warm with honey butter.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$6</div>
-        <button class="add-btn" onclick="addToTray('Jalapeño Cornbread', 6)">ADD</button>
+        <div class="menu-card-price">$16</div>
+        <button class="add-btn" onclick="addToTray('Jalapeño Cornbread', 16)">ADD</button>
       </div>
     </div>
   </div>
@@ -505,8 +616,8 @@
       <div class="menu-card-name">Rice & Peas</div>
       <div class="menu-card-desc">Classic Caribbean rice & peas cooked in coconut milk with thyme and scotch bonnet. Fragrant perfection.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$11</div>
-        <button class="add-btn" onclick="addToTray('Rice & Peas', 11)">ADD</button>
+        <div class="menu-card-price">$21</div>
+        <button class="add-btn" onclick="addToTray('Rice & Peas', 21)">ADD</button>
       </div>
     </div>
 
@@ -516,8 +627,8 @@
       <div class="menu-card-tag">⭐ POPULAR</div>
       <div class="menu-card-desc">Caramelized ripe plantains fried golden. Sweet, soft, irresistible — the perfect Caribbean side.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$9</div>
-        <button class="add-btn" onclick="addToTray('Fried Sweet Plantains', 9)">ADD</button>
+        <div class="menu-card-price">$19</div>
+        <button class="add-btn" onclick="addToTray('Fried Sweet Plantains', 19)">ADD</button>
       </div>
     </div>
 
@@ -526,8 +637,8 @@
       <div class="menu-card-name">Caribbean Curry Bowl</div>
       <div class="menu-card-desc">Velvety coconut curry over jasmine rice with seasonal vegetables, topped with crispy chickpeas.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$16</div>
-        <button class="add-btn" onclick="addToTray('Caribbean Curry Bowl', 16)">ADD</button>
+        <div class="menu-card-price">$26</div>
+        <button class="add-btn" onclick="addToTray('Caribbean Curry Bowl', 26)">ADD</button>
       </div>
     </div>
 
@@ -536,8 +647,8 @@
       <div class="menu-card-name">Festival Bread</div>
       <div class="menu-card-desc">Lightly sweet fried dough — a Jamaican classic. The perfect companion to any dish on this menu.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$7</div>
-        <button class="add-btn" onclick="addToTray('Festival Bread', 7)">ADD</button>
+        <div class="menu-card-price">$17</div>
+        <button class="add-btn" onclick="addToTray('Festival Bread', 17)">ADD</button>
       </div>
     </div>
   </div>
@@ -553,8 +664,8 @@
       <div class="menu-card-tag">⭐ POPULAR</div>
       <div class="menu-card-desc">Crispy corn tortillas loaded with jerk chicken, mango slaw, pickled onions, and cilantro crema.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$14</div>
-        <button class="add-btn" onclick="addToTray('Jerk Chicken Tacos (3)', 14)">ADD</button>
+        <div class="menu-card-price">$24</div>
+        <button class="add-btn" onclick="addToTray('Jerk Chicken Tacos (3)', 24)">ADD</button>
       </div>
     </div>
 
@@ -564,8 +675,8 @@
       <div class="menu-card-tag">NEW</div>
       <div class="menu-card-desc">Braised oxtail in flour tortillas with pepper jack cheese, pickled cabbage, and house sauce. Mind-blowing.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$17</div>
-        <button class="add-btn" onclick="addToTray('Oxtail Tacos (3)', 17)">ADD</button>
+        <div class="menu-card-price">$27</div>
+        <button class="add-btn" onclick="addToTray('Oxtail Tacos (3)', 27)">ADD</button>
       </div>
     </div>
 
@@ -575,8 +686,8 @@
       <div class="menu-card-tag">NEW</div>
       <div class="menu-card-desc">Spiced black beans, roasted corn, avocado, pico de gallo, in warm corn tortillas. Plant-powered paradise.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$13</div>
-        <button class="add-btn" onclick="addToTray('Vegan Black Bean Tacos (3)', 13)">ADD</button>
+        <div class="menu-card-price">$23</div>
+        <button class="add-btn" onclick="addToTray('Vegan Black Bean Tacos (3)', 23)">ADD</button>
       </div>
     </div>
   </div>
@@ -591,8 +702,8 @@
       <div class="menu-card-name">Fresh Vegan Bowls</div>
       <div class="menu-card-desc">Colorful seasonal vegetables over grains, topped with tahini drizzle and roasted seeds. Made to order.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$15</div>
-        <button class="add-btn" onclick="addToTray('Fresh Vegan Bowls', 15)">ADD</button>
+        <div class="menu-card-price">$25</div>
+        <button class="add-btn" onclick="addToTray('Fresh Vegan Bowls', 25)">ADD</button>
       </div>
     </div>
 
@@ -601,8 +712,8 @@
       <div class="menu-card-name">Spiced Lentil Stew</div>
       <div class="menu-card-desc">Red lentils slow-cooked with turmeric, cumin, tomatoes, and spinach. Served with pita or rice.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$14</div>
-        <button class="add-btn" onclick="addToTray('Spiced Lentil Stew', 14)">ADD</button>
+        <div class="menu-card-price">$24</div>
+        <button class="add-btn" onclick="addToTray('Spiced Lentil Stew', 24)">ADD</button>
       </div>
     </div>
   </div>
@@ -618,8 +729,8 @@
       <div class="menu-card-tag">⭐ POPULAR</div>
       <div class="menu-card-desc">Refreshing hibiscus sorrel infused with ginger and cloves. A Jamaican classic — sweet and tart.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$6</div>
-        <button class="add-btn" onclick="addToTray('Sorrel Punch', 6)">ADD</button>
+        <div class="menu-card-price">$16</div>
+        <button class="add-btn" onclick="addToTray('Sorrel Punch', 16)">ADD</button>
       </div>
     </div>
 
@@ -628,8 +739,8 @@
       <div class="menu-card-name">House Lemonade</div>
       <div class="menu-card-desc">Fresh-squeezed lemonade with a secret twist. Available still or sparkling. Ask about seasonal flavors.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$5</div>
-        <button class="add-btn" onclick="addToTray('House Lemonade', 5)">ADD</button>
+        <div class="menu-card-price">$15</div>
+        <button class="add-btn" onclick="addToTray('House Lemonade', 15)">ADD</button>
       </div>
     </div>
 
@@ -638,8 +749,8 @@
       <div class="menu-card-name">Fresh Coconut Water</div>
       <div class="menu-card-desc">Pure natural coconut water, chilled and refreshing. Nature's best hydration, straight from the source.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$5</div>
-        <button class="add-btn" onclick="addToTray('Fresh Coconut Water', 5)">ADD</button>
+        <div class="menu-card-price">$15</div>
+        <button class="add-btn" onclick="addToTray('Fresh Coconut Water', 15)">ADD</button>
       </div>
     </div>
   </div>
@@ -655,7 +766,7 @@
       <div class="menu-card-tag">⭐ POPULAR</div>
       <div class="menu-card-desc">The secret weapon. House-made international sauce — recipe classified. Elevates every single dish.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$8</div>
+        <div class="menu-card-price">$18</div>
         <button class="add-btn" onclick="addToTray('Keke\'s House Sauce (8oz)', 8)">ADD</button>
       </div>
     </div>
@@ -666,8 +777,8 @@
       <div class="menu-card-tag">⭐ POPULAR</div>
       <div class="menu-card-desc">Rich, smoky jerk gravy — poured over everything. Take a jar home and transform your own cooking.</div>
       <div class="menu-card-footer">
-        <div class="menu-card-price">$8</div>
-        <button class="add-btn" onclick="addToTray('Jerk Gravy (8oz)', 8)">ADD</button>
+        <div class="menu-card-price">$18</div>
+        <button class="add-btn" onclick="addToTray('Jerk Gravy (8oz)', 18)">ADD</button>
       </div>
     </div>
   </div>
@@ -698,12 +809,19 @@
 
 <!-- ORDER TRAY -->
 <div class="order-tray" id="orderTray">
-  <div class="tray-info">
-    <span class="tray-label">📦 ITEMS IN TRAY:</span>
-    <div class="tray-count" id="itemCount">0</div>
+  <div class="tray-toggle" onclick="toggleTrayExpand()">
+    <div class="tray-info">
+      <span class="tray-label">🍽️ YOUR TRAY</span>
+      <div class="tray-count" id="itemCount">0</div>
+    </div>
+    <div class="tray-total">$<span id="totalPrice">0.00</span></div>
+    <span class="tray-arrow" id="trayArrow">▲</span>
   </div>
-  <div class="tray-total">Total: $<span id="totalPrice">0.00</span></div>
-  <a href="kekesinternational-checkout.html" class="checkout-btn">PROCEED TO CHECKOUT →</a>
+  <div class="tray-items" id="trayItems"></div>
+  <div class="tray-actions">
+    <button class="clear-tray-btn" onclick="clearTray()">🗑️ CLEAR TRAY</button>
+    <a href="kekesinternational-checkout.html" class="checkout-btn" onclick="playCheckoutSound()">CHECKOUT →</a>
+  </div>
 </div>
 
 <!-- FOOTER -->
@@ -720,78 +838,147 @@
 </footer>
 
 <script>
-  // Initialize cart from localStorage
+  // Cart: { name, price, qty }
   let cart = JSON.parse(localStorage.getItem('kekes-cart')) || [];
-  let totalPrice = 0;
+  let trayExpanded = false;
 
-  // Sound effects using Web Audio API
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
   function playAddSound() {
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    oscillator.frequency.value = 800;
-    oscillator.type = 'sine';
-    
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
-    
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.2);
+    const osc = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+    osc.connect(gain); gain.connect(audioContext.destination);
+    osc.frequency.value = 800; osc.type = 'sine';
+    gain.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+    osc.start(audioContext.currentTime); osc.stop(audioContext.currentTime + 0.2);
   }
 
   function playCheckoutSound() {
     const now = audioContext.currentTime;
-    const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
-    
-    notes.forEach((freq, index) => {
+    [523.25, 659.25, 783.99].forEach((freq, i) => {
       const osc = audioContext.createOscillator();
       const gain = audioContext.createGain();
-      
-      osc.connect(gain);
-      gain.connect(audioContext.destination);
-      
+      osc.connect(gain); gain.connect(audioContext.destination);
       osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0.2, now + index * 0.1);
-      gain.gain.exponentialRampToValueAtTime(0.01, now + index * 0.1 + 0.2);
-      
-      osc.start(now + index * 0.1);
-      osc.stop(now + index * 0.1 + 0.2);
+      gain.gain.setValueAtTime(0.2, now + i*0.1);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + i*0.1 + 0.2);
+      osc.start(now + i*0.1); osc.stop(now + i*0.1 + 0.2);
     });
   }
 
+  function playRemoveSound() {
+    const osc = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+    osc.connect(gain); gain.connect(audioContext.destination);
+    osc.frequency.value = 400; osc.type = 'sine';
+    gain.gain.setValueAtTime(0.2, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+    osc.start(audioContext.currentTime); osc.stop(audioContext.currentTime + 0.15);
+  }
+
   function addToTray(itemName, price) {
-    cart.push({ name: itemName, price: price });
-    localStorage.setItem('kekes-cart', JSON.stringify(cart));
+    const existing = cart.find(i => i.name === itemName);
+    if (existing) {
+      existing.qty += 1;
+    } else {
+      cart.push({ name: itemName, price: price, qty: 1 });
+    }
+    saveCart();
     playAddSound();
     updateTray();
+    // Flash button green
+    event.target.textContent = '✓ ADDED';
+    event.target.classList.add('added');
+    setTimeout(() => {
+      event.target.textContent = 'ADD';
+      event.target.classList.remove('added');
+    }, 800);
+  }
+
+  function changeQty(itemName, delta) {
+    const item = cart.find(i => i.name === itemName);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) {
+      cart = cart.filter(i => i.name !== itemName);
+      playRemoveSound();
+    } else {
+      playAddSound();
+    }
+    saveCart();
+    updateTray();
+  }
+
+  function removeItem(itemName) {
+    cart = cart.filter(i => i.name !== itemName);
+    playRemoveSound();
+    saveCart();
+    updateTray();
+  }
+
+  function clearTray() {
+    cart = [];
+    playRemoveSound();
+    saveCart();
+    updateTray();
+  }
+
+  function saveCart() {
+    localStorage.setItem('kekes-cart', JSON.stringify(cart));
+  }
+
+  function toggleTrayExpand() {
+    trayExpanded = !trayExpanded;
+    document.getElementById('trayItems').classList.toggle('expanded', trayExpanded);
+    document.getElementById('trayArrow').classList.toggle('down', !trayExpanded);
   }
 
   function updateTray() {
     const itemCount = document.getElementById('itemCount');
     const totalPriceEl = document.getElementById('totalPrice');
     const orderTray = document.getElementById('orderTray');
-    
+    const trayItems = document.getElementById('trayItems');
+
     let total = 0;
+    let count = 0;
+    let html = '';
+
     cart.forEach(item => {
-      total += item.price;
+      total += item.price * item.qty;
+      count += item.qty;
+      html += `
+        <div class="tray-item">
+          <span class="tray-item-name">${item.name}</span>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="event.stopPropagation();changeQty('${item.name.replace(/'/g,"\\'")}', -1)">−</button>
+            <span class="qty-num">${item.qty}</span>
+            <button class="qty-btn" onclick="event.stopPropagation();changeQty('${item.name.replace(/'/g,"\\'")}', 1)">+</button>
+          </div>
+          <span class="tray-item-price">$${(item.price * item.qty).toFixed(2)}</span>
+          <button class="remove-btn" onclick="event.stopPropagation();removeItem('${item.name.replace(/'/g,"\\'")}')">✕</button>
+        </div>`;
     });
-    
-    itemCount.textContent = cart.length;
+
+    itemCount.textContent = count;
     totalPriceEl.textContent = total.toFixed(2);
-    
-    if (cart.length > 0) {
+    trayItems.innerHTML = html;
+
+    if (count > 0) {
       orderTray.classList.add('visible');
     } else {
       orderTray.classList.remove('visible');
+      trayExpanded = false;
+      trayItems.classList.remove('expanded');
     }
   }
 
-  // Load cart on page load
+  // Migrate old cart format (no qty) to new format
+  cart = cart.map(item => {
+    if (!item.qty) item.qty = 1;
+    return item;
+  });
+  saveCart();
   updateTray();
 </script>
 
