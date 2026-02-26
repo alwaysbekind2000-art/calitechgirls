@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Checkout — Keke's International Food Spot</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
-<script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+<script src="https://web.squarecdn.com/v1/square.js"></script>
 <style>
 :root{--gold:#D4AF37;--gold-light:#F5D76E;--red:#8B1A1A;--red-bright:#c0392b;--cream:#FFF8E7;--dark:#0a0500;--brown:#1a0800;}
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -269,7 +269,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
   // Init Square
   try {
-    const payments = Square.payments('sq0idp-huwaT_W5n-rd6iH9yo5dEw', 'sandbox');
+    const payments = Square.payments('sq0idp-huwaT_W5n-rd6iH9yo5dEw', 'LAK46M9HX2CB8');
     payments.card().then(card => {
       card.attach('#card-container');
     }).catch(() => {
