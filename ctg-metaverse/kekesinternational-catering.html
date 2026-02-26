@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catering — Keke's International Food Spot</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#D4AF37;--gold-light:#F5D76E;--red:#8B1A1A;--red-bright:#c0392b;--cream:#FFF8E7;--dark:#0a0500;--brown:#1a0800;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--dark);color:var(--cream);font-family:'Montserrat',sans-serif;overflow-x:hidden;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sparkle{0%,100%{opacity:0;transform:translateY(0) scale(0)}50%{opacity:.8;transform:translateY(-30px) scale(1.5)}}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.5rem);color:var(--gold);text-align:center;margin-bottom:15px;}
+.section-label{font-size:.7rem;letter-spacing:8px;color:var(--gold);text-transform:uppercase;text-align:center;margin-bottom:20px;opacity:.7;}
+.section-divider{width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:20px auto 50px;}
+.btn-primary{padding:18px 50px;background:linear-gradient(135deg,#8B1A1A,#c0392b);color:var(--cream);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:4px;text-transform:uppercase;border:none;border-radius:5px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .3s ease;box-shadow:0 10px 40px rgba(139,26,26,.5);}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 15px 60px rgba(139,26,26,.7);}
+.btn-secondary{padding:16px 45px;background:transparent;color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:600;font-size:.85rem;letter-spacing:4px;text-transform:uppercase;border:1px solid rgba(212,175,55,.5);border-radius:5px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .3s ease;}
+.btn-secondary:hover{background:rgba(212,175,55,.1);border-color:var(--gold);}
+
+.hero{min-height:70vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(ellipse at center top,#3d1500 0%,#1a0800 40%,#0a0500 100%);}
+.hero-content{position:relative;z-index:2;text-align:center;padding:120px 20px 60px;}
+.hero-tagline{font-size:.7rem;letter-spacing:8px;color:var(--gold);text-transform:uppercase;margin-bottom:20px;animation:fadeUp 1s ease forwards .3s;opacity:0;}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,7vw,5.5rem);color:var(--gold);text-shadow:0 0 60px rgba(212,175,55,.4);line-height:1.1;animation:fadeUp 1s ease forwards .5s;opacity:0;font-weight:900;}
+.hero-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,2.5vw,1.6rem);color:rgba(255,248,231,.8);margin-top:20px;animation:fadeUp 1s ease forwards .7s;opacity:0;}
+.steam-lines{position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,rgba(212,175,55,.05),transparent);pointer-events:none;}
+.particle{position:absolute;width:2px;height:2px;background:var(--gold);border-radius:50%;animation:sparkle var(--d,4s) ease-in-out infinite var(--delay,0s);opacity:0;}
+
+/* PACKAGES */
+.packages-section{padding:100px 40px;max-width:1200px;margin:0 auto;}
+.packages-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin-top:60px;}
+.package-card{background:linear-gradient(135deg,rgba(26,8,0,.9),rgba(10,5,0,.95));border:1px solid rgba(212,175,55,.2);border-radius:16px;padding:45px 35px;text-align:center;transition:all .3s ease;position:relative;overflow:hidden;}
+.package-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,rgba(212,175,55,.3),transparent);}
+.package-card.featured{border-color:rgba(212,175,55,.5);}
+.package-card.featured::before{background:var(--gold);}
+.package-card:hover{transform:translateY(-8px);box-shadow:0 25px 80px rgba(212,175,55,.1);}
+.package-badge{font-size:.65rem;letter-spacing:4px;background:rgba(212,175,55,.15);border:1px solid rgba(212,175,55,.3);color:var(--gold);padding:6px 16px;border-radius:20px;display:inline-block;margin-bottom:20px;}
+.package-badge.popular{background:rgba(139,26,26,.3);border-color:rgba(192,57,43,.4);color:#f08;color:#F5D76E;}
+.package-name{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--cream);margin-bottom:10px;}
+.package-price{font-family:'Dancing Script',cursive;font-size:2.5rem;color:var(--gold);margin-bottom:5px;}
+.package-guests{font-size:.75rem;letter-spacing:3px;color:rgba(255,248,231,.5);margin-bottom:25px;}
+.package-features{list-style:none;text-align:left;margin-bottom:30px;}
+.package-features li{padding:8px 0;border-bottom:1px solid rgba(212,175,55,.1);font-size:.85rem;color:rgba(255,248,231,.7);display:flex;gap:10px;align-items:center;}
+.package-features li::before{content:'✦';color:var(--gold);font-size:.6rem;flex-shrink:0;}
+
+/* SERVICES */
+.services-section{background:linear-gradient(to bottom,rgba(26,8,0,.5),rgba(10,5,0,.8));padding:80px 40px;border-top:1px solid rgba(212,175,55,.1);border-bottom:1px solid rgba(212,175,55,.1);}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px;max-width:1000px;margin:50px auto 0;}
+.service-item{background:rgba(212,175,55,.05);border:1px solid rgba(212,175,55,.15);border-radius:10px;padding:25px;text-align:center;transition:all .3s;}
+.service-item:hover{border-color:rgba(212,175,55,.4);background:rgba(212,175,55,.08);}
+.service-icon{font-size:2rem;margin-bottom:12px;}
+.service-name{font-size:.8rem;letter-spacing:2px;color:var(--cream);}
+
+/* BOOKING FORM */
+.booking-section{padding:100px 40px;max-width:800px;margin:0 auto;}
+.form-card{background:linear-gradient(135deg,rgba(26,8,0,.8),rgba(10,5,0,.9));border:1px solid rgba(212,175,55,.2);border-radius:16px;padding:50px;}
+.form-group{margin-bottom:22px;}
+.form-group label{display:block;font-size:.7rem;letter-spacing:3px;color:var(--gold);margin-bottom:8px;text-transform:uppercase;}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(212,175,55,.3);border-radius:6px;padding:14px 18px;color:var(--cream);font-family:'Montserrat',sans-serif;font-size:.9rem;outline:none;transition:border-color .3s;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold);}
+.form-group select option{background:#1a0800;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:600px){.form-row{grid-template-columns:1fr;}}
+
+
+.nav-links { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+/* Hamburger Menu Styles */
+.hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; z-index: 1001; }
+.hamburger span { display: block; width: 25px; height: 2px; background: var(--gold, #D4AF37); margin: 5px 0; transition: all 0.3s; }
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+@media (max-width: 1200px) {
+  .hamburger { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 65px; left: 0; right: 0;
+    background: rgba(10,5,0,0.97);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    padding: 20px;
+    gap: 8px;
+    border-bottom: 1px solid rgba(212,175,55,0.2);
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { font-size: 0.85rem; padding: 12px 20px; width: 100%; }
+}
+
+
+.main-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(10,5,0,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(212,175,55,0.15);
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 65px;
+  }
+  .nav-logo {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.4rem;
+    color: var(--gold);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .nav-links a {
+    color: rgba(255,248,231,0.65);
+    text-decoration: none;
+    font-size: 0.6rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--gold); background: rgba(212,175,55,0.08); }
+  .nav-links a.active { color: var(--gold); }
+  .nav-order-btn {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #8B1A1A, #c0392b);
+    color: var(--cream);
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    box-shadow: 0 5px 20px rgba(139,26,26,0.5);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .nav-order-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,26,26,0.7); }
+  .nav-hub-btn {
+    padding: 8px 14px;
+    background: rgba(212,175,55,0.1);
+    color: var(--gold);
+    font-size: 0.55rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .nav-hub-btn:hover { background: rgba(212,175,55,0.2); border-color: var(--gold); }
+  body { padding-top: 65px; }
+  </style>
+</head>
+<body>
+
+<!-- MAIN NAVIGATION -->
+<nav class="main-nav">
+  <a href="kekesinternational-14.html" class="nav-logo">Keke's International</a>
+  <div class="nav-links">
+    <a href="kekesinternational-menu.html">Menu</a>
+    <a href="kekesinternational-catering.html">Catering</a>
+    <a href="kekesinternational-events.html">Events</a>
+    <a href="kekesinternational-vip.html">VIP</a>
+    <a href="kekesinternational-about.html">About</a>
+    <a href="kekesinternational-contact.html">Contact</a>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-particles" id="particles"></div>
+  <div class="steam-lines"></div>
+  <div class="hero-content">
+    <p class="hero-tagline">Keke's International · Catering</p>
+    <h1 class="hero-title">Catering That Brings<br>the Flavor</h1>
+    <p class="hero-subtitle">Events of every size. Chef Keke shows up and shows OUT.</p>
+    <div style="margin-top:40px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+      <a href="#booking" class="btn-primary">BOOK YOUR EVENT</a>
+      <a href="mississippi-soul-food.html" class="btn-secondary">🍖 MISSISSIPPI CATERING</a>
+    </div>
+  </div>
+</div>
+
+<!-- PACKAGES -->
+<div class="packages-section">
+  <p class="section-label">Our Packages</p>
+  <h2 class="section-title">Choose Your Experience</h2>
+  <div class="section-divider"></div>
+
+  <div class="packages-grid">
+    <div class="package-card">
+      <div class="package-badge">INTIMATE GATHERINGS</div>
+      <div class="package-name">Essentials Package</div>
+      <div class="package-price">Starting at $500</div>
+      <div class="package-guests">UP TO 20 GUESTS</div>
+      <ul class="package-features">
+        <li>Soul food classics menu</li>
+        <li>Smothered chicken, mac &amp; cheese</li>
+        <li>Rice &amp; peas, cornbread</li>
+        <li>2-hour service window</li>
+        <li>Serving equipment included</li>
+        <li>Deposit required to book</li>
+      </ul>
+      <a href="#booking" class="btn-secondary" style="width:100%;text-align:center;">INQUIRE</a>
+    </div>
+
+    <div class="package-card featured">
+      <div class="package-badge popular">⭐ MOST POPULAR</div>
+      <div class="package-name">Signature Package</div>
+      <div class="package-price">Starting at $1,200</div>
+      <div class="package-guests">UP TO 50 GUESTS</div>
+      <ul class="package-features">
+        <li>Full spread + desserts</li>
+        <li>Oxtail, ribs, jerk chicken</li>
+        <li>Full sides selection</li>
+        <li>Dessert table included</li>
+        <li>3-hour service window</li>
+        <li>Staff + setup included</li>
+        <li>Custom menu consultation</li>
+      </ul>
+      <a href="#booking" class="btn-primary" style="width:100%;text-align:center;">BOOK NOW</a>
+    </div>
+
+    <div class="package-card">
+      <div class="package-badge">GRAND SCALE</div>
+      <div class="package-name">Grand Event Package</div>
+      <div class="package-price">Starting at $2,500</div>
+      <div class="package-guests">50–200 GUESTS</div>
+      <ul class="package-features">
+        <li>Full custom menu design</li>
+        <li>International cuisine options</li>
+        <li>Staffed buffet service</li>
+        <li>Setup &amp; breakdown included</li>
+        <li>Full-day event coverage</li>
+        <li>Priority booking</li>
+        <li>Mississippi Soul Food available</li>
+      </ul>
+      <a href="#booking" class="btn-secondary" style="width:100%;text-align:center;">GET A QUOTE</a>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="services-section">
+  <p class="section-label">We Cater For</p>
+  <h2 class="section-title" style="text-align:center;">Every Occasion</h2>
+  <div class="section-divider"></div>
+  <div class="services-grid">
+    <div class="service-item"><div class="service-icon">💍</div><div class="service-name">Weddings</div></div>
+    <div class="service-item"><div class="service-icon">🏢</div><div class="service-name">Corporate Events</div></div>
+    <div class="service-item"><div class="service-icon">🎖️</div><div class="service-name">ROTC &amp; School</div></div>
+    <div class="service-item"><div class="service-icon">⛪</div><div class="service-name">Church Events</div></div>
+    <div class="service-item"><div class="service-icon">👨‍👩‍👧‍👦</div><div class="service-name">Family Reunions</div></div>
+    <div class="service-item"><div class="service-icon">🇺🇸</div><div class="service-name">National Catering</div></div>
+    <div class="service-item"><div class="service-icon">🎂</div><div class="service-name">Birthday Parties</div></div>
+    <div class="service-item"><div class="service-icon">🍾</div><div class="service-name">Private Dinners</div></div>
+  </div>
+  <p style="text-align:center;margin-top:40px;font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,248,231,.5);font-size:1.1rem;">For large formal events, ask about our <a href="mississippi-soul-food.html" style="color:var(--gold);text-decoration:none;">Mississippi Soul Food</a> catering service</p>
+</div>
+
+<!-- BOOKING FORM -->
+<div class="booking-section" id="booking">
+  <p class="section-label">Book Your Catering</p>
+  <h2 class="section-title">Tell Us About Your Event</h2>
+  <div class="section-divider"></div>
+
+  <div class="form-card">
+    <form id="cateringForm" style="display:flex;flex-direction:column;gap:0;">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">YOUR NAME *</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">PHONE NUMBER *</label>
+          <input type="tel" id="phone" name="phone" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email">EMAIL ADDRESS *</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="date">EVENT DATE *</label>
+          <input type="date" id="date" name="date" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="eventType">EVENT TYPE</label>
+          <select id="eventType" name="eventType">
+            <option value="">Select Event Type</option>
+            <option value="wedding">Wedding</option>
+            <option value="corporate">Corporate Event</option>
+            <option value="birthday">Birthday Party</option>
+            <option value="family">Family Reunion</option>
+            <option value="church">Church Event</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="headcount">EXPECTED HEADCOUNT</label>
+          <input type="number" id="headcount" name="headcount" min="1" placeholder="Number of guests">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="package">PACKAGE SELECTION</label>
+          <select id="package" name="package">
+            <option value="">Select Package</option>
+            <option value="essentials">Essentials Package ($500)</option>
+            <option value="signature">Signature Package ($1,200)</option>
+            <option value="grand">Grand Event Package ($2,500)</option>
+            <option value="custom">Custom Quote</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="location">EVENT LOCATION</label>
+          <input type="text" id="location" name="location" placeholder="Address or venue name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="notes">SPECIAL REQUESTS & DIETARY NOTES</label>
+        <textarea id="notes" name="notes" rows="5" placeholder="Tell us about any dietary restrictions, menu preferences, or special requests..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-primary" style="width:100%;text-align:center;margin-top:20px;">🍽️ SUBMIT CATERING REQUEST</button>
+    </form>
+    <p style="text-align:center;font-size:.75rem;color:rgba(255,248,231,.4);margin-top:20px;">Or call us directly: <a href="tel:9516305410" style="color:var(--gold);">(951) 630-5410</a></p>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div style="padding:100px 40px;max-width:1000px;margin:0 auto;background:linear-gradient(to bottom,rgba(26,8,0,.3),rgba(10,5,0,.5));border-top:1px solid rgba(212,175,55,.1);">
+  <p class="section-label">Success Stories</p>
+  <h2 class="section-title">What Our Clients Say</h2>
+  <div class="section-divider"></div>
+  
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;margin-top:50px;">
+    <div style="background:linear-gradient(135deg,rgba(26,8,0,.8),rgba(10,5,0,.9));border:1px solid rgba(212,175,55,.15);bor

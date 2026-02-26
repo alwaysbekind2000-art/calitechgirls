@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track Your Order — Keke's International Food Spot</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#D4AF37;--gold-light:#F5D76E;--red:#8B1A1A;--red-bright:#c0392b;--cream:#FFF8E7;--dark:#0a0500;--brown:#1a0800;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--dark);color:var(--cream);font-family:'Montserrat',sans-serif;overflow-x:hidden;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(212,175,55,.4)}50%{box-shadow:0 0 0 12px rgba(212,175,55,0)}}
+@keyframes sparkle{0%,100%{opacity:0;transform:translateY(0) scale(0)}50%{opacity:.8;transform:translateY(-30px) scale(1.5)}}
+
+.hero{min-height:50vh;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at center top,#3d1500 0%,#1a0800 40%,#0a0500 100%);padding-top:100px;}
+.hero-content{text-align:center;padding:40px 20px;}
+.hero-tagline{font-size:.7rem;letter-spacing:8px;color:var(--gold);text-transform:uppercase;margin-bottom:20px;animation:fadeUp 1s ease forwards .3s;opacity:0;}
+.hero-title{font-family:'Dancing Script',cursive;font-size:clamp(2.5rem,8vw,5.5rem);color:var(--gold);text-shadow:0 0 40px rgba(212,175,55,.5);animation:fadeUp 1s ease forwards .5s;opacity:0;}
+.hero-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;color:rgba(255,248,231,.7);margin-top:15px;animation:fadeUp 1s ease forwards .7s;opacity:0;}
+.steam-lines{position:absolute;bottom:0;left:0;right:0;height:150px;background:linear-gradient(to top,rgba(212,175,55,.05),transparent);pointer-events:none;}
+.particle{position:absolute;width:2px;height:2px;background:var(--gold);border-radius:50%;animation:sparkle var(--d,4s) ease-in-out infinite var(--delay,0s);opacity:0;}
+
+.main-content{max-width:800px;margin:0 auto;padding:60px 40px 100px;}
+
+.lookup-card{background:linear-gradient(135deg,rgba(26,8,0,.8),rgba(10,5,0,.9));border:1px solid rgba(212,175,55,.2);border-radius:12px;padding:40px;margin-bottom:40px;}
+.lookup-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold);margin-bottom:25px;}
+.lookup-form{display:flex;gap:15px;}
+.lookup-input{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(212,175,55,.3);border-radius:6px;padding:16px 20px;color:var(--cream);font-family:'Montserrat',sans-serif;font-size:.9rem;outline:none;transition:border-color .3s;}
+.lookup-input:focus{border-color:var(--gold);}
+.lookup-btn{padding:16px 30px;background:linear-gradient(135deg,#8B1A1A,#c0392b);color:var(--cream);border:none;border-radius:6px;font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:3px;cursor:pointer;transition:all .3s;white-space:nowrap;}
+.lookup-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(139,26,26,.6);}
+
+.tracker-card{background:linear-gradient(135deg,rgba(26,8,0,.8),rgba(10,5,0,.9));border:1px solid rgba(212,175,55,.2);border-radius:12px;padding:40px;}
+.tracker-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold);margin-bottom:10px;}
+.order-num{font-size:.75rem;letter-spacing:4px;color:rgba(255,248,231,.5);margin-bottom:35px;}
+
+.timeline{position:relative;padding-left:0;}
+.timeline-step{display:flex;align-items:flex-start;gap:25px;margin-bottom:0;position:relative;}
+.step-connector{display:flex;flex-direction:column;align-items:center;}
+.step-dot{width:40px;height:40px;border-radius:50%;border:2px solid rgba(212,175,55,.3);background:rgba(26,8,0,.8);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;transition:all .5s;position:relative;z-index:1;}
+.step-dot.active{border-color:var(--gold);background:var(--gold);animation:pulse 2s infinite;color:var(--dark);}
+.step-dot.done{border-color:var(--gold);background:rgba(212,175,55,.2);}
+.step-line{width:2px;height:60px;background:rgba(212,175,55,.2);margin:0 auto;}
+.step-line.done{background:var(--gold);}
+.step-info{padding-top:8px;padding-bottom:60px;}
+.step-label{font-size:.75rem;letter-spacing:3px;color:rgba(255,248,231,.5);margin-bottom:4px;text-transform:uppercase;}
+.step-name{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--cream);}
+.step-name.active-step{color:var(--gold);}
+.step-time{font-size:.75rem;color:rgba(212,175,55,.6);margin-top:4px;}
+
+.eta-card{background:rgba(212,175,55,.06);border:1px solid rgba(212,175,55,.3);border-radius:10px;padding:25px;text-align:center;margin-top:10px;}
+.eta-label{font-size:.7rem;letter-spacing:5px;color:rgba(255,248,231,.5);margin-bottom:8px;}
+.eta-time{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);}
+.eta-note{font-size:.75rem;color:rgba(255,248,231,.5);margin-top:5px;font-style:italic;}
+
+.contact-card{background:linear-gradient(135deg,rgba(26,8,0,.6),rgba(10,5,0,.8));border:1px solid rgba(212,175,55,.15);border-radius:12px;padding:35px;text-align:center;margin-top:30px;}
+.contact-card h3{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.3rem;margin-bottom:10px;}
+.contact-card p{color:rgba(255,248,231,.6);font-size:.85rem;margin-bottom:15px;}
+.contact-card a{color:var(--gold);text-decoration:none;font-weight:700;}
+
+
+.nav-links { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+/* Hamburger Menu Styles */
+.hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; z-index: 1001; }
+.hamburger span { display: block; width: 25px; height: 2px; background: var(--gold, #D4AF37); margin: 5px 0; transition: all 0.3s; }
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+@media (max-width: 1200px) {
+  .hamburger { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 65px; left: 0; right: 0;
+    background: rgba(10,5,0,0.97);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    padding: 20px;
+    gap: 8px;
+    border-bottom: 1px solid rgba(212,175,55,0.2);
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { font-size: 0.85rem; padding: 12px 20px; width: 100%; }
+}
+
+
+.main-nav { position: relative; }
+</style>
+</head>
+<body>
+
+<!-- MAIN NAVIGATION -->
+<nav class="main-nav">
+  <a href="kekesinternational-14.html" class="nav-logo">Keke's International</a>
+  <div class="nav-links">
+    <a href="kekesinternational-menu.html">Menu</a>
+    <a href="kekesinternational-catering.html">Catering</a>
+    <a href="kekesinternational-events.html">Events</a>
+    <a href="kekesinternational-vip.html">VIP</a>
+    <a href="kekesinternational-about.html">About</a>
+    <a href="kekesinternational-contact.html">Contact</a>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-particles" id="particles"></div>
+  <div class="steam-lines"></div>
+  <div class="hero-content">
+    <p class="hero-tagline">Keke's International Food Spot</p>
+    <h1 class="hero-title">Track Your Order</h1>
+    <p class="hero-subtitle">We're cooking something special just for you</p>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+
+  <!-- LOOKUP FORM -->
+  <div class="lookup-card">
+    <div class="lookup-title">🔍 Order Lookup</div>
+    <div class="lookup-form">
+      <input class="lookup-input" id="lookupInput" type="text" placeholder="Enter order number or phone number">
+      <button class="lookup-btn" onclick="lookupOrder()">TRACK</button>
+    </div>
+    <p style="font-size:.75rem;color:rgba(255,248,231,.4);margin-top:12px;">Example: Enter your phone number used at checkout</p>
+  </div>
+
+  <!-- TRACKER (demo shown by default) -->
+  <div class="tracker-card" id="trackerDisplay">
+    <div class="tracker-title">Order Status</div>
+    <div class="order-num" id="orderNumDisplay">Enter your order details above to check status</div>
+
+    <div class="timeline">
+      <div class="timeline-step">
+        <div class="step-connector">
+          <div class="step-dot done" id="step1">✓</div>
+          <div class="step-line done"></div>
+        </div>
+        <div class="step-info">
+          <div class="step-label">Step 1</div>
+          <div class="step-name">Order Received</div>
+          <div class="step-time">Your order has been confirmed</div>
+        </div>
+      </div>
+      <div class="timeline-step">
+        <div class="step-connector">
+          <div class="step-dot active" id="step2">🍳</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-info">
+          <div class="step-label">Step 2</div>
+          <div class="step-name active-step">Being Prepared</div>
+          <div class="step-time" style="color:var(--gold);">Chef Keke is cooking your meal now</div>
+        </div>
+      </div>
+      <div class="timeline-step">
+        <div class="step-connector">
+          <div class="step-dot" id="step3">✔️</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-info">
+          <div class="step-label">Step 3</div>
+          <div class="step-name" style="color:rgba(255,248,231,.5);">Quality Check</div>
+          <div class="step-time" style="color:rgba(255,248,231,.3);">Ensuring your order is perfect</div>
+        </div>
+      </div>
+      <div class="timeline-step">
+        <div class="step-connector">
+          <div class="step-dot" id="step4">🚗</div>
+          <div class="step-line" style="display:none;"></div>
+        </div>
+        <div class="step-info">
+          <div class="step-label">Step 4</div>
+          <div class="step-name" style="color:rgba(255,248,231,.5);">On the Way</div>
+          <div class="step-time" style="color:rgba(255,248,231,.3);">Your order is being delivered</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="eta-card">
+      <div class="eta-label">ESTIMATED TIME</div>
+      <div class="eta-time" id="etaDisplay">30–45 MIN</div>
+      <div class="eta-note">Times may vary. We'll call you if there's any delay.</div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-card">
+    <h3>Questions About Your Order?</h3>
+    <p>Our team is available to help. Don't hesitate to reach out.</p>
+    <a href="tel:9516305410" style="font-size:1.3rem;">📞 (951) 630-5410</a>
+    <p style="margin-top:10px;font-size:.75rem;">Or DM us on Instagram <a href="https://www.instagram.com/kekesinternationalfoodspot/">@kekesinternationalfoodspot</a></p>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer style="background:#0a0500;border-top:1px solid rgba(212,175,55,0.2);padding:60px 40px 30px;text-align:center;">
+  <a href="#" style="font-family:'Dancing Script',cursive;font-size:2.5rem;color:#D4AF37;text-decoration:none;display:block;margin-bottom:10px;">Keke's International</a>
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,248,231,0.6);margin-bottom:30px;">Food Spot · Est. 2020</p>
+  <div style="display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;">
+<a href="kekesinternational-menu.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">MENU</a>
+    <a href="kekesinternational-catering.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">CATERING</a>
+    <a href="kekesinternational-events.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">EVENTS</a>
+    <a href="kekesinternational-about.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">ABOUT</a>
+    <a href="kekesinternational-contact.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">CONTACT</a>
+    <a href="mississippi-soul-food.html" style="color:#D4AF37;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">🍖 MISSISSIPPI SOUL FOOD</a>
+  </div>
+  <p style="color:rgba(255,248,231,0.4);font-size:0.7rem;font-family:'Montserrat',sans-serif;letter-spacing:2px;">© 2026 KEKE'S INTERNATIONAL FOOD SPOT · ALL RIGHTS RESERVED · (951) 630-5410</p>
+</footer>
+
+<script>
+function lookupOrder() {
+  const val = document.getElementById('lookupInput').value.trim();
+  if (!val) { alert('Please enter an order number or phone number.'); return; }
+  document.getElementById('orderNumDisplay').textContent = 'Order for: ' + val + ' · Status updated in real time';
+}
+// Particles
+const container = document.getElementById('particles');
+if (container) {
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = Math.random() * 100 + '%';
+    p.style.setProperty('--d', (3 + Math.random() * 4) + 's');
+    p.style.setProperty('--delay', (Math.random() * 4) + 's');
+    container.appendChild(p);
+  }
+}
+</script>
+</body>
+</html>
