@@ -87,7 +87,82 @@ body{background:var(--dark);color:var(--cream);font-family:'Montserrat',sans-ser
 }
 
 
-.main-nav { position: relative; }
+.main-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(10,5,0,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(212,175,55,0.15);
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 65px;
+  }
+  .nav-logo {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.4rem;
+    color: var(--gold);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .nav-links a {
+    color: rgba(255,248,231,0.65);
+    text-decoration: none;
+    font-size: 0.6rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--gold); background: rgba(212,175,55,0.08); }
+  .nav-links a.active { color: var(--gold); }
+  .nav-order-btn {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #8B1A1A, #c0392b);
+    color: var(--cream);
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    box-shadow: 0 5px 20px rgba(139,26,26,0.5);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .nav-order-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,26,26,0.7); }
+  .nav-hub-btn {
+    padding: 8px 14px;
+    background: rgba(212,175,55,0.1);
+    color: var(--gold);
+    font-size: 0.55rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .nav-hub-btn:hover { background: rgba(212,175,55,0.2); border-color: var(--gold); }
   body { padding-top: 65px; }
   
 /* INTERACTIVE CALENDAR */
@@ -115,28 +190,36 @@ body{background:var(--dark);color:var(--cream);font-family:'Montserrat',sans-ser
 </style>
 </head>
 <body>
-
-<!-- NAV -->
+<!-- MAIN NAVIGATION -->
 <nav class="main-nav">
   <a href="kekesinternational-14.html" class="nav-logo">Keke's International</a>
-  <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open');this.classList.toggle('active');" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
   <div class="nav-links">
     <a href="kekesinternational-menu.html">Menu</a>
     <a href="kekesinternational-catering.html">Catering</a>
     <a href="kekesinternational-events.html">Events</a>
-    <a href="kekesinternational-grand-opening.html">🎉 Reopening</a>
-    <a href="kekesinternational-gallery.html">Gallery</a>
     <a href="kekesinternational-vip.html">VIP</a>
     <a href="kekesinternational-about.html">About</a>
     <a href="kekesinternational-contact.html">Contact</a>
-    <a href="kekesinternational-tracker.html">Track Order</a>
-    <a href="mississippi-soul-food.html" style="background:linear-gradient(135deg,#6B1A1A,#3D0C0C);border:1px solid #D4A017;border-radius:20px;padding:5px 12px;font-size:0.78rem;font-weight:700;letter-spacing:0.5px;color:#F0A500 !important;text-shadow:0 0 8px rgba(212,160,23,0.5);box-shadow:0 2px 10px rgba(107,26,26,0.4);">✨ Mississippi Soul Food</a>
   </div>
   <div style="display:flex;gap:8px;align-items:center;">
     <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
-    <button id="pwa-install-btn" onclick="triggerPWAInstall()" style="display:none;background:linear-gradient(135deg,#D4AF37,#8B1A1A);color:#fff;border:none;padding:8px 14px;border-radius:20px;font-weight:700;font-size:0.8rem;cursor:pointer;animation:pulse-gold 2s infinite;">📱 Add App</button>
+  </div>
+</nav>
+
+
+<!-- MAIN NAVIGATION -->
+<nav class="main-nav">
+  <a href="kekesinternational-14.html" class="nav-logo">Keke's International</a>
+  <div class="nav-links">
+    <a href="kekesinternational-menu.html">Menu</a>
+    <a href="kekesinternational-catering.html">Catering</a>
+    <a href="kekesinternational-events.html">Events</a>
+    <a href="kekesinternational-vip.html">VIP</a>
+    <a href="kekesinternational-about.html">About</a>
+    <a href="kekesinternational-contact.html">Contact</a>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
   </div>
 </nav>
 
@@ -358,6 +441,16 @@ function showEvent(dateStr) {
 
 renderCalendar();
 
+
+  // Hamburger Menu Toggle
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('open');
+    });
+  }
 </script>
 </body>
 </html>

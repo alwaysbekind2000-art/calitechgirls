@@ -61,12 +61,259 @@ tr:hover td{background:rgba(212,175,55,.04);}
 .edit-link{color:var(--gold);text-decoration:none;font-size:.75rem;cursor:pointer;}
 
 /* Nav Styles */
-.main-nav { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 12px 30px; background: rgba(10,5,0,0.95); border-bottom: 1px solid rgba(212,175,55,0.3); position: sticky; top: 0; z-index: 1000; }
-.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #D4AF37; text-decoration: none; font-weight: 700; }
+.main-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(10,5,0,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(212,175,55,0.15);
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 65px;
+  }
+  .nav-logo {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.4rem;
+    color: var(--gold);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .nav-links a {
+    color: rgba(255,248,231,0.65);
+    text-decoration: none;
+    font-size: 0.6rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--gold); background: rgba(212,175,55,0.08); }
+  .nav-links a.active { color: var(--gold); }
+  .nav-order-btn {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #8B1A1A, #c0392b);
+    color: var(--cream);
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    box-shadow: 0 5px 20px rgba(139,26,26,0.5);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .nav-order-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,26,26,0.7); }
+  .nav-hub-btn {
+    padding: 8px 14px;
+    background: rgba(212,175,55,0.1);
+    color: var(--gold);
+    font-size: 0.55rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .nav-hub-btn:hover { background: rgba(212,175,55,0.2); border-color: var(--gold); }
+  body { padding-top: 65px; }
+  
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(10, 5, 0, 0.98), transparent);
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    nav a {
+      color: #FFF8E7;
+      text-decoration: none;
+      font-size: .7rem;
+      letter-spacing: 2px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .nav-logo {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      color: #D4AF37;
+      text-decoration: none;
+      text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+    }
+    .nav-cta {
+      padding: 10px 22px;
+      background: linear-gradient(135deg, #8B1A1A, #c0392b);
+      color: #FFF8E7;
+      text-decoration: none;
+      font-size: .65rem;
+      letter-spacing: 2px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .order-tray {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      background: linear-gradient(135deg, rgba(26, 8, 0, .98), rgba(10, 5, 0, .99));
+      border-top: 2px solid rgba(212, 175, 55, .4);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transform: translateY(100%);
+      transition: transform .4s ease;
+      gap: 20px;
+    }
+    .order-tray.visible {
+      transform: translateY(0);
+    }
+    .tray-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .tray-count {
+      background: var(--gold);
+      color: var(--dark);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: .9rem;
+    }
+    .tray-label {
+      font-size: .75rem;
+      letter-spacing: 2px;
+      color: rgba(255, 248, 231, .7);
+      text-transform: uppercase;
+    }
+    .tray-total {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .checkout-btn {
+      padding: 12px 35px;
+      background: linear-gradient(135deg, #8B1A1A, #c0392b);
+      color: var(--cream);
+      border: none;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all .3s;
+      text-transform: uppercase;
+    }
+    .checkout-btn:hover {
+      box-shadow: 0 10px 40px rgba(139, 26, 26, .7);
+    }
+    footer {
+      background: #0a0500;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+      padding: 50px 40px 30px;
+      text-align: center;
+    }
+    footer a {
+      color: rgba(255, 248, 231, 0.6);
+      text-decoration: none;
+      font-size: .7rem;
+      letter-spacing: 2px;
+      font-family: 'Montserrat', sans-serif;
+      display: inline-block;
+      margin: 0 15px;
+    }
+    .payment-methods {
+      background: rgba(26, 8, 0, .6);
+      border-top: 1px solid rgba(212, 175, 55, .2);
+      border-bottom: 1px solid rgba(212, 175, 55, .2);
+      padding: 40px 20px;
+      margin: 40px 0;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .payment-methods h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .payment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+    }
+    .payment-item {
+      text-align: center;
+      padding: 15px;
+      background: rgba(212, 175, 55, .05);
+      border-radius: 8px;
+      color: rgba(255, 248, 231, .8);
+      font-size: .85rem;
+    }
+    .deposit-notice {
+      background: linear-gradient(135deg, rgba(139, 26, 26, .3), rgba(212, 175, 55, .1));
+      border-left: 4px solid var(--gold);
+      padding: 30px;
+      margin: 40px auto;
+      max-width: 1200px;
+      border-radius: 8px;
+    }
+    .deposit-notice h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      margin-bottom: 15px;
+    }
+    .deposit-notice p {
+      color: rgba(255, 248, 231, .8);
+      line-height: 1.6;
+      font-size: .9rem;
+    }
+  
+
 .nav-links { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.nav-links a { color: #FFF8E7; text-decoration: none; font-size: 0.8rem; padding: 6px 10px; border-radius: 15px; transition: all 0.3s; }
-.nav-links a:hover { background: rgba(212,175,55,0.15); color: #D4AF37; }
-.nav-order-btn { background: linear-gradient(135deg, #D4AF37, #8B6914); color: #1a0a00 !important; padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; text-decoration: none; }
+/* Hamburger Menu Styles */
 .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; z-index: 1001; }
 .hamburger span { display: block; width: 25px; height: 2px; background: var(--gold, #D4AF37); margin: 5px 0; transition: all 0.3s; }
 .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
@@ -89,31 +336,152 @@ tr:hover td{background:rgba(212,175,55,.04);}
   .nav-links a { font-size: 0.85rem; padding: 12px 20px; width: 100%; }
 }
 
-  body { padding-top: 65px; }
-  </style>
+
+
+    .tray-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      padding: 15px 0;
+      gap: 15px;
+    }
+    .tray-arrow {
+      color: var(--gold);
+      font-size: 1rem;
+      transition: transform .3s;
+    }
+    .tray-arrow.down { transform: rotate(180deg); }
+    .tray-items {
+      max-height: 0;
+      overflow-y: auto;
+      transition: max-height .4s ease;
+    }
+    .tray-items.expanded {
+      max-height: 300px;
+      padding: 10px 0;
+      border-top: 1px solid rgba(212,175,55,.2);
+    }
+    .tray-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(212,175,55,.1);
+    }
+    .tray-item-name {
+      font-size: .85rem;
+      color: var(--cream);
+      flex: 1;
+    }
+    .tray-item-price {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold);
+      font-size: .9rem;
+      min-width: 60px;
+      text-align: right;
+    }
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 15px;
+    }
+    .qty-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,175,55,.4);
+      background: transparent;
+      color: var(--gold);
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+    }
+    .qty-btn:hover {
+      background: rgba(212,175,55,.2);
+    }
+    .qty-num {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--cream);
+      min-width: 20px;
+      text-align: center;
+    }
+    .remove-btn {
+      background: none;
+      border: none;
+      color: rgba(255,100,100,.7);
+      cursor: pointer;
+      font-size: .75rem;
+      padding: 4px 8px;
+      transition: color .2s;
+    }
+    .remove-btn:hover { color: #ff4444; }
+    .tray-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid rgba(212,175,55,.2);
+    }
+    .clear-tray-btn {
+      background: none;
+      border: 1px solid rgba(255,100,100,.3);
+      color: rgba(255,100,100,.7);
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .7rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .clear-tray-btn:hover {
+      border-color: #ff4444;
+      color: #ff4444;
+    }
+    .add-btn.added {
+      background: linear-gradient(135deg, #2d6a30, #1a8a1a) !important;
+    }
+
+.main-nav { position: relative; }
+</style>
 </head>
 <body>
-
+<!-- MAIN NAVIGATION -->
 <nav class="main-nav">
   <a href="kekesinternational-14.html" class="nav-logo">Keke's International</a>
-  <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open');this.classList.toggle('active');" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
   <div class="nav-links">
     <a href="kekesinternational-menu.html">Menu</a>
     <a href="kekesinternational-catering.html">Catering</a>
     <a href="kekesinternational-events.html">Events</a>
-    <a href="kekesinternational-grand-opening.html">🎉 Reopening</a>
-    <a href="kekesinternational-gallery.html">Gallery</a>
     <a href="kekesinternational-vip.html">VIP</a>
     <a href="kekesinternational-about.html">About</a>
     <a href="kekesinternational-contact.html">Contact</a>
-    <a href="kekesinternational-tracker.html">Track Order</a>
-    <a href="mississippi-soul-food.html" style="background:linear-gradient(135deg,#6B1A1A,#3D0C0C);border:1px solid #D4A017;border-radius:20px;padding:5px 12px;font-size:0.78rem;font-weight:700;letter-spacing:0.5px;color:#F0A500 !important;text-shadow:0 0 8px rgba(212,160,23,0.5);box-shadow:0 2px 10px rgba(107,26,26,0.4);">✨ Mississippi Soul Food</a>
   </div>
   <div style="display:flex;gap:8px;align-items:center;">
     <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
-    <button id="pwa-install-btn" onclick="triggerPWAInstall()" style="display:none;background:linear-gradient(135deg,#D4AF37,#8B1A1A);color:#fff;border:none;padding:8px 14px;border-radius:20px;font-weight:700;font-size:0.8rem;cursor:pointer;animation:pulse-gold 2s infinite;">📱 Add App</button>
+  </div>
+</nav>
+
+
+<!-- MAIN NAVIGATION -->
+<nav class="main-nav">
+  <a href="kekesinternational-14.html" class="nav-logo">Keke's International</a>
+  <div class="nav-links">
+    <a href="kekesinternational-menu.html">Menu</a>
+    <a href="kekesinternational-catering.html">Catering</a>
+    <a href="kekesinternational-events.html">Events</a>
+    <a href="kekesinternational-vip.html">VIP</a>
+    <a href="kekesinternational-about.html">About</a>
+    <a href="kekesinternational-contact.html">Contact</a>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
   </div>
 </nav>
 
@@ -275,6 +643,16 @@ function updateAdminDays() {
   const el = document.getElementById('adminDays');
   if (el) el.textContent = days > 0 ? days : '🎉';
 }
+
+  // Hamburger Menu Toggle
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('open');
+    });
+  }
 </script>
 </body>
 </html>

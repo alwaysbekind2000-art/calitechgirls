@@ -1021,6 +1021,22 @@
 </style>
 </head>
 <body>
+<!-- MAIN NAVIGATION -->
+<nav class="main-nav">
+  <a href="kekesinternational-14.html" class="nav-logo">Keke's International</a>
+  <div class="nav-links">
+    <a href="kekesinternational-menu.html">Menu</a>
+    <a href="kekesinternational-catering.html">Catering</a>
+    <a href="kekesinternational-events.html">Events</a>
+    <a href="kekesinternational-vip.html">VIP</a>
+    <a href="kekesinternational-about.html">About</a>
+    <a href="kekesinternational-contact.html">Contact</a>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
+  </div>
+</nav>
+
 
 <!-- MAIN NAVIGATION -->
 <nav class="main-nav">
@@ -1824,6 +1840,16 @@ window.addEventListener('appinstalled', () => {
   dismissBanner();
   document.getElementById('pwa-install-btn').style.display = 'none';
 });
+
+  // Hamburger Menu Toggle
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('open');
+    });
+  }
 </script>
 </body>
 </html>
