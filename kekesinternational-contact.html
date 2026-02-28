@@ -1404,6 +1404,23 @@
     document.body.style.transition = 'opacity 1.2s ease';
     setTimeout(() => { document.body.style.opacity = '1'; }, 100);
   });
+
+  // ===== PARTICLE GENERATION =====
+  window.addEventListener('load', () => {
+    const container = document.querySelector('.hero-bg-particles');
+    if (!container) return;
+    
+    for (let i = 0; i < 150; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      particle.style.setProperty('--d', (Math.random() * 3 + 2) + 's');
+      particle.style.setProperty('--delay', (Math.random() * 2) + 's');
+      container.appendChild(particle);
+    }
+  });
+
 </script>
 </body>
 </html>
