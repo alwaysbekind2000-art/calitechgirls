@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Menu — Keke's International Food Spot</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
-  
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu — Keke's International Food Spot</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<!-- PWA Meta Tags -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#D4A017">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Keke's International">
 <style>
   :root {
     --gold: #D4AF37;
@@ -1015,383 +1021,506 @@
 </style>
 </head>
 <body>
-<!-- ===== MAIN NAVIGATION ===== -->
+
+<!-- MAIN NAVIGATION -->
 <nav class="main-nav">
-  <a href="kekesinternational-14.html" class="nav-logo">Keke's International</a>
-  <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+  <a href="/" class="nav-logo">Keke's International</a>
+  <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open');this.classList.toggle('active');" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
-  <div class="nav-links" id="navLinks">
+  <div class="nav-links">
     <a href="kekesinternational-menu.html">Menu</a>
     <a href="kekesinternational-catering.html">Catering</a>
     <a href="kekesinternational-events.html">Events</a>
-    <a href="kekesinternational-grand-opening.html">&#127881; Reopening</a>
+    <a href="kekesinternational-grand-opening.html">🎉 Reopening</a>
     <a href="kekesinternational-gallery.html">Gallery</a>
     <a href="kekesinternational-vip.html">VIP</a>
     <a href="kekesinternational-about.html">About</a>
     <a href="kekesinternational-contact.html">Contact</a>
     <a href="kekesinternational-tracker.html">Track Order</a>
+    <a href="mississippi-soul-food.html" style="background:linear-gradient(135deg,#6B1A1A,#3D0C0C);border:1px solid #D4A017;border-radius:20px;padding:5px 12px;font-size:0.78rem;font-weight:700;letter-spacing:0.5px;color:#F0A500 !important;text-shadow:0 0 8px rgba(212,160,23,0.5);box-shadow:0 2px 10px rgba(107,26,26,0.4);">✨ Mississippi Soul Food</a>
   </div>
-  <div class="nav-cta-group" id="navCtaGroup">
-    <a href="mississippi-soul-food.html" class="nav-cta nav-cta-soul">&#10024; Mississippi Soul Food</a>
-    <a href="kekesinternational-menu.html" class="nav-cta nav-cta-order">&#127869;&#65039; Order Now</a>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
+    <button id="pwa-install-btn" onclick="triggerPWAInstall()" style="display:none;background:linear-gradient(135deg,#D4AF37,#8B1A1A);color:#fff;border:none;padding:8px 14px;border-radius:20px;font-weight:700;font-size:0.8rem;cursor:pointer;animation:pulse-gold 2s infinite;">📱 Add App</button>
   </div>
 </nav>
-<!-- ===== END MAIN NAVIGATION ===== -->
 
+<!-- PWA Install Popup Banner -->
+<div id="pwa-banner" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9999;background:linear-gradient(135deg,#1a0800,#2d0f00);border:2px solid #D4AF37;border-radius:20px;padding:20px 30px;box-shadow:0 10px 50px rgba(212,175,55,0.5);text-align:center;max-width:380px;width:90%;animation:slideUpBanner 0.5s ease;">
+  <div style="font-size:2rem;margin-bottom:8px;">🍛</div>
+  <div style="color:#D4AF37;font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;margin-bottom:6px;">Add Keke's to Your Phone!</div>
+  <div style="color:#FFF8E7;font-size:0.85rem;margin-bottom:16px;opacity:0.9;">Order faster · Track orders · Get VIP deals · Works offline</div>
+  <div style="display:flex;gap:10px;justify-content:center;">
+    <button onclick="installPWA()" style="background:linear-gradient(135deg,#D4AF37,#8B1A1A);color:#fff;border:none;padding:12px 24px;border-radius:25px;font-weight:700;font-size:0.95rem;cursor:pointer;box-shadow:0 4px 20px rgba(212,175,55,0.4);">📱 Install Free App</button>
+    <button onclick="dismissBanner()" style="background:transparent;color:#D4AF37;border:1px solid #D4AF37;padding:12px 18px;border-radius:25px;font-size:0.85rem;cursor:pointer;">Not Now</button>
+  </div>
+</div>
+<style>
+@keyframes slideUpBanner { from { opacity:0; transform:translateX(-50%) translateY(30px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+@keyframes pulse-gold { 0%,100% { box-shadow:0 0 8px rgba(212,175,55,0.4); } 50% { box-shadow:0 0 20px rgba(212,175,55,0.9); } }
+</style>
 
+<!-- ====== HERO ====== -->
+<section class="hero">
+  <!-- Particles -->
+  <div class="hero-bg-particles" id="particles"></div>
+  <div class="steam-lines"></div>
 
-<!-- HERO SECTION -->
-<div class="hero">
+  <!-- Floating food -->
+  <div class="food-float" style="top:15%;left:5%;--fd:7s;--fdelay:0s;">🍗</div>
+  <div class="food-float" style="top:25%;right:8%;--fd:5s;--fdelay:1s;">🌮</div>
+  <div class="food-float" style="bottom:30%;left:10%;--fd:8s;--fdelay:2s;">🥩</div>
+  <div class="food-float" style="bottom:20%;right:5%;--fd:6s;--fdelay:0.5s;">🍔</div>
+  <div class="food-float" style="top:60%;left:3%;--fd:9s;--fdelay:1.5s;">✨</div>
+
   <div class="hero-content">
-    <div class="hero-tagline">Fresh · Flavorful · International</div>
-    <h1 class="hero-title">Our Menu</h1>
-    <p class="hero-subtitle">Caribbean & Soul Food Made Fresh to Order</p>
-  </div>
-</div>
-
-<!-- SIGNATURES -->
-<div class="menu-section">
-  <h2 class="section-title">🏆 Signature Dishes</h2>
-  <div class="menu-grid">
-    <div class="menu-card">
-      <div class="menu-card-emoji">🍗</div>
-      <div class="menu-card-name">Jerk Chicken</div>
-      <div class="menu-card-tag">⭐ POPULAR</div>
-      <div class="menu-card-desc">House-marinated jerk chicken, slow-cooked with island spices. Served with rice & peas and festival bread.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$28</div>
-        <button class="add-btn" onclick="addToTray('Jerk Chicken', 28)">ADD</button>
-      </div>
+    <p class="hero-tagline">Est. 2020 · Moreno Valley · Long Beach · Orange County</p>
+    <h1 class="hero-title">Keke's International</h1>
+    <p class="hero-subtitle">Food Spot</p>
+    <div class="hero-divider"></div>
+    <p class="hero-description">
+      Every meal cooked with love. Soul food, BBQ, Mexican, Vegan, Gourmet Burgers — 
+      international flavors that taste like home, delivered to your door.
+    </p>
+    <div class="hero-badges">
+      <span class="badge">⭐ 125+ Five-Star Reviews</span>
+      <span class="badge">🚚 Online Orders Only</span>
+      <span class="badge">🌱 Vegan Options</span>
+      <span class="badge">🎉 Catering Available</span>
     </div>
-
-    <div class="menu-card">
-      <div class="menu-card-emoji">🥩</div>
-      <div class="menu-card-name">Slow Braised Oxtail</div>
-      <div class="menu-card-tag">⭐ POPULAR</div>
-      <div class="menu-card-desc">Fall-off-the-bone oxtail braised for hours in our secret gravy. A Keke's staple that sells out fast.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$36</div>
-        <button class="add-btn" onclick="addToTray('Slow Braised Oxtail', 36)">ADD</button>
-      </div>
-    </div>
-
-    <div class="menu-card">
-      <div class="menu-card-emoji">🍲</div>
-      <div class="menu-card-name">Curry Goat</div>
-      <div class="menu-card-tag">🌶️ SPICY</div>
-      <div class="menu-card-desc">Tender goat slow-simmered in fragrant Caribbean curry. Served with white rice and roti.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$34</div>
-        <button class="add-btn" onclick="addToTray('Curry Goat', 34)">ADD</button>
-      </div>
-    </div>
-
-    <div class="menu-card">
-      <div class="menu-card-emoji">🐟</div>
-      <div class="menu-card-name">Crispy Catfish Platter</div>
-      <div class="menu-card-tag">⭐ POPULAR</div>
-      <div class="menu-card-desc">Seasoned cornmeal-crusted catfish, golden fried. Served with mac & cheese and collard greens.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$30</div>
-        <button class="add-btn" onclick="addToTray('Crispy Catfish Platter', 30)">ADD</button>
-      </div>
+    <div class="cta-group">
+      <a href="kekesinternational-menu.html" class="btn-primary">
+        🍽️ ENTER & ORDER NOW
+      </a>
+      <a href="kekesinternational-catering.html" class="btn-secondary">
+        🎉 Book Catering
+      </a>
     </div>
   </div>
-</div>
 
-<!-- SOUL FOOD -->
-<div class="menu-section">
-  <h2 class="section-title">❤️ Soul Food</h2>
-  <div class="menu-grid">
-    <div class="menu-card">
-      <div class="menu-card-emoji">🧀</div>
-      <div class="menu-card-name">Baked Mac & Cheese</div>
-      <div class="menu-card-desc">Creamy four-cheese blend baked to a golden crust. Made from scratch every morning.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$22</div>
-        <button class="add-btn" onclick="addToTray('Baked Mac & Cheese', 22)">ADD</button>
+  <div class="scroll-indicator">
+    <span>Explore</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ====== MISSION STATEMENT ====== -->
+<section class="section mission">
+  <div class="section-inner">
+    <div class="mission-grid">
+      <div class="reveal">
+        <p class="section-label">▸ Chef Keke's Promise</p>
+        <p class="mission-quote">Every Meal Cooked with Love. Delicious food for every mood.</p>
+        <p style="margin-top:20px;color:rgba(255,248,231,0.6);font-size:0.9rem;line-height:1.8;">
+          Since 2020, Chef Keke Chanel has been feeding Moreno Valley, Long Beach, and beyond with the kind of food that makes you close your eyes on the first bite. Soul food that heals. Global flavors that inspire. And love in every plate.
+        </p>
       </div>
-    </div>
-
-    <div class="menu-card">
-      <div class="menu-card-emoji">🥬</div>
-      <div class="menu-card-name">Collard Greens</div>
-      <div class="menu-card-desc">Southern slow-cooked collard greens seasoned with smoked turkey. A comfort classic.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$20</div>
-        <button class="add-btn" onclick="addToTray('Collard Greens', 20)">ADD</button>
-      </div>
-    </div>
-
-    <div class="menu-card">
-      <div class="menu-card-emoji">🍠</div>
-      <div class="menu-card-name">Candied Yams</div>
-      <div class="menu-card-desc">Sweet and buttery yams slow-baked with brown sugar, cinnamon, and nutmeg. Pure soul.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$20</div>
-        <button class="add-btn" onclick="addToTray('Candied Yams', 20)">ADD</button>
-      </div>
-    </div>
-
-    <div class="menu-card">
-      <div class="menu-card-emoji">🌽</div>
-      <div class="menu-card-name">Jalapeño Cornbread</div>
-      <div class="menu-card-tag">NEW</div>
-      <div class="menu-card-desc">Fluffy golden cornbread with a jalapeño kick. Baked fresh and served warm with honey butter.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$16</div>
-        <button class="add-btn" onclick="addToTray('Jalapeño Cornbread', 16)">ADD</button>
+      <div class="mission-stats reveal">
+        <div class="stat-card">
+          <div class="stat-number">125+</div>
+          <div class="stat-label">5-Star Reviews</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Locations</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">2020</div>
+          <div class="stat-label">Est. Year</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">4AM</div>
+          <div class="stat-label">Latest Hours</div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- CARIBBEAN -->
-<div class="menu-section">
-  <h2 class="section-title">🌴 Caribbean Flavors</h2>
-  <div class="menu-grid">
-    <div class="menu-card">
-      <div class="menu-card-emoji">🍚</div>
-      <div class="menu-card-name">Rice & Peas</div>
-      <div class="menu-card-desc">Classic Caribbean rice & peas cooked in coconut milk with thyme and scotch bonnet. Fragrant perfection.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$21</div>
-        <button class="add-btn" onclick="addToTray('Rice & Peas', 21)">ADD</button>
-      </div>
+<!-- ====== MENU ====== -->
+<section class="section menu-section">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-label">▸ What We're Cooking</p>
+      <h2 class="section-title">The <span>Menu</span></h2>
+      <div class="gold-line"></div>
     </div>
 
-    <div class="menu-card">
-      <div class="menu-card-emoji">🍌</div>
-      <div class="menu-card-name">Fried Sweet Plantains</div>
-      <div class="menu-card-tag">⭐ POPULAR</div>
-      <div class="menu-card-desc">Caramelized ripe plantains fried golden. Sweet, soft, irresistible — the perfect Caribbean side.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$19</div>
-        <button class="add-btn" onclick="addToTray('Fried Sweet Plantains', 19)">ADD</button>
-      </div>
+    <div class="menu-categories reveal">
+      <button class="cat-btn active" onclick="filterMenu('all', this)">🌟 All</button>
+      <button class="cat-btn" onclick="filterMenu('soul', this)">🍗 Soul Food</button>
+      <button class="cat-btn" onclick="filterMenu('bbq', this)">🔥 BBQ & Smoked</button>
+      <button class="cat-btn" onclick="filterMenu('mexican', this)">🌮 Mexican</button>
+      <button class="cat-btn" onclick="filterMenu('burger', this)">🍔 Burgers</button>
+      <button class="cat-btn" onclick="filterMenu('vegan', this)">🌱 Vegan</button>
+      <button class="cat-btn" onclick="filterMenu('drinks', this)">🥤 Drinks</button>
     </div>
 
-    <div class="menu-card">
-      <div class="menu-card-emoji">🍛</div>
-      <div class="menu-card-name">Caribbean Curry Bowl</div>
-      <div class="menu-card-desc">Velvety coconut curry over jasmine rice with seasonal vegetables, topped with crispy chickpeas.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$26</div>
-        <button class="add-btn" onclick="addToTray('Caribbean Curry Bowl', 26)">ADD</button>
+    <div class="menu-grid" id="menuGrid">
+
+      <!-- SOUL FOOD -->
+      <div class="menu-card" data-cat="soul">
+        <span class="menu-card-emoji">🍗</span>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Smothered Chicken & Gravy</h3>
+          <p class="menu-card-desc">Tender chicken smothered in rich, homestyle gravy. The kind of plate that makes you call your grandma.</p>
+          <div class="menu-card-footer">
+            <span class="menu-tag tag-soul">Soul Food</span>
+            <a href="kekesinternational-menu.html" class="order-btn-sm">Order →</a>
+          </div>
+        </div>
       </div>
+
+      <div class="menu-card" data-cat="soul">
+        <span class="menu-card-emoji">🥘</span>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Oxtail & Gravy</h3>
+          <p class="menu-card-desc">Slow-braised oxtail falling off the bone in a rich, savory gravy. Served with rice and sides.</p>
+          <div class="menu-card-footer">
+            <span class="menu-tag tag-soul">Soul Food</span>
+            <a href="kekesinternational-menu.html" class="order-btn-sm">Order →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card" data-cat="soul">
+        <span class="menu-card-emoji">🧀</span>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Mac & Cheese</h3>
+          <p class="menu-card-desc">Chef Keke's legendary mac & cheese that disappears fast at every event. Creamy, golden, perfect.</p>
+          <div class="menu-card-footer">
+            <span class="menu-tag tag-soul">Soul Food</span>
+            <a href="kekesinternational-menu.html" class="order-btn-sm">Order →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- BBQ -->
+      <div class="menu-card" data-cat="bbq">
+        <span class="menu-card-emoji">🍖</span>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">BBQ Ribs</h3>
+          <p class="menu-card-desc">Fall-off-the-bone ribs with a smoky, caramelized bark. Low and slow. Worth every minute of the wait.</p>
+          <div class="menu-card-footer">
+            <span class="menu-tag tag-bbq">BBQ</span>
+            <a href="kekesinternational-menu.html" class="order-btn-sm">Order →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card" data-cat="bbq">
+        <span class="menu-card-emoji">🥩</span>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Pulled Pork</h3>
+          <p class="menu-card-desc">Slow-smoked pulled pork piled high. Sweet, smoky, and fall-apart tender with house sauce.</p>
+          <div class="menu-card-footer">
+            <span class="menu-tag tag-bbq">BBQ</span>
+            <a href="kekesinternational-menu.html" class="order-btn-sm">Order →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- MEXICAN -->
+      <div class="menu-card" data-cat="mexican">
+        <span class="menu-card-emoji">🌮</span>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Tacos</h3>
+          <p class="menu-card-desc">Street-style tacos loaded with flavor. International sauces & gravies that set Keke's apart from everyone else.</p>
+          <div class="menu-card-footer">
+            <span class="menu-tag tag-mexican">Mexican</span>
+            <a href="kekesinternational-menu.html" class="order-btn-sm">Order →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card" data-cat="mexican">
+        <span class="menu-card-emoji">🫔</span>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Enchiladas</h3>
+          <p class="menu-card-desc">Rolled and smothered enchiladas with housemade sauce. The kind you dream about the next day.</p>
+          <div class="menu-card-footer">
+            <span class="menu-tag tag-mexican">Mexican</span>
+            <a href="kekesinternational-menu.html" class="order-btn-sm">Order →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- BURGERS -->
+      <div class="menu-card" data-cat="burger">
+        <span class="menu-card-emoji">🍔</span>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Gourmet Burgers</h3>
+          <p class="menu-card-desc">Chef-crafted gourmet burgers stacked sky high. Custom sauces, premium toppings, no shortcuts.</p>
+          <div class="menu-card-footer">
+            <span class="menu-tag tag-burger">Gourmet</span>
+            <a href="kekesinternational-menu.html" class="order-btn-sm">Order →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- VEGAN -->
+      <div class="menu-card" data-cat="vegan">
+        <span class="menu-card-emoji">🥗</span>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Fresh Vegan Bowls</h3>
+          <p class="menu-card-desc">Made from real vegetables — not processed substitutes. Colorful, filling, and genuinely delicious.</p>
+          <div class="menu-card-footer">
+            <span class="menu-tag tag-vegan">Vegan</span>
+            <a href="kekesinternational-menu.html" class="order-btn-sm">Order →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card" data-cat="vegan soul">
+        <span class="menu-card-emoji">🍚</span>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Rice & Peas</h3>
+          <p class="menu-card-desc">Classic Caribbean-inspired rice & peas cooked with coconut and seasoned right. A perfect side or main.</p>
+          <div class="menu-card-footer">
+            <span class="menu-tag tag-vegan">Vegan Option</span>
+            <a href="kekesinternational-menu.html" class="order-btn-sm">Order →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- DRINKS -->
+      <div class="menu-card" data-cat="drinks">
+        <span class="menu-card-emoji">🍹</span>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">House Drinks</h3>
+          <p class="menu-card-desc">Signature house drinks crafted to complement every meal. Ask about the current specials — they rotate!</p>
+          <div class="menu-card-footer">
+            <span class="menu-tag tag-drinks">Drinks</span>
+            <a href="kekesinternational-menu.html" class="order-btn-sm">Order →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card" data-cat="soul">
+        <span class="menu-card-emoji">🫙</span>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">International Sauces & Gravies</h3>
+          <p class="menu-card-desc">The secret weapon. House-made international sauces and rich gravies that set Keke's apart from the rest.</p>
+          <div class="menu-card-footer">
+            <span class="menu-tag tag-soul">Signature</span>
+            <a href="kekesinternational-menu.html" class="order-btn-sm">Order →</a>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="menu-card">
-      <div class="menu-card-emoji">🍞</div>
-      <div class="menu-card-name">Festival Bread</div>
-      <div class="menu-card-desc">Lightly sweet fried dough — a Jamaican classic. The perfect companion to any dish on this menu.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$17</div>
-        <button class="add-btn" onclick="addToTray('Festival Bread', 17)">ADD</button>
+    <div style="text-align:center;margin-top:50px;" class="reveal">
+      <a href="kekesinternational-menu.html" class="btn-primary" style="font-size:0.9rem;padding:18px 60px;">
+        View Full Menu & Order Online →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== ORDER NOW BANNER ====== -->
+<section class="order-banner">
+  <h2 class="order-banner-title">Ready to <span>Eat?</span></h2>
+  <p class="order-banner-sub">Online orders only — fresh, fast, delivered with love 🤎</p>
+  <div class="order-buttons">
+    <a href="kekesinternational-menu.html" class="order-main-btn">🍽️ Place Your Order Now</a>
+    <a href="tel:9516305410" class="btn-secondary" style="padding:18px 40px;border-color:rgba(255,248,231,0.4);color:var(--cream);">📞 Call First: (951) 630-5410</a>
+  </div>
+</section>
+
+<!-- ====== CATERING ====== -->
+<section class="section catering-section">
+  <div class="section-inner">
+    <div class="catering-inner">
+      <div class="reveal">
+        <p class="section-label">▸ Events & Large Gatherings</p>
+        <h2 class="section-title">Catering That <span>Brings the Flavor</span></h2>
+        <div class="gold-line"></div>
+        <p style="color:rgba(255,248,231,0.7);font-size:0.9rem;line-height:1.8;margin-bottom:20px;">
+          Weddings. Corporate lunches. School banquets. Backyard parties. Church gatherings. Family reunions. Chef Keke shows up and shows OUT — every time.
+        </p>
+        <ul class="catering-list">
+          <li>Any Cuisine, Any Time — Soul, Vegan, Mexican, BBQ, International</li>
+          <li>Events of Every Size — from intimate to hundreds of guests</li>
+          <li>Menus Made for YOU — fully customized down to the sides & sauces</li>
+          <li>Professional & Reliable — on time, stress-free, absolutely delicious</li>
+          <li>125+ ⭐⭐⭐⭐⭐ Google reviews — clients keep coming back</li>
+          <li>ROTC & School Events welcome</li>
+          <li>National catering requests accepted</li>
+        </ul>
+        <div style="display:flex;gap:15px;flex-wrap:wrap;">
+          <a href="kekesinternational-catering.html" class="btn-primary">🎉 Book Catering</a>
+          <a href="tel:9516305410" class="btn-secondary">📞 (951) 630-5410</a>
+        </div>
+      </div>
+      <div class="catering-visual reveal">
+        <div class="catering-dish">🍖<span>BBQ Ribs</span></div>
+        <div class="catering-dish">🌮<span>Mexican</span></div>
+        <div class="catering-dish">🍗<span>Soul Food</span></div>
+        <div class="catering-dish">🥗<span>Vegan</span></div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- TACOS -->
-<div class="menu-section">
-  <h2 class="section-title">🌮 International Tacos</h2>
-  <div class="menu-grid">
-    <div class="menu-card">
-      <div class="menu-card-emoji">🌮</div>
-      <div class="menu-card-name">Jerk Chicken Tacos (3)</div>
-      <div class="menu-card-tag">⭐ POPULAR</div>
-      <div class="menu-card-desc">Crispy corn tortillas loaded with jerk chicken, mango slaw, pickled onions, and cilantro crema.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$24</div>
-        <button class="add-btn" onclick="addToTray('Jerk Chicken Tacos (3)', 24)">ADD</button>
-      </div>
+<!-- ====== SERVICES ====== -->
+<section class="section services-section">
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:60px;" class="reveal">
+      <p class="section-label">▸ More From Chef Keke</p>
+      <h2 class="section-title">Services We <span>Offer</span></h2>
+      <div class="gold-line" style="margin:0 auto 0;"></div>
     </div>
-
-    <div class="menu-card">
-      <div class="menu-card-emoji">🌯</div>
-      <div class="menu-card-name">Oxtail Tacos (3)</div>
-      <div class="menu-card-tag">NEW</div>
-      <div class="menu-card-desc">Braised oxtail in flour tortillas with pepper jack cheese, pickled cabbage, and house sauce. Mind-blowing.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$27</div>
-        <button class="add-btn" onclick="addToTray('Oxtail Tacos (3)', 27)">ADD</button>
-      </div>
-    </div>
-
-    <div class="menu-card">
-      <div class="menu-card-emoji">🫘</div>
-      <div class="menu-card-name">Vegan Black Bean Tacos (3)</div>
-      <div class="menu-card-tag">NEW</div>
-      <div class="menu-card-desc">Spiced black beans, roasted corn, avocado, pico de gallo, in warm corn tortillas. Plant-powered paradise.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$23</div>
-        <button class="add-btn" onclick="addToTray('Vegan Black Bean Tacos (3)', 23)">ADD</button>
-      </div>
+    <div class="services-grid">
+      <a href="kekesinternational-menu.html" class="service-card reveal">
+        <span class="service-icon">🚚</span>
+        <h3 class="service-title">Online Orders</h3>
+        <p class="service-desc">Order delivery & pickup online. Fresh meals made to order and delivered to you.</p>
+      </a>
+      <a href="kekesinternational-catering.html" class="service-card reveal">
+        <span class="service-icon">🎊</span>
+        <h3 class="service-title">Catering</h3>
+        <p class="service-desc">Events of every size. Fully customized menus for your special occasion.</p>
+      </a>
+      <a href="https://link.apisystem.tech/widget/form/3TzjEjRMnprsbQGh6WFg" class="service-card reveal">
+        <span class="service-icon">🥡</span>
+        <h3 class="service-title">Meal Prep</h3>
+        <p class="service-desc">Weekly meal prep service. Let Chef Keke handle your meals so you can focus on living.</p>
+      </a>
+      <a href="https://link.apisystem.tech/widget/form/9PrqTykNFkKKHuJElC0N" class="service-card reveal">
+        <span class="service-icon">🏪</span>
+        <h3 class="service-title">Start a Restaurant</h3>
+        <p class="service-desc">Want to start your own food business? Chef Keke can show you how. Inquire now.</p>
+      </a>
     </div>
   </div>
-</div>
+</section>
 
-<!-- VEGAN -->
-<div class="menu-section">
-  <h2 class="section-title">🌿 Vegan & Plant-Based</h2>
-  <div class="menu-grid">
-    <div class="menu-card">
-      <div class="menu-card-emoji">🥗</div>
-      <div class="menu-card-name">Fresh Vegan Bowls</div>
-      <div class="menu-card-desc">Colorful seasonal vegetables over grains, topped with tahini drizzle and roasted seeds. Made to order.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$25</div>
-        <button class="add-btn" onclick="addToTray('Fresh Vegan Bowls', 25)">ADD</button>
+<!-- ====== REVIEWS ====== -->
+<section class="section reviews-section">
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:60px;" class="reveal">
+      <p class="section-label">▸ What the People Say</p>
+      <h2 class="section-title">Real <span>Reviews</span></h2>
+      <div class="gold-line" style="margin:0 auto;"></div>
+      <p style="color:rgba(255,248,231,0.5);font-size:0.85rem;margin-top:20px;">125+ five-star Google reviews and counting ⭐⭐⭐⭐⭐</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card reveal">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">Taste just like home cooking, delicious. Made with love. Thank you Keke. You put your heart in your cooking. I've eaten here ever since my dad is in the hospital and you've fed my family like we are your family.</p>
+        <p class="review-author">— Lynn C. · Google Review</p>
+        <div class="review-quote-mark">"</div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">Food Was Amazing. Worth The Wait. Definitely Coming Back. Everything Tasted Like It Was Made With Love Because I'm Pretty Sure It Was. Plate Was Still Hot After My Short Drive Home, But That Didn't Stop Me From Eating It All.</p>
+        <p class="review-author">— John L. · Google Review</p>
+        <div class="review-quote-mark">"</div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">Keke was the perfect hostess! She is a great cook and really went out of her way to make sure we were happy. She makes her vegetarian options out of real veggies. This is big to me. I don't want a whole bunch of processed stuff.</p>
+        <p class="review-author">— Bu W. · Google Review</p>
+        <div class="review-quote-mark">"</div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">The food was absolutely amazing. Everyone at our party went back for seconds! Keke catered our event and the staff is still raving about it. Professional, delicious, and stress-free. Couldn't ask for better.</p>
+        <p class="review-author">— Catering Client · Google Review</p>
+        <div class="review-quote-mark">"</div>
       </div>
     </div>
+    <div style="text-align:center;margin-top:50px;" class="reveal">
+      <a href="https://www.google.com/search?kgmid=/g/11p73r8k59&q=Keke%27s+International+food+spot#lrd=0xc7b7974f6d0150f:0xc809195ae1ef66b9,1,,,," class="btn-secondary">Read All Reviews on Google →</a>
+    </div>
+  </div>
+</section>
 
-    <div class="menu-card">
-      <div class="menu-card-emoji">🍵</div>
-      <div class="menu-card-name">Spiced Lentil Stew</div>
-      <div class="menu-card-desc">Red lentils slow-cooked with turmeric, cumin, tomatoes, and spinach. Served with pita or rice.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$24</div>
-        <button class="add-btn" onclick="addToTray('Spiced Lentil Stew', 24)">ADD</button>
+<!-- ====== LOCATIONS ====== -->
+<section class="section locations-section">
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:60px;" class="reveal">
+      <p class="section-label">▸ Find Us</p>
+      <h2 class="section-title">3 Locations to <span>Serve You</span></h2>
+      <div class="gold-line" style="margin:0 auto;"></div>
+      <p style="color:rgba(255,248,231,0.5);font-size:0.85rem;margin-top:20px;">Always call first: (951) 630-5410</p>
+    </div>
+    <div class="locations-grid">
+      <div class="location-card reveal">
+        <h3 class="location-name">📍 Moreno Valley</h3>
+        <p class="location-address">24195 Sunnymead Blvd<br>Moreno Valley, CA 92557</p>
+        <p class="location-hours">
+          Thurs – Sun: Open till <strong style="color:var(--gold);">4AM</strong><br>
+          Online Orders · Pickup Available
+        </p>
+        <div class="location-tag">🟢 Open Late</div>
+      </div>
+      <div class="location-card reveal">
+        <h3 class="location-name">📍 Long Beach</h3>
+        <p class="location-address">7th & Magnolia<br>Downtown Long Beach, CA</p>
+        <p class="location-hours">
+          Mon – Wed: Open till <strong style="color:var(--gold);">2AM</strong><br>
+          Ghost Kitchen · Online Orders
+        </p>
+        <div class="location-tag">🟢 Ghost Kitchen</div>
+      </div>
+      <div class="location-card reveal">
+        <h3 class="location-name">📍 Orange County</h3>
+        <p class="location-address">4th St Marketplace<br>Santa Ana, CA</p>
+        <p class="location-hours">
+          Coming Soon 2025<br>
+          Call for updates: (951) 630-5410
+        </p>
+        <div class="location-tag" style="background:rgba(212,175,55,0.15);border-color:rgba(212,175,55,0.4);color:var(--gold);">⏳ Coming Soon</div>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- DRINKS -->
-<div class="menu-section">
-  <h2 class="section-title">🍹 House Drinks</h2>
-  <div class="menu-grid">
-    <div class="menu-card">
-      <div class="menu-card-emoji">🌺</div>
-      <div class="menu-card-name">Sorrel Punch</div>
-      <div class="menu-card-tag">⭐ POPULAR</div>
-      <div class="menu-card-desc">Refreshing hibiscus sorrel infused with ginger and cloves. A Jamaican classic — sweet and tart.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$16</div>
-        <button class="add-btn" onclick="addToTray('Sorrel Punch', 16)">ADD</button>
-      </div>
-    </div>
-
-    <div class="menu-card">
-      <div class="menu-card-emoji">🍋</div>
-      <div class="menu-card-name">House Lemonade</div>
-      <div class="menu-card-desc">Fresh-squeezed lemonade with a secret twist. Available still or sparkling. Ask about seasonal flavors.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$15</div>
-        <button class="add-btn" onclick="addToTray('House Lemonade', 15)">ADD</button>
-      </div>
-    </div>
-
-    <div class="menu-card">
-      <div class="menu-card-emoji">🥥</div>
-      <div class="menu-card-name">Fresh Coconut Water</div>
-      <div class="menu-card-desc">Pure natural coconut water, chilled and refreshing. Nature's best hydration, straight from the source.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$15</div>
-        <button class="add-btn" onclick="addToTray('Fresh Coconut Water', 15)">ADD</button>
-      </div>
+    <div style="text-align:center;" class="reveal">
+      <p style="color:rgba(255,248,231,0.5);font-size:0.85rem;margin-bottom:25px;">📞 Call or text Chef Keke Chanel directly: (951) 630-5410</p>
+      <a href="kekesinternational-menu.html" class="btn-primary">Order Online Now →</a>
     </div>
   </div>
-</div>
+</section>
 
-<!-- SAUCES -->
-<div class="menu-section">
-  <h2 class="section-title">🫙 International Sauces & Gravies</h2>
-  <div class="menu-grid">
-    <div class="menu-card">
-      <div class="menu-card-emoji">🫙</div>
-      <div class="menu-card-name">Keke's House Sauce (8oz)</div>
-      <div class="menu-card-tag">⭐ POPULAR</div>
-      <div class="menu-card-desc">The secret weapon. House-made international sauce — recipe classified. Elevates every single dish.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$18</div>
-        <button class="add-btn" onclick="addToTray('Keke\'s House Sauce (8oz)', 8)">ADD</button>
-      </div>
+<!-- ====== VIP SECTION ====== -->
+<section class="vip-section">
+  <div class="vip-card reveal">
+    <span class="vip-crown">👑</span>
+    <h2 class="vip-title">Join the VIP Club</h2>
+    <p class="vip-desc">Be the first to know about new menu items, exclusive promos, pop-up events, and special drops. Chef Keke hooks her VIPs right.</p>
+    <a href="kekesinternational-catering.html" class="btn-primary" style="font-size:0.8rem;">
+      👑 Join VIP — It's Free
+    </a>
+  </div>
+</section>
+
+
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Keke's</div>
+    <p class="footer-tagline">International Food Spot · Every Meal Cooked with Love</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/kekesinternationalfoodspot" class="social-btn">📸 @KekesInternational</a>
+      <a href="https://www.instagram.com/longbeach_kekes/" class="social-btn">📸 @LongBeach_Kekes</a>
+      <a href="https://www.facebook.com/KekesFoodSpot" class="social-btn">👍 Facebook</a>
+      <a href="https://www.yelp.com/biz/kekes-international-food-spot-moreno-valley" class="social-btn">⭐ Yelp</a>
     </div>
-
-    <div class="menu-card">
-      <div class="menu-card-emoji">🍯</div>
-      <div class="menu-card-name">Jerk Gravy (8oz)</div>
-      <div class="menu-card-tag">⭐ POPULAR</div>
-      <div class="menu-card-desc">Rich, smoky jerk gravy — poured over everything. Take a jar home and transform your own cooking.</div>
-      <div class="menu-card-footer">
-        <div class="menu-card-price">$18</div>
-        <button class="add-btn" onclick="addToTray('Jerk Gravy (8oz)', 18)">ADD</button>
-      </div>
-    </div>
+    <div class="footer-divider"></div>
+    <p class="footer-contact">
+      📞 (951) 630-5410 · Call or Text Chef Keke Chanel<br>
+      🚚 Online Orders Only · No Walk-Up<br>
+      📍 Moreno Valley · Long Beach · Orange County (Coming Soon)
+    </p>
+    <div class="footer-divider"></div>
+    <p class="footer-copy">© 2026 Keke's International Food Spot · All Rights Reserved</p>
+    <p class="footer-copy" style="font-size:0.85rem;margin-top:8px;color:#D4AF37;">🍽️ Powered by Chanel 'The Chef' Hardy</p>
   </div>
-</div>
-
-<!-- PAYMENT METHODS -->
-<div class="payment-methods">
-  <h3>💳 We Accept All Payment Methods</h3>
-  <div class="payment-grid">
-    <div class="payment-item">💵 Cash</div>
-    <div class="payment-item">💳 Credit/Debit Cards</div>
-    <div class="payment-item">📱 Cash App</div>
-    <div class="payment-item">💸 Zelle</div>
-    <div class="payment-item">🍎 Apple Pay</div>
-    <div class="payment-item">🤖 Google Pay</div>
-    <div class="payment-item">🏛️ CalFresh EBT (RMP)</div>
-    <div class="payment-item">⬛ Square</div>
-    <div class="payment-item">🔵 PayPal</div>
-    <div class="payment-item">🟠 Venmo</div>
-  </div>
-</div>
-
-<!-- DEPOSIT NOTICE -->
-<div class="deposit-notice">
-  <h4>🔐 DEPOSIT REQUIRED BEFORE COOKING BEGINS</h4>
-  <p>All orders require a deposit before your meal is started. Your food is made fresh to order — this ensures quality and commitment on both sides. Balance due at delivery or pickup.</p>
-</div>
-
-<!-- ORDER TRAY -->
-<div class="order-tray" id="orderTray">
-  <div class="tray-toggle" onclick="toggleTrayExpand()">
-    <div class="tray-info">
-      <span class="tray-label">🍽️ YOUR TRAY</span>
-      <div class="tray-count" id="itemCount">0</div>
-    </div>
-    <div class="tray-total">$<span id="totalPrice">0.00</span></div>
-    <span class="tray-arrow" id="trayArrow">▲</span>
-  </div>
-  <div class="tray-items" id="trayItems"></div>
-  <div class="tray-actions">
-    <button class="clear-tray-btn" onclick="clearTray()">🗑️ CLEAR TRAY</button>
-    <a href="kekesinternational-checkout.html" class="checkout-btn" onclick="playCheckoutSound()">CHECKOUT →</a>
-  </div>
-</div>
-
-<!-- FOOTER -->
-
-<!-- ===== FOOTER ===== -->
-<footer style="background:#0a0500;border-top:1px solid rgba(212,175,55,0.2);padding:60px 40px 30px;text-align:center;">
-  <a href="kekesinternational-14.html" style="font-family:'Dancing Script',cursive;font-size:2.5rem;color:#D4AF37;text-decoration:none;display:block;margin-bottom:10px;">Keke's International</a>
-  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,248,231,0.6);margin-bottom:30px;">Food Spot &middot; Est. 2020</p>
-  <div style="display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;">
-    <a href="kekesinternational-menu.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">MENU</a>
-    <a href="kekesinternational-catering.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">CATERING</a>
-    <a href="kekesinternational-events.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">EVENTS</a>
-    <a href="kekesinternational-about.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">ABOUT</a>
-    <a href="kekesinternational-gallery.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">GALLERY</a>
-    <a href="kekesinternational-vip.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">VIP</a>
-    <a href="kekesinternational-contact.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">CONTACT</a>
-    <a href="mississippi-soul-food.html" style="color:#D4AF37;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">&#127830; MISSISSIPPI SOUL FOOD</a>
-  </div>
-  <p style="color:rgba(255,248,231,0.4);font-size:0.7rem;font-family:'Montserrat',sans-serif;letter-spacing:2px;">&copy; 2026 KEKE'S INTERNATIONAL FOOD SPOT &middot; ALL RIGHTS RESERVED &middot; (951) 630-5410</p>
 </footer>
-<!-- ===== END FOOTER ===== -->
 
-
-
-
-
-<!-- ===== NAVIGATION SCRIPT ===== -->
-
-<!-- ===== END NAVIGATION SCRIPT ===== -->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
   // ===== PARTICLES =====
   const container = document.getElementById('particles');
@@ -1611,23 +1740,106 @@
     document.body.style.transition = 'opacity 1.2s ease';
     setTimeout(() => { document.body.style.opacity = '1'; }, 100);
   });
+</script>
 
-  // ===== PARTICLE GENERATION =====
+<!-- PWA Install Button -->
+<style>
+#pwaInstallBtn {
+  position:fixed; bottom:28px; right:28px; z-index:9999;
+  padding:13px 22px; border:none; border-radius:50px;
+  background:linear-gradient(135deg,#D4A017,#F5D76E);
+  color:#0a0005; font-family:'Montserrat',sans-serif;
+  font-weight:800; font-size:0.72rem; letter-spacing:1.5px; text-transform:uppercase;
+  cursor:pointer; display:none;
+  box-shadow:0 0 0 3px rgba(212,160,23,0.25), 0 8px 30px rgba(212,160,23,0.5);
+  animation:pwaGlowMain 2s ease-in-out infinite;
+  transition:transform 0.2s, box-shadow 0.2s;
+}
+#pwaInstallBtn:hover { transform:translateY(-3px); box-shadow:0 0 0 5px rgba(212,160,23,0.35), 0 12px 40px rgba(212,160,23,0.7); }
+@keyframes pwaGlowMain {
+  0%,100% { box-shadow:0 0 0 3px rgba(212,160,23,0.25), 0 8px 30px rgba(212,160,23,0.5); }
+  50%      { box-shadow:0 0 0 6px rgba(212,160,23,0.15), 0 8px 40px rgba(212,160,23,0.75); }
+}
+</style>
+<script>
+// ===== PWA INSTALL SYSTEM =====
+let deferredPrompt = null;
+
+// Register service worker
+if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    const container = document.querySelector('.hero-bg-particles');
-    if (!container) return;
-    
-    for (let i = 0; i < 150; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'particle';
-      particle.style.left = Math.random() * 100 + '%';
-      particle.style.top = Math.random() * 100 + '%';
-      particle.style.setProperty('--d', (Math.random() * 3 + 2) + 's');
-      particle.style.setProperty('--delay', (Math.random() * 2) + 's');
-      container.appendChild(particle);
-    }
+    navigator.serviceWorker.register('sw.js').catch(() => {});
   });
+}
 
+// Catch install prompt
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Show banner after 3 seconds
+  setTimeout(() => {
+    const banner = document.getElementById('pwa-banner');
+    const btn = document.getElementById('pwa-install-btn');
+    if (banner) banner.style.display = 'block';
+    if (btn) btn.style.display = 'block';
+  }, 3000);
+});
+
+function installPWA() {
+  if (!deferredPrompt) {
+    // iOS fallback instructions
+    alert('📱 To install on iPhone:\n1. Tap the Share button (📤)\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add" — done! 🎉');
+    return;
+  }
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then((choice) => {
+    if (choice.outcome === 'accepted') {
+      dismissBanner();
+    }
+    deferredPrompt = null;
+  });
+}
+
+function triggerPWAInstall() {
+  installPWA();
+}
+
+function dismissBanner() {
+  const banner = document.getElementById('pwa-banner');
+  if (banner) banner.style.display = 'none';
+  // Remember for 7 days
+  localStorage.setItem('pwa-dismissed', Date.now());
+}
+
+// Don't show again for 7 days if dismissed
+window.addEventListener('load', () => {
+  const dismissed = localStorage.getItem('pwa-dismissed');
+  if (dismissed && Date.now() - parseInt(dismissed) < 7 * 24 * 60 * 60 * 1000) {
+    // Suppressed — still show nav button when prompt ready
+  }
+});
+
+// App installed
+window.addEventListener('appinstalled', () => {
+  dismissBanner();
+  document.getElementById('pwa-install-btn').style.display = 'none';
+});
+
+// ===== PARTICLE GENERATION =====
+window.addEventListener('load', () => {
+  const container = document.querySelector('.hero-bg-particles');
+  if (!container) return;
+  
+  for (let i = 0; i < 150; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.top = Math.random() * 100 + '%';
+    particle.style.setProperty('--d', (Math.random() * 3 + 2) + 's');
+    particle.style.setProperty('--delay', (Math.random() * 2) + 's');
+    container.appendChild(particle);
+  }
+});
 </script>
 </body>
 </html>
