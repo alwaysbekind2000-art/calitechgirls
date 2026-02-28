@@ -1257,6 +1257,7 @@
 
 <!-- ===== END NAVIGATION SCRIPT ===== -->
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
   // ===== PARTICLES =====
   const container = document.getElementById('particles');
@@ -1476,23 +1477,106 @@
     document.body.style.transition = 'opacity 1.2s ease';
     setTimeout(() => { document.body.style.opacity = '1'; }, 100);
   });
+</script>
 
-  // ===== PARTICLE GENERATION =====
+<!-- PWA Install Button -->
+<style>
+#pwaInstallBtn {
+  position:fixed; bottom:28px; right:28px; z-index:9999;
+  padding:13px 22px; border:none; border-radius:50px;
+  background:linear-gradient(135deg,#D4A017,#F5D76E);
+  color:#0a0005; font-family:'Montserrat',sans-serif;
+  font-weight:800; font-size:0.72rem; letter-spacing:1.5px; text-transform:uppercase;
+  cursor:pointer; display:none;
+  box-shadow:0 0 0 3px rgba(212,160,23,0.25), 0 8px 30px rgba(212,160,23,0.5);
+  animation:pwaGlowMain 2s ease-in-out infinite;
+  transition:transform 0.2s, box-shadow 0.2s;
+}
+#pwaInstallBtn:hover { transform:translateY(-3px); box-shadow:0 0 0 5px rgba(212,160,23,0.35), 0 12px 40px rgba(212,160,23,0.7); }
+@keyframes pwaGlowMain {
+  0%,100% { box-shadow:0 0 0 3px rgba(212,160,23,0.25), 0 8px 30px rgba(212,160,23,0.5); }
+  50%      { box-shadow:0 0 0 6px rgba(212,160,23,0.15), 0 8px 40px rgba(212,160,23,0.75); }
+}
+</style>
+<script>
+// ===== PWA INSTALL SYSTEM =====
+let deferredPrompt = null;
+
+// Register service worker
+if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    const container = document.querySelector('.hero-bg-particles');
-    if (!container) return;
-    
-    for (let i = 0; i < 150; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'particle';
-      particle.style.left = Math.random() * 100 + '%';
-      particle.style.top = Math.random() * 100 + '%';
-      particle.style.setProperty('--d', (Math.random() * 3 + 2) + 's');
-      particle.style.setProperty('--delay', (Math.random() * 2) + 's');
-      container.appendChild(particle);
-    }
+    navigator.serviceWorker.register('sw.js').catch(() => {});
   });
+}
 
+// Catch install prompt
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Show banner after 3 seconds
+  setTimeout(() => {
+    const banner = document.getElementById('pwa-banner');
+    const btn = document.getElementById('pwa-install-btn');
+    if (banner) banner.style.display = 'block';
+    if (btn) btn.style.display = 'block';
+  }, 3000);
+});
+
+function installPWA() {
+  if (!deferredPrompt) {
+    // iOS fallback instructions
+    alert('📱 To install on iPhone:\n1. Tap the Share button (📤)\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add" — done! 🎉');
+    return;
+  }
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then((choice) => {
+    if (choice.outcome === 'accepted') {
+      dismissBanner();
+    }
+    deferredPrompt = null;
+  });
+}
+
+function triggerPWAInstall() {
+  installPWA();
+}
+
+function dismissBanner() {
+  const banner = document.getElementById('pwa-banner');
+  if (banner) banner.style.display = 'none';
+  // Remember for 7 days
+  localStorage.setItem('pwa-dismissed', Date.now());
+}
+
+// Don't show again for 7 days if dismissed
+window.addEventListener('load', () => {
+  const dismissed = localStorage.getItem('pwa-dismissed');
+  if (dismissed && Date.now() - parseInt(dismissed) < 7 * 24 * 60 * 60 * 1000) {
+    // Suppressed — still show nav button when prompt ready
+  }
+});
+
+// App installed
+window.addEventListener('appinstalled', () => {
+  dismissBanner();
+  document.getElementById('pwa-install-btn').style.display = 'none';
+});
+
+// ===== PARTICLE GENERATION =====
+window.addEventListener('load', () => {
+  const container = document.querySelector('.hero-bg-particles');
+  if (!container) return;
+  
+  for (let i = 0; i < 150; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.top = Math.random() * 100 + '%';
+    particle.style.setProperty('--d', (Math.random() * 3 + 2) + 's');
+    particle.style.setProperty('--delay', (Math.random() * 2) + 's');
+    container.appendChild(particle);
+  }
+});
 </script>
 </body>
 </html>
