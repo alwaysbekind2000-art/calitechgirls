@@ -3,9 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catering — Keke's International Food Spot</title>
+<title>Catering Services — Keke's International Food Spot</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
-
+<!-- PWA Meta Tags -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#D4A017">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Keke's International">
 <style>
   :root {
     --gold: #D4AF37;
@@ -1015,247 +1021,131 @@
 </style>
 </head>
 <body>
-<!-- ===== MAIN NAVIGATION ===== -->
+
+<!-- MAIN NAVIGATION -->
 <nav class="main-nav">
-  <a href="kekesinternational-14.html" class="nav-logo">Keke's International</a>
-  <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+  <a href="/" class="nav-logo">Keke's International</a>
+  <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
-  <div class="nav-links" id="navLinks">
-    <a href="kekesinternational-menu.html">Menu</a>
-    <a href="kekesinternational-catering.html">Catering</a>
-    <a href="kekesinternational-events.html">Events</a>
-    <a href="kekesinternational-grand-opening.html">&#127881; Reopening</a>
-    <a href="kekesinternational-gallery.html">Gallery</a>
+  <div class="nav-links">
+    <a href="kekesinternational-menu.html">MENU</a>
+    <a href="kekesinternational-catering.html">CATERING</a>
+    <a href="kekesinternational-events.html">EVENTS</a>
+    <a href="kekesinternational-grand-opening.html">🎉 REOPENING</a>
+    <a href="kekesinternational-gallery.html">GALLERY</a>
     <a href="kekesinternational-vip.html">VIP</a>
-    <a href="kekesinternational-about.html">About</a>
-    <a href="kekesinternational-contact.html">Contact</a>
-    <a href="kekesinternational-tracker.html">Track Order</a>
-  </div>
-  <div class="nav-cta-group" id="navCtaGroup">
-    <a href="mississippi-soul-food.html" class="nav-cta nav-cta-soul">&#10024; Mississippi Soul Food</a>
-    <a href="kekesinternational-menu.html" class="nav-cta nav-cta-order">&#127869;&#65039; Order Now</a>
+    <a href="kekesinternational-about.html">ABOUT</a>
+    <a href="kekesinternational-contact.html">CONTACT</a>
+    <a href="kekesinternational-tracker.html">TRACK ORDER</a>
+    <a href="kekesinternational-faq.html">FAQ</a>
+    <a href="kekesinternational-blog.html">BLOG</a>
+    <a href="kekesinternational-careers.html">CAREERS</a>
+    <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
   </div>
 </nav>
-<!-- ===== END MAIN NAVIGATION ===== -->
-
-
-
-<!-- HERO -->
-<div class="hero">
+<div class="sound-toggle" onclick="this.classList.toggle('muted')" title="Toggle Sizzle">🔊</div>
+<a href="mississippi-soul-food.html" class="ms-soul-btn">✨ MISSISSIPPI SOUL FOOD</a>
+<!-- ====== HERO ====== -->
+<section class="hero">
+  <div class="hero-glow"></div>
   <div class="hero-bg-particles" id="particles"></div>
-  <div class="steam-lines"></div>
-  <div class="hero-content">
-    <p class="hero-tagline">Keke's International · Catering</p>
-    <h1 class="hero-title">Catering That Brings<br>the Flavor</h1>
-    <p class="hero-subtitle">Events of every size. Chef Keke shows up and shows OUT.</p>
-    <div style="margin-top:40px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
-      <a href="#booking" class="btn-primary">BOOK YOUR EVENT</a>
-      <a href="mississippi-soul-food.html" class="btn-secondary">🍖 MISSISSIPPI CATERING</a>
+  <div class="hero-content fade-up">
+    <p class="hero-label">Keke's International Food Spot</p>
+    <h1 class="hero-title">Catering That <span class="hero-highlight">Brings the Flavor</span></h1>
+    <p class="hero-sub">Let Chef Keke feed your crowd — weddings, birthdays, corporate events & more</p>
+    <a href="kekesinternational-menu.html" class="order-btn">🍽️ ENTER & ORDER NOW</a>
+  </div>
+</section>
+
+<!-- ====== CATERING PACKAGES ====== -->
+<section class="section mission">
+  <div class="section-inner">
+    <div class="fade-up">
+      <p class="section-label">▸ Feed Your Crowd Right</p>
+      <h2 class="section-title">Catering <span>Packages</span></h2>
+    </div>
+    <div class="menu-grid fade-up">
+      <div class="menu-card">
+        <div class="menu-card-badge">POPULAR</div>
+        <h3>🍗 Soul Food Package</h3>
+        <p>Fried chicken, mac & cheese, collard greens, cornbread, sweet tea</p>
+        <div class="menu-card-price">$25/person</div>
+        <div class="menu-card-desc">Minimum 20 guests</div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-badge">PREMIUM</div>
+        <h3>🌮 Taco Bar Package</h3>
+        <p>Street tacos, rice & beans, guacamole, salsa bar, agua fresca</p>
+        <div class="menu-card-price">$22/person</div>
+        <div class="menu-card-desc">Minimum 20 guests</div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-badge">DELUXE</div>
+        <h3>🔥 Caribbean Feast</h3>
+        <p>Jerk chicken, oxtail, rice & peas, plantains, festival bread</p>
+        <div class="menu-card-price">$35/person</div>
+        <div class="menu-card-desc">Minimum 15 guests</div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-badge">ELITE</div>
+        <h3>👑 Chef's Table Experience</h3>
+        <p>Custom multi-course meal designed by Chef Keke for your event</p>
+        <div class="menu-card-price">$55/person</div>
+        <div class="menu-card-desc">Minimum 10 guests</div>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- PACKAGES -->
-<div class="packages-section">
-  <p class="section-label">Our Packages</p>
-  <h2 class="section-title">Choose Your Experience</h2>
-  <div class="section-divider"></div>
-
-  <div class="packages-grid">
-    <div class="package-card">
-      <div class="package-badge">INTIMATE GATHERINGS</div>
-      <div class="package-name">Essentials Package</div>
-      <div class="package-price">Starting at $500</div>
-      <div class="package-guests">UP TO 20 GUESTS</div>
-      <ul class="package-features">
-        <li>Soul food classics menu</li>
-        <li>Smothered chicken, mac &amp; cheese</li>
-        <li>Rice &amp; peas, cornbread</li>
-        <li>2-hour service window</li>
-        <li>Serving equipment included</li>
-        <li>Deposit required to book</li>
-      </ul>
-      <a href="#booking" class="btn-secondary" style="width:100%;text-align:center;">INQUIRE</a>
+<section class="section catering-section">
+  <div class="section-inner">
+    <div class="fade-up">
+      <p class="section-label">▸ How It Works</p>
+      <h2 class="section-title">Book Your <span>Event</span></h2>
     </div>
-
-    <div class="package-card featured">
-      <div class="package-badge popular">⭐ MOST POPULAR</div>
-      <div class="package-name">Signature Package</div>
-      <div class="package-price">Starting at $1,200</div>
-      <div class="package-guests">UP TO 50 GUESTS</div>
-      <ul class="package-features">
-        <li>Full spread + desserts</li>
-        <li>Oxtail, ribs, jerk chicken</li>
-        <li>Full sides selection</li>
-        <li>Dessert table included</li>
-        <li>3-hour service window</li>
-        <li>Staff + setup included</li>
-        <li>Custom menu consultation</li>
-      </ul>
-      <a href="#booking" class="btn-primary" style="width:100%;text-align:center;">BOOK NOW</a>
+    <div class="locations-grid fade-up">
+      <div class="location-card">
+        <h3>📞 Step 1: Call Us</h3>
+        <p>Call 951-630-5410 or fill out our contact form to discuss your event</p>
+      </div>
+      <div class="location-card">
+        <h3>📋 Step 2: Customize</h3>
+        <p>Choose your package, customize the menu, set your date & guest count</p>
+      </div>
+      <div class="location-card">
+        <h3>🍽️ Step 3: We Cook</h3>
+        <p>Chef Keke & team prepare everything fresh. Setup & cleanup included</p>
+      </div>
     </div>
-
-    <div class="package-card">
-      <div class="package-badge">GRAND SCALE</div>
-      <div class="package-name">Grand Event Package</div>
-      <div class="package-price">Starting at $2,500</div>
-      <div class="package-guests">50–200 GUESTS</div>
-      <ul class="package-features">
-        <li>Full custom menu design</li>
-        <li>International cuisine options</li>
-        <li>Staffed buffet service</li>
-        <li>Setup &amp; breakdown included</li>
-        <li>Full-day event coverage</li>
-        <li>Priority booking</li>
-        <li>Mississippi Soul Food available</li>
-      </ul>
-      <a href="#booking" class="btn-secondary" style="width:100%;text-align:center;">GET A QUOTE</a>
-    </div>
-
-    <div class="package-card" style="border-color:rgba(212,175,55,.5);">
-      <div class="package-badge" style="background:linear-gradient(135deg,#D4AF37,#FFD700);color:#1a0800;border:none;">👑 GRAND EVENTS</div>
-      <div class="package-name">Grand Event Experience</div>
-      <div class="package-price">Call for Pricing</div>
-      <div class="package-guests">200+ GUESTS · CUSTOM QUOTE REQUIRED</div>
-      <ul class="package-features">
-        <li>Custom Menu Design</li>
-        <li>Professional Catering Staff</li>
-        <li>Full Setup &amp; Breakdown</li>
-        <li>China &amp; Linen Options</li>
-        <li>Beverage Service Available</li>
-        <li>Event Coordination</li>
-        <li>Tasting Session Included</li>
-        <li>Dedicated Event Manager</li>
-      </ul>
-      <a href="#booking" class="btn-secondary" style="width:100%;text-align:center;">REQUEST CUSTOM QUOTE</a>
+    <div style="text-align:center; margin-top:2rem;">
+      <a href="kekesinternational-contact.html" class="order-btn">📞 Request a Quote</a>
     </div>
   </div>
-</div>
+</section>
 
-<!-- SERVICES -->
-<div class="services-section">
-  <p class="section-label">We Cater For</p>
-  <h2 class="section-title" style="text-align:center;">Every Occasion</h2>
-  <div class="section-divider"></div>
-  <div class="services-grid">
-    <div class="service-item"><div class="service-icon">💍</div><div class="service-name">Weddings</div></div>
-    <div class="service-item"><div class="service-icon">🏢</div><div class="service-name">Corporate Events</div></div>
-    <div class="service-item"><div class="service-icon">🎖️</div><div class="service-name">ROTC &amp; School</div></div>
-    <div class="service-item"><div class="service-icon">⛪</div><div class="service-name">Church Events</div></div>
-    <div class="service-item"><div class="service-icon">👨‍👩‍👧‍👦</div><div class="service-name">Family Reunions</div></div>
-    <div class="service-item"><div class="service-icon">🇺🇸</div><div class="service-name">National Catering</div></div>
-    <div class="service-item"><div class="service-icon">🎂</div><div class="service-name">Birthday Parties</div></div>
-    <div class="service-item"><div class="service-icon">🍾</div><div class="service-name">Private Dinners</div></div>
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Keke's</div>
+    <p class="footer-tagline">International Food Spot · Every Meal Cooked with Love</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/kekesinternationalfoodspot" class="social-btn">📸 @KekesInternational</a>
+      <a href="https://www.instagram.com/longbeach_kekes/" class="social-btn">📸 @LongBeach_Kekes</a>
+      <a href="https://www.facebook.com/KekesFoodSpot" class="social-btn">👍 Facebook</a>
+      <a href="https://www.yelp.com/biz/kekes-international-food-spot-moreno-valley" class="social-btn">⭐ Yelp</a>
+    </div>
+    <div class="footer-divider"></div>
+    <p class="footer-contact">
+      📞 (951) 630-5410 · Call or Text Chef Keke Chanel<br>
+      🚚 Online Orders Only · No Walk-Up<br>
+      📍 Moreno Valley · Long Beach · Orange County (Coming Soon)
+    </p>
+    <div class="footer-divider"></div>
+    <p class="footer-copy">© 2026 Keke's International Food Spot · All Rights Reserved</p>
+    <p class="footer-copy" style="font-size:0.85rem;margin-top:8px;color:#D4AF37;">🍽️ Powered by Chanel 'The Chef' Hardy</p>
   </div>
-  <p style="text-align:center;margin-top:40px;font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,248,231,.5);font-size:1.1rem;">For large formal events, ask about our <a href="mississippi-soul-food.html" style="color:var(--gold);text-decoration:none;">Mississippi Soul Food</a> catering service</p>
-</div>
-
-<!-- BOOKING FORM -->
-<div class="booking-section" id="booking">
-  <p class="section-label">Book Your Catering</p>
-  <h2 class="section-title">Tell Us About Your Event</h2>
-  <div class="section-divider"></div>
-
-  <div class="form-card">
-    <form id="cateringForm" style="display:flex;flex-direction:column;gap:0;">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="name">YOUR NAME *</label>
-          <input type="text" id="name" name="name" required>
-        </div>
-        <div class="form-group">
-          <label for="phone">PHONE NUMBER *</label>
-          <input type="tel" id="phone" name="phone" required>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label for="email">EMAIL ADDRESS *</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-          <label for="date">EVENT DATE *</label>
-          <input type="date" id="date" name="date" required>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label for="eventType">EVENT TYPE</label>
-          <select id="eventType" name="eventType">
-            <option value="">Select Event Type</option>
-            <option value="wedding">Wedding</option>
-            <option value="corporate">Corporate Event</option>
-            <option value="birthday">Birthday Party</option>
-            <option value="family">Family Reunion</option>
-            <option value="church">Church Event</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="headcount">EXPECTED HEADCOUNT</label>
-          <input type="number" id="headcount" name="headcount" min="1" placeholder="Number of guests">
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label for="package">PACKAGE SELECTION</label>
-          <select id="package" name="package">
-            <option value="">Select Package</option>
-            <option value="essentials">Essentials Package ($500)</option>
-            <option value="signature">Signature Package ($1,200)</option>
-            <option value="grand">Grand Event Package ($2,500)</option>
-            <option value="grand-event">Grand Event Experience (Call for Pricing)</option>
-            <option value="custom">Custom Quote</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="location">EVENT LOCATION</label>
-          <input type="text" id="location" name="location" placeholder="Address or venue name">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="notes">SPECIAL REQUESTS & DIETARY NOTES</label>
-        <textarea id="notes" name="notes" rows="5" placeholder="Tell us about any dietary restrictions, menu preferences, or special requests..."></textarea>
-      </div>
-
-      <button type="submit" class="btn-primary" style="width:100%;text-align:center;margin-top:20px;">🍽️ SUBMIT CATERING REQUEST</button>
-    </form>
-    <p style="text-align:center;font-size:.75rem;color:rgba(255,248,231,.4);margin-top:20px;">Or call us directly: <a href="tel:9516305410" style="color:var(--gold);">(951) 630-5410</a></p>
-  </div>
-</div>
-
-<!-- FOOTER -->
-
-<!-- ===== FOOTER ===== -->
-<footer style="background:#0a0500;border-top:1px solid rgba(212,175,55,0.2);padding:60px 40px 30px;text-align:center;">
-  <a href="kekesinternational-14.html" style="font-family:'Dancing Script',cursive;font-size:2.5rem;color:#D4AF37;text-decoration:none;display:block;margin-bottom:10px;">Keke's International</a>
-  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,248,231,0.6);margin-bottom:30px;">Food Spot &middot; Est. 2020</p>
-  <div style="display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;">
-    <a href="kekesinternational-menu.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">MENU</a>
-    <a href="kekesinternational-catering.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">CATERING</a>
-    <a href="kekesinternational-events.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">EVENTS</a>
-    <a href="kekesinternational-about.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">ABOUT</a>
-    <a href="kekesinternational-gallery.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">GALLERY</a>
-    <a href="kekesinternational-vip.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">VIP</a>
-    <a href="kekesinternational-contact.html" style="color:rgba(255,248,231,0.6);text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">CONTACT</a>
-    <a href="mississippi-soul-food.html" style="color:#D4AF37;text-decoration:none;font-size:0.75rem;letter-spacing:2px;font-family:'Montserrat',sans-serif;">&#127830; MISSISSIPPI SOUL FOOD</a>
-  </div>
-  <p style="color:rgba(255,248,231,0.4);font-size:0.7rem;font-family:'Montserrat',sans-serif;letter-spacing:2px;">&copy; 2026 KEKE'S INTERNATIONAL FOOD SPOT &middot; ALL RIGHTS RESERVED &middot; (951) 630-5410</p>
 </footer>
-<!-- ===== END FOOTER ===== -->
-
-
-
-
-
-<!-- ===== NAVIGATION SCRIPT ===== -->
-
-<!-- ===== END NAVIGATION SCRIPT ===== -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -1578,5 +1468,6 @@ window.addEventListener('load', () => {
   }
 });
 </script>
+</body>
 </body>
 </html>
