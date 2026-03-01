@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soul Food Mastery with Chef Keke — Get Access Now</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Rajdhani:wght@400;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0a;
+    color: #fff;
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Fire background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 20% 80%, rgba(255,80,0,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(255,140,0,0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(139,0,0,0.2) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .logo-text {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 13px;
+    color: #ff6a00;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    animation: flicker 3s infinite;
+  }
+
+  .title {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 32px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ff6a00, #ffb347, #ff4500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    text-shadow: none;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    color: #ff9a3c;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+  }
+
+  .divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ff6a00, transparent);
+    margin: 20px auto;
+    width: 80%;
+  }
+
+  .episode-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff4500, #ff6a00);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 6px 20px;
+    border-radius: 30px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    animation: pulse 2s infinite;
+  }
+
+  .what-you-get {
+    background: rgba(255,106,0,0.08);
+    border: 1px solid rgba(255,106,0,0.3);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 30px;
+    text-align: left;
+  }
+
+  .what-you-get h3 {
+    font-family: 'Cinzel Decorative', cursive;
+    color: #ff6a00;
+    font-size: 14px;
+    margin-bottom: 16px;
+    text-align: center;
+    letter-spacing: 2px;
+  }
+
+  .lesson-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    font-size: 15px;
+    color: #e0e0e0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .lesson-item:last-child { border-bottom: none; }
+
+  .lesson-emoji { font-size: 20px; min-width: 28px; }
+
+  /* Pricing Cards */
+  .pricing-section { margin-bottom: 30px; }
+
+  .pricing-section h3 {
+    font-family: 'Cinzel Decorative', cursive;
+    color: #ffb347;
+    font-size: 14px;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  .pricing-cards {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .price-card {
+    background: rgba(255,106,0,0.08);
+    border: 1px solid rgba(255,106,0,0.3);
+    border-radius: 16px;
+    padding: 24px 20px;
+    flex: 1;
+    min-width: 200px;
+    max-width: 260px;
+    position: relative;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+
+  .price-card:hover {
+    transform: translateY(-4px);
+    border-color: #ff6a00;
+  }
+
+  .price-card.featured {
+    border-color: #ff6a00;
+    background: rgba(255,106,0,0.15);
+    box-shadow: 0 0 30px rgba(255,106,0,0.3);
+  }
+
+  .best-value {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #ff4500, #ff6a00);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 16px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    animation: pulse 2s infinite;
+  }
+
+  .price-tier {
+    font-size: 13px;
+    color: #ff9a3c;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .price-amount {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 48px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ff6a00, #ffb347);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .price-desc {
+    font-size: 13px;
+    color: #aaa;
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+
+  .price-includes {
+    font-size: 12px;
+    color: #ff9a3c;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  /* Buttons */
+  .btn-buy {
+    display: block;
+    width: 100%;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #ff4500, #ff6a00, #ffb347);
+    color: #fff;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(255,106,0,0.4);
+  }
+
+  .btn-buy:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255,106,0,0.6);
+  }
+
+  /* Payment methods */
+  .payment-methods {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 30px;
+  }
+
+  .payment-methods h3 {
+    font-size: 13px;
+    color: #888;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .payment-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .payment-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .payment-btn:hover { transform: translateY(-2px); }
+
+  .btn-cashapp {
+    background: #00d632;
+    color: #000;
+  }
+
+  .btn-zelle {
+    background: #6d1ed4;
+    color: #fff;
+  }
+
+  .btn-square {
+    background: #fff;
+    color: #000;
+  }
+
+  .btn-ebt {
+    background: linear-gradient(135deg, #1a1a6e, #2d2d8f);
+    color: #fff;
+    border: 1px solid #4444cc;
+  }
+
+  .contact-note {
+    font-size: 13px;
+    color: #666;
+    margin-top: 12px;
+  }
+
+  .contact-note a {
+    color: #ff6a00;
+    text-decoration: none;
+  }
+
+  .free-badge {
+    background: rgba(0,214,50,0.1);
+    border: 1px solid rgba(0,214,50,0.3);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    color: #00d632;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .free-badge span {
+    font-size: 20px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .footer-note {
+    font-size: 12px;
+    color: #555;
+    margin-top: 30px;
+    line-height: 1.6;
+  }
+
+  @keyframes flicker {
+    0%, 95%, 100% { opacity: 1; }
+    96% { opacity: 0.7; }
+    97% { opacity: 1; }
+    98% { opacity: 0.8; }
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(255,106,0,0.4); }
+    50% { box-shadow: 0 0 20px rgba(255,106,0,0.8); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="logo-text">Keke's International Presents</div>
+  
+  <h1 class="title">Soul Food Mastery</h1>
+  <div class="subtitle">with Chef Keke 👩🏾‍🍳</div>
+
+  <div class="episode-badge">🔥 Episode 1 — Live Now!</div>
+
+  <div class="free-badge">
+    <span>✨ FREE</span>
+    First 2 Sessions Are FREE for the Community — Come Through!
+  </div>
+
+  <div class="what-you-get">
+    <h3>🍽️ Today's Episode Includes</h3>
+    <div class="lesson-item"><span class="lesson-emoji">🥬</span> How to cook flavorful collard greens</div>
+    <div class="lesson-item"><span class="lesson-emoji">🍖</span> Seasoning & preparing smoked ribs & rib tips</div>
+    <div class="lesson-item"><span class="lesson-emoji">🥕</span> Balancing vegetables in meal prep</div>
+    <div class="lesson-item"><span class="lesson-emoji">🍉</span> How to cut watermelon & pineapple like a pro</div>
+    <div class="lesson-item"><span class="lesson-emoji">✨</span> Making food BURST with flavor using herbs & seasoning</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="pricing-section">
+    <h3>🎓 Get Lifetime Access</h3>
+    <div class="pricing-cards">
+
+      <div class="price-card">
+        <div class="price-tier">Replay Access</div>
+        <div class="price-amount">$27</div>
+        <div class="price-desc">Access to this episode replay — watch anytime</div>
+        <div class="price-includes">✅ Episode 1 Replay</div>
+        <a href="sms:9516305410&body=I want the $27 Soul Food Mastery replay access!" class="btn-buy">Get Replay — $27</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="best-value">🔥 Best Value</div>
+        <div class="price-tier">Lifetime Access</div>
+        <div class="price-amount">$47</div>
+        <div class="price-desc">ALL sessions forever — every episode, every secret</div>
+        <div class="price-includes">✅ All Episodes • ✅ Future Sessions • ✅ Private Group</div>
+        <a href="sms:9516305410&body=I want the $47 LIFETIME Soul Food Mastery access!" class="btn-buy">Get Lifetime — $47</a>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="payment-methods">
+    <h3>Choose How to Pay</h3>
+    <div class="payment-grid">
+      <a href="https://cash.app/$KekesInternational" target="_blank" class="payment-btn btn-cashapp">
+        💚 Cash App
+      </a>
+      <a href="sms:9516305410&body=Sending Zelle payment for Soul Food Mastery" class="payment-btn btn-zelle">
+        💜 Zelle
+      </a>
+      <a href="sms:9516305410&body=I want to pay by card for Soul Food Mastery" class="payment-btn btn-square">
+        🟦 Card/Square
+      </a>
+      <a href="sms:9516305410&body=I want to use EBT for Soul Food Mastery" class="payment-btn btn-ebt">
+        📋 CA EBT
+      </a>
+    </div>
+    <div class="contact-note">
+      Text or call us: <a href="tel:9516305410">(951) 630-5410</a><br>
+      📍 24195 Sunnymead Blvd, Moreno Valley
+    </div>
+  </div>
+
+  <div class="footer-note">
+    © 2026 Keke's International Food Spot · Soul Food Mastery with Chef Keke<br>
+    Questions? Call/text (951) 630-5410 or DM us on Instagram @kekesinternationalfoodspot
+  </div>
+
+</div>
+</body>
+</html>

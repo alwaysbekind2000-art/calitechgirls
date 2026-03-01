@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soul Food Mastery with Chef Keke</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Oswald:wght@400;600;700&family=Dancing+Script:wght@700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1080px;
+    overflow: hidden;
+    background: #0a0a0a;
+    font-family: 'Oswald', sans-serif;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 0.18; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 0.35; transform: translate(-50%,-50%) scale(1.15); }
+  }
+
+  @keyframes flameDance {
+    0%, 100% { transform: translateX(-50%) scale(1) rotate(-2deg); opacity: 0.12; }
+    50% { transform: translateX(-50%) scale(1.2) rotate(2deg); opacity: 0.22; }
+  }
+
+  @keyframes blinkTitle {
+    0%, 100% { text-shadow: 0 0 30px #ff6600, 0 0 60px #ff4400, 0 0 100px #ff2200; color: #ffffff; }
+    50% { text-shadow: 0 0 60px #ffaa00, 0 0 120px #ff6600, 0 0 200px #ff4400; color: #ffe066; }
+  }
+
+  @keyframes liveFlash {
+    0%, 100% { background: #ff0000; box-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000; opacity: 1; }
+    50% { background: #ff4444; box-shadow: 0 0 40px #ff0000, 0 0 80px #ff4400; opacity: 0.7; }
+  }
+
+  @keyframes slideInLeft {
+    from { transform: translateX(-100px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  @keyframes slideInRight {
+    from { transform: translateX(100px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  @keyframes fadeInUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0); }
+    50% { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes borderPulse {
+    0%, 100% { border-color: #ff6600; box-shadow: 0 0 20px rgba(255,102,0,0.5); }
+    50% { border-color: #ffcc00; box-shadow: 0 0 40px rgba(255,204,0,0.8), 0 0 80px rgba(255,102,0,0.4); }
+  }
+
+  @keyframes priceFlash {
+    0%, 100% { color: #ffcc00; text-shadow: 0 0 10px #ffcc00; }
+    50% { color: #ffffff; text-shadow: 0 0 20px #ffcc00, 0 0 40px #ff6600; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @keyframes rotateEmoji {
+    0%, 100% { transform: rotate(-5deg) scale(1); }
+    50% { transform: rotate(5deg) scale(1.1); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .flyer {
+    width: 1080px;
+    height: 1080px;
+    position: relative;
+    background: linear-gradient(160deg, #0a0a0a 0%, #1a0800 40%, #0a0a0a 100%);
+    overflow: hidden;
+  }
+
+  .bg-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,100,0,0.2) 0%, rgba(255,50,0,0.08) 40%, transparent 70%);
+    top: 50%; left: 50%;
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  .bg-glow2 {
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,180,0,0.15) 0%, transparent 70%);
+    top: 10%; left: 50%;
+    animation: flameDance 3s ease-in-out infinite;
+  }
+
+  /* Sparkle particles */
+  .spark {
+    position: absolute;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #ffcc00;
+    animation: sparkle 1.5s ease-in-out infinite;
+  }
+  .spark:nth-child(1) { top: 12%; left: 8%; animation-delay: 0s; }
+  .spark:nth-child(2) { top: 20%; left: 92%; animation-delay: 0.3s; }
+  .spark:nth-child(3) { top: 50%; left: 5%; animation-delay: 0.6s; }
+  .spark:nth-child(4) { top: 70%; left: 95%; animation-delay: 0.9s; }
+  .spark:nth-child(5) { top: 85%; left: 15%; animation-delay: 1.2s; }
+  .spark:nth-child(6) { top: 35%; left: 88%; animation-delay: 0.4s; background: #ff6600; }
+  .spark:nth-child(7) { top: 60%; left: 10%; animation-delay: 0.8s; background: #ff6600; }
+  .spark:nth-child(8) { top: 90%; left: 80%; animation-delay: 1.0s; }
+
+  .content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 60px;
+    height: 100%;
+  }
+
+  /* LIVE NOW badge */
+  .live-badge {
+    background: #ff0000;
+    color: white;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    padding: 10px 40px;
+    border-radius: 4px;
+    margin-bottom: 18px;
+    animation: liveFlash 1s ease-in-out infinite;
+    text-transform: uppercase;
+  }
+
+  .episode-tag {
+    color: #ff8800;
+    font-size: 18px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    animation: slideInLeft 0.8s ease forwards;
+    animation-delay: 0.2s;
+    opacity: 0;
+  }
+
+  .main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-weight: 900;
+    text-align: center;
+    line-height: 1.05;
+    animation: blinkTitle 2s ease-in-out infinite;
+    margin-bottom: 4px;
+  }
+
+  .subtitle {
+    font-family: 'Dancing Script', cursive;
+    font-size: 38px;
+    color: #ff8800;
+    margin-bottom: 24px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .divider {
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ff6600, #ffcc00, #ff6600, transparent);
+    margin-bottom: 22px;
+    animation: shimmer 2s linear infinite;
+    background-size: 200% auto;
+  }
+
+  .today-box {
+    border: 2px solid #ff6600;
+    border-radius: 12px;
+    padding: 18px 50px;
+    margin-bottom: 20px;
+    width: 90%;
+    animation: borderPulse 1.5s ease-in-out infinite;
+  }
+
+  .today-label {
+    color: #ffcc00;
+    font-size: 16px;
+    letter-spacing: 4px;
+    text-align: center;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .menu-item {
+    color: #ffffff;
+    font-size: 19px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: fadeInUp 0.8s ease forwards;
+    opacity: 0;
+  }
+
+  .menu-item:nth-child(1) { animation-delay: 0.3s; }
+  .menu-item:nth-child(2) { animation-delay: 0.5s; }
+  .menu-item:nth-child(3) { animation-delay: 0.7s; }
+  .menu-item:nth-child(4) { animation-delay: 0.9s; }
+
+  .emoji-spin {
+    display: inline-block;
+    animation: rotateEmoji 2s ease-in-out infinite;
+  }
+
+  .next-box {
+    background: rgba(255,102,0,0.1);
+    border-left: 4px solid #ff6600;
+    border-radius: 8px;
+    padding: 14px 24px;
+    width: 90%;
+    margin-bottom: 20px;
+    animation: slideInRight 0.8s ease forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+  }
+
+  .next-label {
+    color: #ff8800;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .next-text {
+    color: #ffffff;
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  .pricing-row {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 18px;
+    animation: fadeInUp 0.8s ease forwards;
+    animation-delay: 0.8s;
+    opacity: 0;
+  }
+
+  .price-card {
+    text-align: center;
+    padding: 12px 28px;
+    border: 1px solid rgba(255,204,0,0.4);
+    border-radius: 8px;
+    background: rgba(0,0,0,0.4);
+  }
+
+  .price-amount {
+    font-size: 32px;
+    font-weight: 700;
+    animation: priceFlash 1.5s ease-in-out infinite;
+  }
+
+  .price-desc {
+    color: #aaaaaa;
+    font-size: 13px;
+    margin-top: 2px;
+  }
+
+  .free-badge {
+    color: #00ff88;
+    font-size: 16px;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+    animation: priceFlash 1s ease-in-out infinite;
+    text-shadow: 0 0 10px #00ff88;
+  }
+
+  .location {
+    color: #888888;
+    font-size: 15px;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+
+  .location span {
+    color: #ff8800;
+  }
+
+  .bottom-fire {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(0deg, rgba(255,60,0,0.3), transparent);
+    animation: pulseGlow 1.5s ease-in-out infinite;
+  }
+
+  @keyframes btnPulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(255,102,0,0.7), 0 0 40px rgba(255,102,0,0.4); transform: scale(1); }
+    50% { box-shadow: 0 0 40px rgba(255,180,0,1), 0 0 80px rgba(255,102,0,0.6); transform: scale(1.04); }
+  }
+
+  .buy-btn-wrap {
+    margin-bottom: 14px;
+    animation: fadeInUp 0.8s ease forwards;
+    animation-delay: 1s;
+    opacity: 0;
+    text-align: center;
+  }
+
+  .buy-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff4500, #ff6600, #ffaa00);
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 14px 60px;
+    border-radius: 8px;
+    animation: btnPulse 1.5s ease-in-out infinite;
+    border: 2px solid rgba(255,200,0,0.5);
+  }
+
+  .buy-url {
+    color: #ffaa00;
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-top: 6px;
+    text-shadow: 0 0 8px #ff6600;
+  }
+</style>
+</head>
+<body>
+<div class="flyer">
+  <div class="bg-glow"></div>
+  <div class="bg-glow2"></div>
+
+  <!-- Sparkles -->
+  <div class="spark"></div>
+  <div class="spark"></div>
+  <div class="spark"></div>
+  <div class="spark"></div>
+  <div class="spark"></div>
+  <div class="spark"></div>
+  <div class="spark"></div>
+  <div class="spark"></div>
+
+  <div class="content">
+    <div class="live-badge">🔴 LIVE NOW</div>
+    <div class="episode-tag">✦ Episode 1 ✦</div>
+
+    <div class="main-title">SOUL FOOD<br>MASTERY</div>
+    <div class="subtitle">with Chef Keke 👩🏾‍🍳</div>
+
+    <div class="divider"></div>
+
+    <div class="today-box">
+      <div class="today-label">🔥 Today You'll Learn</div>
+      <div class="menu-grid">
+        <div class="menu-item"><span class="emoji-spin">🥬</span> Collard greens that POP</div>
+        <div class="menu-item"><span class="emoji-spin">🍖</span> Smoked ribs & rib tips</div>
+        <div class="menu-item"><span class="emoji-spin">🥕</span> Meal prep mastery</div>
+        <div class="menu-item"><span class="emoji-spin">🍉</span> Cut fruit like a pro</div>
+      </div>
+    </div>
+
+    <div class="next-box">
+      <div class="next-label">⏭️ Next Session</div>
+      <div class="next-text">Full slab breakdown • Rib tips origin • Tender vs Fall-Off-The-Bone • Smoke + Fry techniques</div>
+    </div>
+
+    <div class="free-badge">✨ FIRST 2 SESSIONS FREE FOR THE COMMUNITY ✨</div>
+
+    <div class="pricing-row">
+      <div class="price-card">
+        <div class="price-amount">$27</div>
+        <div class="price-desc">Replay Access</div>
+      </div>
+      <div class="price-card">
+        <div class="price-amount">$47</div>
+        <div class="price-desc">LIFETIME Access<br>All Sessions</div>
+      </div>
+    </div>
+
+
+    <div class="buy-btn-wrap">
+      <a href="https://kekesinternational.com/chef-keke-purchase.html" class="buy-btn">🔥 GET ACCESS NOW</a>
+      <div class="buy-url">kekesinternational.com/chef-keke-purchase</div>
+    </div>
+
+    <div class="location">📍 Live Outside <span>Keke's International</span> • 24195 Sunnymead Blvd, Moreno Valley</div>
+  </div>
+
+  <div class="bottom-fire"></div>
+</div>
+</body>
+</html>
