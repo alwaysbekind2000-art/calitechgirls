@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Keke's International</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#D4AF37;--gold-light:#F5D76E;--red:#8B1A1A;--red-bright:#c0392b;--cream:#FFF8E7;--dark:#0a0500;--brown:#1a0800;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--dark);color:var(--cream);font-family:'Montserrat',sans-serif;overflow-x:hidden;}
+
+/* LOGIN */
+.login-overlay{position:fixed;inset:0;z-index:9999;background:var(--dark);display:flex;align-items:center;justify-content:center;}
+.login-card{background:linear-gradient(135deg,rgba(26,8,0,.9),rgba(10,5,0,.95));border:1px solid rgba(212,175,55,.3);border-radius:16px;padding:50px;text-align:center;max-width:400px;width:90%;}
+.login-logo{font-family:'Dancing Script',cursive;font-size:2.5rem;color:var(--gold);margin-bottom:8px;}
+.login-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,248,231,.5);margin-bottom:30px;}
+.login-input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(212,175,55,.3);border-radius:6px;padding:16px 20px;color:var(--cream);font-family:'Montserrat',sans-serif;font-size:.9rem;outline:none;text-align:center;letter-spacing:4px;margin-bottom:20px;}
+.login-input:focus{border-color:var(--gold);}
+.login-btn{width:100%;padding:16px;background:linear-gradient(135deg,#8B1A1A,#c0392b);color:var(--cream);border:none;border-radius:6px;font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:4px;cursor:pointer;transition:all .3s;}
+.login-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(139,26,26,.5);}
+.login-error{color:#c0392b;font-size:.75rem;margin-top:10px;display:none;}
+
+/* DASHBOARD */
+.dashboard{display:none;}
+.admin-header{background:linear-gradient(135deg,rgba(26,8,0,.95),rgba(10,5,0,.98));border-bottom:1px solid rgba(212,175,55,.2);padding:20px 40px;display:flex;justify-content:space-between;align-items:center;}
+.admin-logo{font-family:'Dancing Script',cursive;font-size:1.5rem;color:var(--gold);}
+.admin-user{display:flex;gap:15px;align-items:center;}
+.admin-badge{font-size:.65rem;letter-spacing:3px;padding:6px 14px;border-radius:20px;background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.3);color:var(--gold);}
+.logout-btn{padding:8px 20px;background:transparent;border:1px solid rgba(255,248,231,.2);color:rgba(255,248,231,.5);border-radius:4px;font-family:'Montserrat',sans-serif;font-size:.7rem;letter-spacing:2px;cursor:pointer;transition:all .3s;}
+.logout-btn:hover{border-color:#c0392b;color:#c0392b;}
+
+.admin-content{max-width:1200px;margin:0 auto;padding:40px;}
+
+/* STAT CARDS */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:40px;}
+.stat-card{background:linear-gradient(135deg,rgba(26,8,0,.8),rgba(10,5,0,.9));border:1px solid rgba(212,175,55,.2);border-radius:12px;padding:25px;transition:all .3s;}
+.stat-card:hover{border-color:rgba(212,175,55,.4);}
+.stat-label{font-size:.65rem;letter-spacing:3px;color:rgba(255,248,231,.4);margin-bottom:8px;}
+.stat-value{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);}
+.stat-change{font-size:.7rem;color:#4ade80;margin-top:5px;}
+
+/* TABS */
+.admin-tabs{display:flex;gap:8px;margin-bottom:25px;flex-wrap:wrap;}
+.admin-tab{padding:10px 22px;background:transparent;border:1px solid rgba(212,175,55,.2);color:rgba(255,248,231,.5);border-radius:6px;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:.75rem;letter-spacing:2px;transition:all .3s;}
+.admin-tab.active,.admin-tab:hover{background:rgba(212,175,55,.1);border-color:var(--gold);color:var(--gold);}
+
+/* TABLE */
+.admin-panel{background:linear-gradient(135deg,rgba(26,8,0,.8),rgba(10,5,0,.9));border:1px solid rgba(212,175,55,.2);border-radius:12px;padding:30px;margin-bottom:30px;}
+.panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.panel-title{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--gold);}
+.add-btn{padding:8px 20px;background:linear-gradient(135deg,#8B1A1A,#c0392b);color:var(--cream);border:none;border-radius:4px;font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:2px;cursor:pointer;}
+table{width:100%;border-collapse:collapse;}
+th{text-align:left;font-size:.65rem;letter-spacing:3px;color:var(--gold);padding:12px 10px;border-bottom:1px solid rgba(212,175,55,.3);}
+td{padding:12px 10px;border-bottom:1px solid rgba(212,175,55,.1);font-size:.82rem;color:rgba(255,248,231,.8);}
+tr:hover td{background:rgba(212,175,55,.04);}
+.status-badge{font-size:.65rem;letter-spacing:2px;padding:4px 10px;border-radius:12px;display:inline-block;}
+.status-active{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);color:#4ade80;}
+.status-pending{background:rgba(245,215,110,.1);border:1px solid rgba(245,215,110,.3);color:#F5D76E;}
+.status-complete{background:rgba(100,149,237,.1);border:1px solid rgba(100,149,237,.3);color:cornflowerblue;}
+.edit-link{color:var(--gold);text-decoration:none;font-size:.75rem;cursor:pointer;}
+
+/* Nav Styles */
+.main-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(10,5,0,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(212,175,55,0.15);
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 65px;
+  }
+  .nav-logo {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.4rem;
+    color: var(--gold);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .nav-links a {
+    color: rgba(255,248,231,0.65);
+    text-decoration: none;
+    font-size: 0.6rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--gold); background: rgba(212,175,55,0.08); }
+  .nav-links a.active { color: var(--gold); }
+  .nav-order-btn {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #8B1A1A, #c0392b);
+    color: var(--cream);
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    box-shadow: 0 5px 20px rgba(139,26,26,0.5);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .nav-order-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,26,26,0.7); }
+  .nav-hub-btn {
+    padding: 8px 14px;
+    background: rgba(212,175,55,0.1);
+    color: var(--gold);
+    font-size: 0.55rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .nav-hub-btn:hover { background: rgba(212,175,55,0.2); border-color: var(--gold); }
+  body { padding-top: 65px; }
+  </style>
+</head>
+<body>
+
+<!-- MAIN NAVIGATION -->
+<nav class="main-nav">
+  <a href="kekesinternational-14.html" class="nav-logo">Keke's International</a>
+  <div class="nav-links">
+    <a href="kekesinternational-menu.html">Menu</a>
+    <a href="kekesinternational-catering.html">Catering</a>
+    <a href="kekesinternational-events.html">Events</a>
+    <a href="kekesinternational-vip.html">VIP</a>
+    <a href="kekesinternational-about.html">About</a>
+    <a href="kekesinternational-contact.html">Contact</a>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <a href="kekesinternational-menu.html" class="nav-order-btn">🍽️ Order Now</a>
+  </div>
+</nav>
+
+<!-- LOGIN OVERLAY -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-card">
+    <div class="login-logo">Keke's International</div>
+    <p class="login-subtitle">Admin Dashboard</p>
+    <input type="password" class="login-input" id="passwordInput" placeholder="Enter password" onkeypress="if(event.key==='Enter')attemptLogin()">
+    <button class="login-btn" onclick="attemptLogin()">ACCESS DASHBOARD</button>
+    <p class="login-error" id="loginError">Incorrect password. Try again.</p>
+    <p style="font-size:.65rem;color:rgba(255,248,231,.3);margin-top:20px;">Authorized personnel only · (951) 630-5410</p>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+  <div class="admin-header">
+    <div class="admin-logo">Keke's Admin</div>
+    <div class="admin-user">
+      <span class="admin-badge">ADMIN</span>
+      <button class="logout-btn" onclick="logout()">LOGOUT</button>
+    </div>
+  </div>
+
+  <div class="admin-content">
+
+    <!-- STATS ROW -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">TODAY'S ORDERS</div>
+        <div class="stat-value">12</div>
+        <div class="stat-change">↑ 3 from yesterday</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">TODAY'S REVENUE</div>
+        <div class="stat-value">$847</div>
+        <div class="stat-change">↑ $120 from yesterday</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">PENDING CATERING</div>
+        <div class="stat-value">3</div>
+        <div class="stat-change" style="color:#F5D76E;">2 this week</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">VIP MEMBERS</div>
+        <div class="stat-value">48</div>
+        <div class="stat-change">↑ 5 new this week</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">DAYS TO REOPENING</div>
+        <div class="stat-value" id="adminDays">--</div>
+        <div class="stat-change">March 19, 2026</div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="showTab('menu',this)">MENU MANAGER</button>
+      <button class="admin-tab" onclick="showTab('orders',this)">ORDERS</button>
+      <button class="admin-tab" onclick="showTab('catering',this)">CATERING REQUESTS</button>
+    </div>
+
+    <!-- MENU MANAGER -->
+    <div class="admin-panel" id="tab-menu">
+      <div class="panel-header">
+        <div class="panel-title">Menu Items</div>
+        <button class="add-btn">+ ADD ITEM</button>
+      </div>
+      <table>
+        <thead>
+          <tr><th>ITEM</th><th>CATEGORY</th><th>PRICE</th><th>STATUS</th><th>ACTION</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Smothered Chicken & Gravy</td><td>Soul Food</td><td>$28.99</td><td><span class="status-badge status-active">ACTIVE</span></td><td><span class="edit-link">Edit</span></td></tr>
+          <tr><td>Oxtail & Gravy</td><td>Soul Food</td><td>$35.99</td><td><span class="status-badge status-active">ACTIVE</span></td><td><span class="edit-link">Edit</span></td></tr>
+          <tr><td>Mac & Cheese</td><td>Soul Food</td><td>$15.99</td><td><span class="status-badge status-active">ACTIVE</span></td><td><span class="edit-link">Edit</span></td></tr>
+          <tr><td>BBQ Ribs (Half Rack)</td><td>BBQ</td><td>$32.99</td><td><span class="status-badge status-active">ACTIVE</span></td><td><span class="edit-link">Edit</span></td></tr>
+          <tr><td>BBQ Ribs (Full Rack)</td><td>BBQ</td><td>$54.99</td><td><span class="status-badge status-active">ACTIVE</span></td><td><span class="edit-link">Edit</span></td></tr>
+          <tr><td>Pulled Pork</td><td>BBQ</td><td>$24.99</td><td><span class="status-badge status-active">ACTIVE</span></td><td><span class="edit-link">Edit</span></td></tr>
+          <tr><td>Jerk Chicken</td><td>International</td><td>$26.99</td><td><span class="status-badge status-active">ACTIVE</span></td><td><span class="edit-link">Edit</span></td></tr>
+          <tr><td>Curry Bowl</td><td>International</td><td>$22.99</td><td><span class="status-badge status-active">ACTIVE</span></td><td><span class="edit-link">Edit</span></td></tr>
+          <tr><td>Tacos (3)</td><td>International</td><td>$18.99</td><td><span class="status-badge status-active">ACTIVE</span></td><td><span class="edit-link">Edit</span></td></tr>
+          <tr><td>Gourmet Burger</td><td>Burgers</td><td>$22.99</td><td><span class="status-badge status-active">ACTIVE</span></td><td><span class="edit-link">Edit</span></td></tr>
+          <tr><td>Fresh Vegan Bowl</td><td>Vegan</td><td>$19.99</td><td><span class="status-badge status-active">ACTIVE</span></td><td><span class="edit-link">Edit</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="admin-panel" id="tab-orders" style="display:none;">
+      <div class="panel-header">
+        <div class="panel-title">Recent Orders</div>
+      </div>
+      <table>
+        <thead>
+          <tr><th>ORDER #</th><th>CUSTOMER</th><th>ITEMS</th><th>TOTAL</th><th>STATUS</th><th>TIME</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>#KI-0112</td><td>Marcus T.</td><td>Oxtail, Mac & Cheese</td><td>$51.98</td><td><span class="status-badge status-active">READY</span></td><td>7:15 PM</td></tr>
+          <tr><td>#KI-0111</td><td>Lisa R.</td><td>Smothered Chicken, Rice</td><td>$41.98</td><td><span class="status-badge status-pending">COOKING</span></td><td>7:02 PM</td></tr>
+          <tr><td>#KI-0110</td><td>DeShawn M.</td><td>Full Rack Ribs, House Drink</td><td>$62.98</td><td><span class="status-badge status-complete">DELIVERED</span></td><td>6:45 PM</td></tr>
+          <tr><td>#KI-0109</td><td>Angela K.</td><td>Jerk Chicken, Curry Bowl</td><td>$49.98</td><td><span class="status-badge status-complete">DELIVERED</span></td><td>6:20 PM</td></tr>
+          <tr><td>#KI-0108</td><td>James W.</td><td>Tacos (3), Gourmet Burger</td><td>$41.98</td><td><span class="status-badge status-complete">PICKED UP</span></td><td>5:50 PM</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CATERING -->
+    <div class="admin-panel" id="tab-catering" style="display:none;">
+      <div class="panel-header">
+        <div class="panel-title">Catering Requests</div>
+      </div>
+      <table>
+        <thead>
+          <tr><th>DATE</th><th>CLIENT</th><th>EVENT</th><th>GUESTS</th><th>PACKAGE</th><th>STATUS</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mar 8, 2026</td><td>Johnson Family</td><td>Family Reunion</td><td>45</td><td>Signature</td><td><span class="status-badge status-pending">PENDING</span></td></tr>
+          <tr><td>Mar 15, 2026</td><td>ABC Corp</td><td>Corporate Lunch</td><td>80</td><td>Grand Event</td><td><span class="status-badge status-active">CONFIRMED</span></td></tr>
+          <tr><td>Apr 2, 2026</td><td>Smith-Williams</td><td>Wedding</td><td>150</td><td>Grand Event</td><td><span class="status-badge status-pending">QUOTING</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function attemptLogin() {
+  const pw = document.getElementById('passwordInput').value;
+  if (pw === 'kekes2026') {
+    document.getElementById('loginOverlay').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    updateAdminDays();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function logout() {
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('loginOverlay').style.display = 'flex';
+  document.getElementById('passwordInput').value = '';
+  document.getElementById('loginError').style.display = 'none';
+}
+
+function showTab(tab, btn) {
+  document.querySelectorAll('.admin-panel').forEach(p => p.style.display = 'none');
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).style.display = 'block';
+  btn.classList.add('active');
+}
+
+function updateAdminDays() {
+  const target = new Date('2026-03-19T12:00:00');
+  const diff = target - new Date();
+  const days = Math.floor(diff / 86400000);
+  const el = document.getElementById('adminDays');
+  if (el) el.textContent = days > 0 ? days : '🎉';
+}
+</script>
+</body>
+</html>
